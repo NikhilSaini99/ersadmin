@@ -1,0 +1,125 @@
+import React, { lazy } from 'react';
+import LazyLoad from '../components/LazyLoad';
+import { AddTextCalenderData } from '../pages/AddTaxCalenderData';
+import { GalleryImage } from '../pages/GalleryImage';
+import { UploadVideo } from '../pages/UploadVideo';
+import { Video } from '../pages/Video';
+import { Setting } from '../pages/setting';
+
+/****Layouts*****/
+const FullLayout = lazy(() => import('../layouts/MainLayout'));
+/****End Layouts*****/
+
+/*****Pages******/
+const AddBanner = LazyLoad('../pages', 'AddBanner');
+// const Video = LazyLoad('../pages', 'Video');
+const CreateImage = LazyLoad('../pages', 'Image');
+const AddNews = LazyLoad('../pages', 'AddNews');
+const Menu = LazyLoad('../pages', 'Menu');
+const AddWhatNew = LazyLoad('../pages', 'AddWhatNew');
+const RecentlyApproved = LazyLoad('../pages', 'RecentlyApproved');
+const AddCorporateResponsibility = LazyLoad(
+	'../pages',
+	'AddCorporateResponsibility'
+);
+const AddPublication = LazyLoad('../pages', 'AddPublication');
+const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
+const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
+const News = LazyLoad('../pages', 'News');
+const Banner = LazyLoad('../pages', 'Banner');
+const NoticeBoard = LazyLoad('../pages', 'NoticeBoard');
+const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
+
+const Login = lazy(() => import('../pages/Login'));
+
+/*****Routes******/
+const routes = [
+	{
+		path: '/',
+		element: <FullLayout />,
+		children: [
+			{
+				path: 'Menu',
+				element: <Menu />
+			},
+			{
+				path: 'News',
+				element: <News />
+			},
+			{
+				path: 'Banner',
+				element: <Banner />
+			},
+			{
+				path: 'Add-Banner',
+				element: <AddBanner />
+			},
+			{
+				path: 'Upload-Video',
+				element: <UploadVideo />
+			},
+			{
+				path: 'Video',
+				element: <Video />
+			},
+			{
+				path: 'Upload-Gallery-Image',
+				element: <UploadGalleryImage />
+			},
+			{
+				path: 'Image',
+				element: <CreateImage />
+			},
+			{
+				path: 'Add-News',
+				element: <AddNews />
+			},
+			{
+				path: 'gallery-images',
+				element: <GalleryImage />
+			},
+			{
+				path: 'Add-what-new',
+				element: <AddWhatNew />
+			},
+			{
+				path: 'Add-Text-Calender-Data',
+				element: <AddTextCalenderData />
+			},
+			{
+				path: 'Recently-Approved',
+				element: <RecentlyApproved />
+			},
+			{
+				path: 'Add-Corporate-Responsibility',
+				element: <AddCorporateResponsibility />
+			},
+			{
+				path: 'Add-publication',
+				element: <AddPublication />
+			},
+			{
+				path: 'Notice-Board',
+				element: <NoticeBoard />
+			},
+			{
+				path: 'Important-Links',
+				element: <ImportantLinks />
+			},
+			{
+				path: 'User-FeedBacks',
+				element: <UserFeedBacks />
+			},
+			{
+				path: 'setting',
+				element: <Setting />
+			}
+		]
+	}
+	// {
+	// 	path: '/login',
+	// 	element: <Login />
+	// }
+];
+
+export default routes;
