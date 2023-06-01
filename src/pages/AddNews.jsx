@@ -99,7 +99,7 @@ export function AddNews() {
 								</LocalizationProvider>
 							</Grid>
 
-							<Grid item xs={12}>
+							<Grid item xs={12} style={{ height: 'auto',overflowY:'auto' }}>
 								{/* <TextField fullWidth label="Description" id="fullWidth" helperText="Please enter Description" /> */}
 								<TextEditor {...{ text, setText }} />
 								{!text && (

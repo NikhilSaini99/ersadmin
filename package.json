@@ -28,6 +28,8 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.10.0",
+    "suneditor": "^2.44.12",
+    "suneditor-react": "^2.16.5",
     "yup": "^1.1.1"
   },
   "devDependencies": {
