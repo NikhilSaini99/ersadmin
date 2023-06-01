@@ -5,16 +5,17 @@ import { GalleryImage } from '../pages/GalleryImage';
 import { UploadVideo } from '../pages/UploadVideo';
 import { Video } from '../pages/Video';
 import { Setting } from '../pages/setting';
+ 
 
 /****Layouts*****/
 const FullLayout = lazy(() => import('../layouts/MainLayout'));
 /****End Layouts*****/
-
+import { AddNews } from '../pages/AddNews';
 /*****Pages******/
 const AddBanner = LazyLoad('../pages', 'AddBanner');
 // const Video = LazyLoad('../pages', 'Video');
 const CreateImage = LazyLoad('../pages', 'Image');
-const AddNews = LazyLoad('../pages', 'AddNews');
+// const AddNews = LazyLoad('../pages', 'AddNews');
 const Menu = LazyLoad('../pages', 'Menu');
 const AddWhatNew = LazyLoad('../pages', 'AddWhatNew');
 const RecentlyApproved = LazyLoad('../pages', 'RecentlyApproved');
