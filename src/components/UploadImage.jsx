@@ -4,6 +4,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 
 const UploadImage = ({ maxImg, images, setImages }) => {
+	
 	const deleteImage = (idx) => {
 		setImages((arr) => {
 			const newArr = arr;

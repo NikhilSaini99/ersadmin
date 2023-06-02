@@ -10,10 +10,13 @@ import MainCard from '../components/MainCard';
 import UploadImage from '../components/UploadImage';
 import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
+import { useNavigate } from 'react-router-dom';
 
 export function AddBanner() {
 	const { UploadFile } = useFile();
 	const { callAPI } = useFetch('POST', '/banner-images');
+
+	const navigate = useNavigate();
 
 	const [images, setImages] = useState([]);
 
@@ -138,11 +141,13 @@ export function AddBanner() {
 	async function createBanner(values) {
 		const result = await UploadFile('/files/banner-image', images);
 		console.log(result);
-		if (result.success)
+		if (result.success) {
 			callAPI({
 				...values,
 				imageurl: result.data.url.toString()
 			});
-		formik.handleReset();
+			formik.handleReset();
+			navigate('/banner')
+		}
 	}
 }

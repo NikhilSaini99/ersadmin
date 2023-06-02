@@ -21,6 +21,7 @@ const useFile = () => {
 		// 	response = result;
 		// })
 		// .catch((error) => console.log('error', error));
+		console.log('i am in use file',response)
 		return response;
 	}
 	return { UploadFile };

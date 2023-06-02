@@ -114,8 +114,8 @@ const Sidebar = (props) => {
 								>
 									<ListItemButton
 										onClick={() => {}}
-										button
-										className={isSelected && 'shadow-md'}
+										button='true'
+										className={`${isSelected && 'shadow-md'}`}
 										component={NavLink}
 										to={item.href}
 										selected={isSelected}

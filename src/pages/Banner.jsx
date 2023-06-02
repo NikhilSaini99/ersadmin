@@ -34,6 +34,7 @@ export function Banner() {
 						</div>
 					</Link>
 				</div>
+			
 				<LoaderContainer {...{ loading, error }}>
 					{banner?.data?.map((item, key) => (
 						<BannerImg
