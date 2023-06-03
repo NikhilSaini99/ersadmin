@@ -96,6 +96,11 @@ const Menuitems = [
         title: 'Settings',
         icon: MdFeedback,
         href: '/setting'
+    },
+    {
+        title: 'Whats New',
+        icon: MdFeedback,
+        href: '/MyWhatsNew'
     }
 ];
 

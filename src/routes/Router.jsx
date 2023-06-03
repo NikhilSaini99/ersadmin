@@ -31,6 +31,8 @@ import {News} from '../pages/News'
 const Banner = LazyLoad('../pages', 'Banner');
 const NoticeBoard = LazyLoad('../pages', 'NoticeBoard');
 const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
+import MyWhatsNew from '../pages/MyWhatsNew'
+import AddMyWhatsNews from '../pages/AddMyWhatsNews'
 
 const Login = lazy(() => import('../pages/Login'));
 
@@ -115,6 +117,14 @@ const routes = [
 			{
 				path: 'setting',
 				element: <Setting />
+			},
+			{
+				path: 'MyWhatsNew',
+				element: <MyWhatsNew />
+			},
+			{
+				path: 'AddMyWhatsNews',
+				element: <AddMyWhatsNews />
 			}
 		]
 	}

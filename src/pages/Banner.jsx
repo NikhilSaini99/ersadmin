@@ -16,7 +16,9 @@ export function Banner() {
 
 	useEffect(() => {
 		callAPI();
+		
 	}, []);
+	
 	return (
 		<>
 			<div className="basis-3/4 flex flex-col  justify-items-end gap-16 mr-16 py-6">
