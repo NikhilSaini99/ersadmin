@@ -33,6 +33,7 @@ const NoticeBoard = LazyLoad('../pages', 'NoticeBoard');
 const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
 import MyWhatsNew from '../pages/MyWhatsNew'
 import AddMyWhatsNews from '../pages/AddMyWhatsNews'
+import MyNewsPrint from '../pages/MyNewsPrint';
 
 const Login = lazy(() => import('../pages/Login'));
 
@@ -125,7 +126,11 @@ const routes = [
 			{
 				path: 'AddMyWhatsNews',
 				element: <AddMyWhatsNews />
-			}
+			},
+			{
+				path: 'MyNewsPrint',
+				element: <MyNewsPrint />
+			},
 		]
 	}
 	// {
