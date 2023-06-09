@@ -28,7 +28,9 @@ const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
 const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
 // const News = LazyLoad('../pages', 'News');
 import {News} from '../pages/News'
-const Banner = LazyLoad('../pages', 'Banner');
+// const Banner = LazyLoad('../pages', 'Banner');
+import { Banner } from '../pages/Banner';
+
 const NoticeBoard = LazyLoad('../pages', 'NoticeBoard');
 const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
 import MyWhatsNew from '../pages/MyWhatsNew'

@@ -40,7 +40,7 @@ const UploadImage = ({ maxImg, images, setImages }) => {
 			)}
 			<Grid container direction="row" spacing={2} padding={2}>
 				{images.map((item, idx) => (
-					<Grid item xs={3} key={item.id}>
+					<Grid item xs={3} key={idx}>
 						<img src={previewImage(item, idx)} style={{ height: '156px' }} />
 						<Button
 							variant="outlined"
