@@ -36,7 +36,7 @@ const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
 import MyWhatsNew from '../pages/MyWhatsNew'
 import AddMyWhatsNews from '../pages/AddMyWhatsNews'
 import MyNewsPrint from '../pages/MyNewsPrint';
-
+import FAQ, { AddFAQ } from '../pages/FAQ';
 const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -132,6 +132,14 @@ const routes = [
 			{
 				path: 'MyNewsPrint',
 				element: <MyNewsPrint />
+			},
+			{
+				path: 'FAQ',
+				element: <FAQ />
+			},
+			{
+				path: 'AddFAQ',
+				element: <AddFAQ />
 			},
 		]
 	}

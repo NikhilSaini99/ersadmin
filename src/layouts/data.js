@@ -1,10 +1,11 @@
 import { AiFillFolderAdd } from 'react-icons/ai'
 import { BiNews, BiNotification } from 'react-icons/bi'
-import { FaHome, FaVideo } from 'react-icons/fa'
+import { FaHome, FaVideo ,FaQuestion} from 'react-icons/fa'
 import { ImFolderUpload } from 'react-icons/im'
 import { MdCorporateFare, MdFeedback, MdLabelImportant, MdOutlineApproval } from 'react-icons/md'
 import { TbReceiptTax } from 'react-icons/tb'
 import { TfiGallery, TfiMenuAlt } from 'react-icons/tfi'
+import { MdSettings } from 'react-icons/md'
 
 
 const Menuitems = [
@@ -94,14 +95,19 @@ const Menuitems = [
     },
     {
         title: 'Settings',
-        icon: MdFeedback,
+        icon: MdSettings,
         href: '/setting'
     },
     {
         title: 'Whats New',
-        icon: MdFeedback,
+        icon: AiFillFolderAdd,
         href: '/MyWhatsNew'
-    }
+    },
+    {
+        title: 'FAQ',
+        icon: FaQuestion,
+        href: '/FAQ'
+    },
 ];
 
 export default Menuitems;
