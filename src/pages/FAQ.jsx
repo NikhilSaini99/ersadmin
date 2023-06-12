@@ -132,7 +132,7 @@ export const AddFAQ = () => {
     return (
         <>
             <MainCard
-                title="Add What New"
+                title="ALL FAQ QUESTIONS"
                 border={false}
                 elevation={16}
                 content={false}
@@ -149,7 +149,7 @@ export const AddFAQ = () => {
                                 name='use_for'
                                 helperText="Use For"
                                 onChange={formik.handleChange}
-                                value={formik.values.useFor}
+                                value={formik.values.use_for}
                                 disabled
                             />
                         </Grid>
@@ -171,6 +171,7 @@ export const AddFAQ = () => {
                                 label="Answer"
                                 id="fullWidth"
                                 name='answer'
+                                multiline
                                 helperText="Please enter Answer"
                                 onChange={formik.handleChange}
                                 value={formik.values.answer}
@@ -185,7 +186,7 @@ export const AddFAQ = () => {
                                     labelId="question_cat"
                                     id="question_cat"
                                     name="question_cat"
-                                    value={formik.values.category}
+                                    value={formik.values.question_cat}
                                     label="Select category"
                                     onChange={formik.handleChange}
                                     required

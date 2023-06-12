@@ -19,33 +19,46 @@ import UploadImage from '../components/UploadImage';
 import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
 
+
 const newsSchema = Yup.object().shape({
 	news: Yup.string().required('News Name is required'),
 	uploadDate: Yup.date().required('Upload Date is required')
 });
 
-const MuiTextField = ({ field, form, ...props }) => {
-	return <TextField {...field} {...props} />;
-};
+
 
 export function AddNews() {
+	const MuiTextField = ({ field, form, ...props }) => {
+		return <TextField  {...field} {...props} />;
+	};
+
 	const { UploadFile } = useFile();
 	const [text, setText] = useState('');
 	const [images, setImages] = useState([]);
 	const { loading, data, error, callAPI } = useFetch('POST', '/news-images');
+	const [htmlData, setHtmlData] = useState({});
 
+	function gettingHtmlData(recvHtml) {
+		setHtmlData({ body: recvHtml })
+	}
+	
 	return (
 		<Formik
 			initialValues={{
 				news: '',
-				uploadDate: ''
+				uploadDate: '',
+				
 			}}
 			validationSchema={newsSchema}
+			// onSubmit={(values, { resetForm }) => {
+			// 	createNews(values);
+			// 	resetForm();
+			// 	setText('');
+			// 	setImages([]);
+			// }}
 			onSubmit={(values, { resetForm }) => {
-				createNews(values);
 				resetForm();
-				setText('');
-				setImages([]);
+				console.log({...values,htmlData})
 			}}
 		>
 			{({
@@ -58,7 +71,6 @@ export function AddNews() {
 				isSubmitting
 			}) => (
 				<Form>
-					{console.log('values===>', values)}
 					<MainCard
 						title="Add News"
 						border={false}
@@ -99,11 +111,11 @@ export function AddNews() {
 								</LocalizationProvider>
 							</Grid>
 
-							<Grid item xs={12} style={{ height: 'auto',overflowY:'auto' }}>
+							<Grid item xs={12} style={{ height: 'auto', overflowY: 'auto' }}>
 								{/* <TextField fullWidth label="Description" id="fullWidth" helperText="Please enter Description" /> */}
-								<TextEditor {...{ text, setText }} />
+								<TextEditor {...{ text, setText }} gettingHtmlData={gettingHtmlData} />
 								{!text && (
-									<Typography component="body2" className="text-red-500">
+									<Typography variant="body2" className="text-red-500">
 										{errors.description}
 									</Typography>
 								)}
@@ -119,10 +131,10 @@ export function AddNews() {
 						<CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
 							<Button
 								size="large"
-								disabled={(images.length == 4 ? false : true) || isSubmitting}
+								// disabled={(images.length == 4 ? false : true) || isSubmitting}
 								type="submit"
 								variant="contained"
-								// fullWidth
+							// fullWidth
 							>
 								Save
 							</Button>
