@@ -18,7 +18,7 @@ export default function BannerImg({
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
-
+console.log(img)
 	return (
 		<div>
 			<h1 className=" text-3xl mb-4">{title}</h1>

@@ -13,7 +13,7 @@ const useFile = () => {
 		};
 
 		let response;
-
+		
 		const res = await fetch(API_HOST + url, requestOptions);
 		response = await res.json();
 		// .then((response) => response.json())

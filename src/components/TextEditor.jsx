@@ -8,7 +8,7 @@ import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 
 
-const TextEditor = ({ text, setText,gettingHtmlData }) => {
+const TextEditor = ({ text, setText,gettingHtmlData,htmlContent }) => {
 	const editorRef = useRef(null);
 	// const changeHandler = (content, delta, source, editor) => {
 	// 	console.log(editor.getHTML()); // rich text
@@ -58,8 +58,9 @@ const TextEditor = ({ text, setText,gettingHtmlData }) => {
 
 	return (
 		<>
-		<div>
+		<div id="editor">
 		<SunEditor
+		// setContents={htmlContent&&htmlContent}
 		ref={editorRef}
 			autoFocus={true}
 			// onInput={handleInput}

@@ -11,7 +11,10 @@ import React, { useEffect } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import useFetch from '../hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
+
 export default function NewsCard({ img, title, description, id, refresh }) {
+	const navigate = useNavigate()
 	const { loading, data, error, callAPI } = useFetch(
 		'DELETE',
 		`/news-images/${id}`
@@ -19,6 +22,12 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
+
+	function handleEditPage(id)
+	{
+		console.log(description)
+		navigate('/Add-News',{state:{id:id,description:description}})
+	}
 	return (
 		<>
 			<Card
@@ -69,6 +78,7 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 						size="small"
 						style={{ marginLeft: '15px' }}
 						startIcon={<FaRegEdit size={20} />}
+						onClick={()=>handleEditPage(id)}
 					>
 						update
 					</Button>

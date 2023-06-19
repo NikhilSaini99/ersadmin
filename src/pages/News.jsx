@@ -12,7 +12,8 @@ export function News() {
 		data: news,
 		error,
 		callAPI
-	} = useFetch('GET', '/news-images');
+	} = useFetch('GET', '/news');
+	console.log(news)
 
 	useEffect(() => callAPI(), []);
 

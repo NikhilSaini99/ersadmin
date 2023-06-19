@@ -147,7 +147,7 @@ export function AddBanner() {
 				imageurl: result.data.url.toString()
 			});
 			formik.handleReset();
-			navigate('banner')
+			navigate('/banner')
 		}
 	}
 }
