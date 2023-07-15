@@ -138,7 +138,7 @@ export function Image() {
 						<Button
 							size="large"
 							variant="contained"
-							fullWidth
+							
 							type="submit"
 							disabled={
 								(images.length >= 1 ? false : true) || formik.isSubmitting

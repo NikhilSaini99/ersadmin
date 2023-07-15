@@ -54,7 +54,7 @@ const MainLayout = () => {
 					sx={{
 						// paddingTop: '20px'
 						paddingRight: '0!important',
-						paddingLeft: isSidebarOpen && lgUp ? '280px!important' : ''
+						paddingLeft: isSidebarOpen && lgUp ? '347px!important' : ''
 					}}
 				>
 					<Box

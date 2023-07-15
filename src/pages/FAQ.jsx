@@ -20,6 +20,9 @@ const FAQ = () => {
         callAPI()
     }, [])
 
+
+
+
     const myBox = {
         display: 'flex',
         justifyContent: 'space-between',
@@ -42,6 +45,7 @@ const FAQ = () => {
                             question={item.question}
                             answer={item.answer}
                             category={item.question_cat}
+                            refresh={callAPI}
                         />
                     ))}
                 </Stack>
@@ -56,44 +60,58 @@ export default FAQ
 
 /*---------- PRINT FAQ STARTS ---------------*/
 
-const MyFAQPrint = ({ myidx, id, question, answer, category }) => {
+const MyFAQPrint = ({ myidx, id, question, answer, category ,refresh}) => {
+
+    const { loading, data, error, callAPI } = useFetch('DELETE', `/faq/${id}`);
+
+    useEffect(() => {
+        if (data?.success) refresh();
+    }, [data])
+
 
     const [ans, setShowAns] = useState(false)
 
     function handleShow() {
         setShowAns(!ans)
     }
+
+    const handleDeleteFAQ = () => {
+        callAPI();
+    }
+
     return (
         <>
-            <Stack sx={{
-                display: 'flex', flexDirection: 'column', background: '#F4F3F6', p: '1rem',
-                borderRadius: '10px'
-            }}>
-                <Stack sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Stack direction='row' spacing={2}><HelpIcon />
-                        <Typography variant='body1' fontWeight='bold'>
-                            {question}
-                        </Typography>
+            <Stack sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Stack sx={{
+                    display: 'flex', flexDirection: 'column', background: '#F4F3F6', p: '1rem',
+                    borderRadius: '10px', flexGrow: '1'
+                }}>
+                    <Stack sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Stack direction='row' spacing={2}><HelpIcon />
+                            <Typography variant='body1' fontWeight='bold'>
+                                {question}
+                            </Typography>
+                        </Stack>
+                        <IconButton onClick={() => handleShow()}>
+                            {ans ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        </IconButton>
                     </Stack>
-                    <IconButton onClick={() => handleShow()}>
-                        {ans ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                    </IconButton>
+
+                    <Collapse in={ans}>
+                        <Typography variant='body1'
+                            sx={{
+                                color: 'grey',
+                                pl: '0.5rem',
+                                ...(ans ? {
+                                    display: 'block',
+                                } : {
+                                    display: 'none',
+                                }),
+                            }}
+                        >{answer}</Typography>
+                    </Collapse>
                 </Stack>
-
-                <Collapse in={ans}>
-                    <Typography variant='body1'
-                        sx={{
-                            color: 'grey',
-                            pl: '0.5rem',
-                            ...(ans ? {
-                                display: 'block',
-                            } : {
-                                display: 'none',
-                            }),
-                        }}
-                    >{answer}</Typography>
-                </Collapse>
-
+                <Button variant='contained' onClick={handleDeleteFAQ}>Delete</Button>
             </Stack>
         </>
     )
@@ -107,7 +125,7 @@ const MyFAQPrint = ({ myidx, id, question, answer, category }) => {
 export const AddFAQ = () => {
     const navigate = useNavigate()
 
-    const {callAPI} = useFetch('POST','/faq')
+    const { callAPI } = useFetch('POST', '/faq')
 
 
     //using formik library to manage overall form and in formik also using useFormik hook
@@ -119,7 +137,7 @@ export const AddFAQ = () => {
             question_cat: ''
         },
         onSubmit: submittingForm
-        
+
     })
 
     function submittingForm() {

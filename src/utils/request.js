@@ -46,6 +46,7 @@ export default async function request(
             err = new Error("Invalid method");
             break;
     }
+    
     if (response.ok) {
         response = response && (await response.json());
         err = false

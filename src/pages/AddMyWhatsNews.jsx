@@ -87,8 +87,10 @@ const AddMyWhatsNews = () => {
                         />
                     </Grid>
                     <Divider sx={{p:2}}/>
+                    
                     <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                        <Button type="submit" size="large" variant="contained" fullWidth>
+                 
+                        <Button type="submit" size="large" variant="contained" >
                             Save
                         </Button>
                     </CardActions>

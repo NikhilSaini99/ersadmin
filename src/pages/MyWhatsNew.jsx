@@ -6,6 +6,7 @@ import useFetch from '../hooks/useFetch'
 import { useEffect } from 'react'
 import LoaderContainer from '../components/LoaderContainer'
 import MyNewsPrint from './MyNewsPrint'
+import { BiAddToQueue } from 'react-icons/bi'
 
 const MyWhatsNew = () => {
 
@@ -29,7 +30,18 @@ const MyWhatsNew = () => {
         <>
             <Box sx={myBox}>
                 <Typography variant='h4'>Whats New</Typography>
-                <Link to="/AddMyWhatsNews"> <Button variant='contained' sx={{ fontWeight: 'bold' }} >Add News </Button></Link>
+                <Link to="/AddMyWhatsNews"> 
+                <Button
+					variant="contained"
+					size="large"
+					sx={{ fontWeight: 600, py: 2 }}
+					startIcon={<BiAddToQueue size={25} />}
+				>
+					{' '}
+					Add News
+				</Button>
+                {/* <Button variant='contained' sx={{ fontWeight: 'bold' }} >Add News </Button> */}
+                </Link>
             </Box>
             
             <LoaderContainer {...{ loading, error }}>

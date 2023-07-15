@@ -107,7 +107,6 @@ export function Video() {
 					<Button
 						size="large"
 						variant="contained"
-						fullWidth
 						type="submit"
 						disabled={!formik.values.uploadDate || formik.isSubmitting}
 					>

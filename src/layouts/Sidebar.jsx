@@ -1,4 +1,4 @@
-const SidebarWidth = 270;
+const SidebarWidth = 350;
 
 import {
 	Avatar,
@@ -45,7 +45,7 @@ const Sidebar = (props) => {
 						<img
 							src={Logo}
 							alt="logo"
-							style={{ width: '120px', height: '84px' }}
+							style={{ width: '120px', height: '84px',mixBlendMode:'multiply' }}
 							srcSet=""
 						/>
 					</Link>

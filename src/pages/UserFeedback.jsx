@@ -51,7 +51,7 @@ const FeedBackPrint = ({ id, name, email, phoneNo, feedbacktype, feedbackDesc, c
     const stackStyling = {
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem',
+        gap: '1rem',
     }
 
 
@@ -59,14 +59,14 @@ const FeedBackPrint = ({ id, name, email, phoneNo, feedbacktype, feedbackDesc, c
     return (
         <>
             <Grid item xs={12} sm={6} md={4}>
-                <Paper sx={{ border: '1px solid #72b8bf', p: '2rem' }}>
+                <Paper sx={{ border: '1px solid #72b8bf', p:{lg:'1rem',xl: '2rem'} }}>
                     <Stack sx={stackStyling} >
-                        <Stack direction='row' sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Box>
+                        <Stack direction='row' sx={{ display: 'flex', justifyContent: 'space-between',alignItems:'center' }}>
+                            <Box sx={stackStyling}>
                                 <Avatar sx={{ backgroundColor: 'orange' }}>{name.charAt(0).toUpperCase()}</Avatar>
-                            </Box>
-                            <Stack sx={{ display: 'flex', gap: '2rem', flexDirection: 'row' }}>
                                 <Typography variant='body1' fontWeight='bold'>{feedbacktype.toUpperCase()}</Typography>
+                            </Box>
+                            <Stack sx={{ display: 'flex', gap: {xs:'0.6rem',md:'1rem',lg:'2rem'}, flexDirection: 'row' }}>
                                 <Typography variant='body1'>{newDate}</Typography>
                             </Stack>
                         </Stack>    

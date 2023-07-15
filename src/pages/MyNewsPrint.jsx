@@ -19,6 +19,7 @@ const MyNewsPrint = ({ names, description, docName, docURL, refresh, id }) => {
 
     const { loading, data, error, callAPI } = useFetch('DELETE', `/whateNew/${id}`);
 
+    
     useEffect(() => {
         if (data?.success) refresh();
     }, [data])

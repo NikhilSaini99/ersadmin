@@ -74,7 +74,7 @@ export function Setting() {
                 <Divider />
 
                 <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                    <Button size="large" variant='contained' fullWidth >
+                    <Button size="large" variant='contained' >
                         Save
                     </Button>
                 </CardActions>
@@ -110,7 +110,7 @@ export function Setting() {
 
                 <Divider />
                 <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                    <Button size="large" variant='contained' fullWidth >
+                    <Button size="large" variant='contained'  >
                         Save
                     </Button>
                 </CardActions>
@@ -164,7 +164,7 @@ export function Setting() {
                 <Divider />
 
                 <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                    <Button size="large" variant='contained' fullWidth >
+                    <Button size="large" variant='contained'  >
                         Save
                     </Button>
                 </CardActions>

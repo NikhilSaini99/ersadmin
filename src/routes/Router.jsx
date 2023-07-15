@@ -37,6 +37,7 @@ import MyWhatsNew from '../pages/MyWhatsNew'
 import AddMyWhatsNews from '../pages/AddMyWhatsNews'
 import MyNewsPrint from '../pages/MyNewsPrint';
 import FAQ, { AddFAQ } from '../pages/FAQ';
+import AddMenu from '../pages/AddMenu';
 const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -48,6 +49,10 @@ const routes = [
 			{
 				path: 'Menu',
 				element: <Menu />
+			},
+			{
+				path: 'AddMenu',
+				element: <AddMenu />
 			},
 			{
 				path: 'News',
@@ -141,6 +146,7 @@ const routes = [
 				path: 'AddFAQ',
 				element: <AddFAQ />
 			},
+		
 		]
 	}
 	// {

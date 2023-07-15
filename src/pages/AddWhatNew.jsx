@@ -54,7 +54,7 @@ export function AddWhatNew() {
 					</Grid>
 
 					<Grid item xs={12}>
-						<Button variant="outlined" component="label" fullWidth>
+						<Button variant="outlined" component="label">
 							<AiOutlineCloudUpload size={30} className="mr-2" />
 							Upload Document
 							<input type="file" hidden />
@@ -63,7 +63,7 @@ export function AddWhatNew() {
 				</Grid>
 				<Divider />
 				<CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-					<Button size="large" variant="contained" fullWidth>
+					<Button size="large" variant="contained">
 						Save
 					</Button>
 				</CardActions>

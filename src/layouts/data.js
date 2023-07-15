@@ -4,8 +4,11 @@ import { FaHome, FaVideo ,FaQuestion} from 'react-icons/fa'
 import { ImFolderUpload } from 'react-icons/im'
 import { MdCorporateFare, MdFeedback, MdLabelImportant, MdOutlineApproval } from 'react-icons/md'
 import { TbReceiptTax } from 'react-icons/tb'
-import { TfiGallery, TfiMenuAlt } from 'react-icons/tfi'
+import { TfiGallery, TfiMenuAlt, } from 'react-icons/tfi'
 import { MdSettings } from 'react-icons/md'
+import {BsFillMenuButtonFill} from "react-icons/bs"
+
+
 
 
 const Menuitems = [
@@ -37,12 +40,12 @@ const Menuitems = [
 
         ]
     },
-    {
-        title: 'Add What New',
-        icon: AiFillFolderAdd,
-        href: '/Add-what-new',
-        childrens: []
-    },
+    // {
+    //     title: 'Add What New',
+    //     icon: AiFillFolderAdd,
+    //     href: '/Add-what-new',
+    //     childrens: []
+    // },
     {
         title: 'Add Tax Calender Data',
         icon: TbReceiptTax,
