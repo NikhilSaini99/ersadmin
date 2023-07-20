@@ -47,7 +47,7 @@ export default function useFetch(method, url) {
 
 	const callAPI = useCallback(
 		(body) => {
-			console.log('receivin body',body,method)
+			// console.log('receivin body',body,method)
 			dispatch({ type: 'fetch' });
 			request(method, url, body)
 				.then(([err, response]) => {

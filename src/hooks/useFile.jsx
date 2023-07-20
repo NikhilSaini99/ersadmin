@@ -14,6 +14,7 @@ const useFile = () => {
 
 		let response;
 		
+		console.log(API_HOST,url)
 		const res = await fetch(API_HOST + url, requestOptions);
 		response = await res.json();
 		// .then((response) => response.json())
@@ -21,7 +22,7 @@ const useFile = () => {
 		// 	response = result;
 		// })
 		// .catch((error) => console.log('error', error));
-		console.log('i am in use file',response)
+		// console.log('i am in use file',response)
 		return response;
 	}
 	return { UploadFile };

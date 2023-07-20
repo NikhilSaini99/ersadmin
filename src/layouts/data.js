@@ -1,4 +1,4 @@
-import { AiFillFolderAdd } from 'react-icons/ai'
+import { AiFillFolderAdd,AiOutlineVideoCameraAdd } from 'react-icons/ai'
 import { BiNews, BiNotification } from 'react-icons/bi'
 import { FaHome, FaVideo ,FaQuestion} from 'react-icons/fa'
 import { ImFolderUpload } from 'react-icons/im'
@@ -7,6 +7,9 @@ import { TbReceiptTax } from 'react-icons/tb'
 import { TfiGallery, TfiMenuAlt, } from 'react-icons/tfi'
 import { MdSettings } from 'react-icons/md'
 import {BsFillMenuButtonFill} from "react-icons/bs"
+import {MdOutlineContactEmergency} from 'react-icons/md'
+import {FaWpforms} from "react-icons/fa"
+
 
 
 
@@ -64,6 +67,18 @@ const Menuitems = [
         href: '/Add-Corporate-Responsibility',
         childrens: []
     },
+    {
+        title: 'Add Form Data',
+        icon: FaWpforms,
+        href: '/Add-Form-Data',
+        childrens: []
+    },
+    {
+        title: 'Add Contact Branch',
+        icon: MdOutlineContactEmergency,
+        href: '/Add-Contact-Branch',
+        childrens: []
+    },
     // {
     //     title: 'Add publication',
     //     icon: MdOutlinePublic,
@@ -78,7 +93,7 @@ const Menuitems = [
     },
     {
         title: 'Upload Videos',
-        icon: FaVideo,
+        icon: AiOutlineVideoCameraAdd,
         href: '/Upload-Video',
         childrens: ['/Admin/Project/Forms/Edit-Form', '/Admin/Project/Forms/Form-View']
     },

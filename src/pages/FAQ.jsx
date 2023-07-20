@@ -158,6 +158,32 @@ export const AddFAQ = () => {
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container direction="column" spacing={2} padding={4}>
+                    <Grid item xs={12}>
+
+<FormControl sx={{ width: { xs: '60%', md: '50%', lg: '40%' }, }}>
+    <InputLabel id="question_cat">Select Category</InputLabel>
+    <Select
+        labelId="question_cat"
+        id="question_cat"
+        name="question_cat"
+        value={formik.values.question_cat}
+        label="Select category"
+        onChange={formik.handleChange}
+        required
+    >
+        <MenuItem value={'Corporate'}>Corporate</MenuItem>
+        <MenuItem value={'VAT'}>VAT</MenuItem>
+        <MenuItem value={'Income Tax'}>Income Tax</MenuItem>
+        <MenuItem value={'Custom and Excise'}>Custom and Excise</MenuItem>
+        <MenuItem value={'e-Tax'}>e-Tax</MenuItem>
+        <MenuItem value={'Ayscuda World'}>Ayscuda World</MenuItem>
+        <MenuItem value={'Sekulula VAT Easy'}>Sekulula VAT Easy</MenuItem>
+        <MenuItem value={'Alcohol and Tabaco Levy'}>Alcohol and Tabaco Levy</MenuItem>
+    </Select>
+</FormControl>
+
+</Grid>
+
 
                         <Grid item xs={12}>
                             <TextField
@@ -196,35 +222,11 @@ export const AddFAQ = () => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12}>
-
-                            <FormControl sx={{ width: { xs: '60%', md: '50%', lg: '40%' }, }}>
-                                <InputLabel id="question_cat">Select Category</InputLabel>
-                                <Select
-                                    labelId="question_cat"
-                                    id="question_cat"
-                                    name="question_cat"
-                                    value={formik.values.question_cat}
-                                    label="Select category"
-                                    onChange={formik.handleChange}
-                                    required
-                                >
-                                    <MenuItem value={'Corporate'}>Corporate</MenuItem>
-                                    <MenuItem value={'VAT'}>VAT</MenuItem>
-                                    <MenuItem value={'Income Tax'}>Income Tax</MenuItem>
-                                    <MenuItem value={'Custom and Excise'}>Custom and Excise</MenuItem>
-                                    <MenuItem value={'e-Tax'}>e-Tax</MenuItem>
-                                    <MenuItem value={'Ayscuda World'}>Ayscuda World</MenuItem>
-                                    <MenuItem value={'Sekulula VAT Easy'}>Sekulula VAT Easy</MenuItem>
-                                    <MenuItem value={'Alcohol and Tabaco Levy'}>Alcohol and Tabaco Levy</MenuItem>
-                                </Select>
-                            </FormControl>
-
-                        </Grid>
+                       
 
                         <Divider sx={{ p: 2 }} />
                         <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                            <Button type="submit" size="large" variant="contained" fullWidth>
+                            <Button type="submit" size="large" variant="contained" >
                                 Save
                             </Button>
                         </CardActions>

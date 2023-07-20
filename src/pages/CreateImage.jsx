@@ -15,8 +15,10 @@ import MainCard from '../components/MainCard';
 import UploadImage from '../components/UploadImage';
 import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
+import { useNavigate } from 'react-router-dom';
 
 export function Image() {
+	const navigate = useNavigate();
 	const { UploadFile } = useFile();
 	const {
 		loading,
@@ -32,6 +34,7 @@ export function Image() {
 	const formik = useFormik({
 		initialValues: {
 			imageName: ''
+
 		},
 		validateOnChange: false,
 		validateOnBlur: false,
@@ -58,22 +61,6 @@ export function Image() {
 				<form onSubmit={formik.handleSubmit}>
 					<Grid container direction="column" spacing={2} padding={4}>
 						<Grid item xs={12}>
-							{/* <Autocomplete
-								value={value}
-								loading={loading}
-								onChange={(event, newValue) => {
-									setValue(newValue);
-								}}
-								inputValue={inputValue}
-								onInputChange={(event, newInputValue) => {
-									setInputValue(newInputValue);
-								}}
-								id="controllable-states-demo"
-								options={groups ? groups : []}
-								renderInput={(params) => (
-									<TextField {...params} label="Controllable" />
-								)}
-							/> */}
 							<Autocomplete
 								id="asynchronous-demo"
 								isOptionEqualToValue={(option, value) =>
@@ -89,7 +76,7 @@ export function Image() {
 									}
 								}}
 								clearOnBlur={false}
-								getOptionLabel={(option) => option?.title}
+								getOptionLabel={(option) => option?.title || ""}
 								options={options}
 								value={inputValue ? inputValue : value}
 								onChange={(event, newValue) => {
@@ -161,5 +148,6 @@ export function Image() {
 				url: result.data.urls.toString()
 			});
 		formik.handleReset();
+		navigate("/Upload-Gallery-Image")
 	}
 }

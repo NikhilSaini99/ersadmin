@@ -15,7 +15,7 @@ const AddMenu = () => {
         initialValues: {
             menuId: '',
             menuName: '',
-            subMenuName: '',
+            sumMenuName: '',
         },
         onSubmit: addMyNews
     })
@@ -67,7 +67,7 @@ const AddMenu = () => {
                                 fullWidth
                                 label="SubMenu Name"
                                 id="fullWidth"
-                                name='subMenuName'
+                                name='sumMenuName'
                                 helperText="Please enter sub menu name"
                                 onChange={formik.handleChange}
                                 value={formik.values.documentName}

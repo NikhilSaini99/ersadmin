@@ -23,6 +23,7 @@ export function UploadGalleryImage() {
 	} = useFetch('GET', '/gallery-images');
 
 	useEffect(() => callAPI(), []);
+	// console.log(gallery)
 	return (
 		<>
 			<PageHeader
@@ -34,7 +35,7 @@ export function UploadGalleryImage() {
 				<Grid container spacing={6}>
 					{gallery?.data?.map((item, key) => (
 						<Grid item sm={6} md={4} key={key}>
-							<GalleryCard {...{ ...item }} />
+							<GalleryCard {...{ ...item }} refresh={callAPI} data={gallery} />
 						</Grid>
 					))}
 				</Grid>
@@ -43,9 +44,10 @@ export function UploadGalleryImage() {
 	);
 }
 
-function GalleryCard({ url, groupName, imageName }) {
+function GalleryCard({ url, groupName, imageName, id, refresh, }) {
 	const navigate = useNavigate();
-	console.log(url, groupName, imageName);
+	console.log(id)
+	const {data: gallery,callAPI} = useFetch('DELETE', `/gallery-images/${id}`);
 	const splitUrl = () => {
 		const newUrl = url?.split(',')[0];
 		if (newUrl) return newUrl;
@@ -56,11 +58,21 @@ function GalleryCard({ url, groupName, imageName }) {
 		if (newUrl) return newUrl;
 		return url;
 	};
+
+	useEffect(() => {
+		if(gallery){
+			refresh();
+		}
+	}, [gallery]);
+
+	const handleDelete=()=>{
+		callAPI();
+	}
+
 	return (
 		<Card>
 			<CardActionArea
-				component=""
-				// href=""
+				component="button"
 				onClick={() =>
 					navigate('/gallery-images', { state: { data: newUrl() } })
 				}
@@ -85,6 +97,7 @@ function GalleryCard({ url, groupName, imageName }) {
 					size="small"
 					onClick={(e) => {
 						e.stopPropagation();
+						handleDelete()
 					}}
 					startIcon={<MdDelete size={20} />}
 				>

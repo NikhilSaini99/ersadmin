@@ -76,7 +76,7 @@ export function AddNews() {
 				createNews({ ...values, ...htmlData })
 				setImages([])
 				resetForm();
-				// console.log({...values,...htmlData})
+				console.log({...values,...htmlData})
 			}}
 		>
 			{({

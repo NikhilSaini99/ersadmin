@@ -5,7 +5,6 @@ import { GalleryImage } from '../pages/GalleryImage';
 import { UploadVideo } from '../pages/UploadVideo';
 import { Video } from '../pages/Video';
 import { Setting } from '../pages/setting';
- 
 
 /****Layouts*****/
 const FullLayout = lazy(() => import('../layouts/MainLayout'));
@@ -27,17 +26,19 @@ const AddPublication = LazyLoad('../pages', 'AddPublication');
 const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
 const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
 // const News = LazyLoad('../pages', 'News');
-import {News} from '../pages/News'
+import { News } from '../pages/News';
 // const Banner = LazyLoad('../pages', 'Banner');
 import { Banner } from '../pages/Banner';
 
 const NoticeBoard = LazyLoad('../pages', 'NoticeBoard');
 const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
-import MyWhatsNew from '../pages/MyWhatsNew'
-import AddMyWhatsNews from '../pages/AddMyWhatsNews'
+import MyWhatsNew from '../pages/MyWhatsNew';
+import AddMyWhatsNews from '../pages/AddMyWhatsNews';
 import MyNewsPrint from '../pages/MyNewsPrint';
 import FAQ, { AddFAQ } from '../pages/FAQ';
 import AddMenu from '../pages/AddMenu';
+import AddFormData from '../pages/AddFormData';
+import AddContactBranch from '../pages/AddContactBranch';
 const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -107,6 +108,14 @@ const routes = [
 				element: <AddCorporateResponsibility />
 			},
 			{
+				path: 'Add-Form-Data',
+				element: <AddFormData />
+			},
+			{
+				path: 'Add-Contact-Branch',
+				element: <AddContactBranch />
+			},
+			{
 				path: 'Add-publication',
 				element: <AddPublication />
 			},
@@ -145,8 +154,7 @@ const routes = [
 			{
 				path: 'AddFAQ',
 				element: <AddFAQ />
-			},
-		
+			}
 		]
 	}
 	// {
