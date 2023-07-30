@@ -57,7 +57,6 @@ const FAQ = () => {
 
 export default FAQ
 
-
 /*---------- PRINT FAQ STARTS ---------------*/
 
 const MyFAQPrint = ({ myidx, id, question, answer, category ,refresh}) => {
@@ -183,7 +182,6 @@ export const AddFAQ = () => {
 </FormControl>
 
 </Grid>
-
 
                         <Grid item xs={12}>
                             <TextField
