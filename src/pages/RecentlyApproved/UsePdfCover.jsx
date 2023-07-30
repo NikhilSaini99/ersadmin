@@ -1,7 +1,7 @@
-import { API_HOST } from '../constants/server';
+import { API_HOST } from "../../constants";
 
-const useUpload = () => {
-        async function uploadPdfFile(url,selectedFile){
+const UsePdfCover = () => {
+        async function uploadCover(url,selectedFile){
             const formData = new FormData();
             formData.append('file', selectedFile);
 
@@ -18,7 +18,7 @@ const useUpload = () => {
             return response;
         } 
 
-        return {uploadPdfFile}
+        return {uploadCover}
 }
 
-export default useUpload
+export default UsePdfCover

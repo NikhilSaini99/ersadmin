@@ -22,7 +22,7 @@ const AddCorporateResponsibility = LazyLoad(
 	'../pages',
 	'AddCorporateResponsibility'
 );
-const AddPublication = LazyLoad('../pages', 'AddPublication');
+
 const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
 const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
 // const News = LazyLoad('../pages', 'News');
@@ -39,7 +39,11 @@ import FAQ, { AddFAQ } from '../pages/FAQ';
 import AddMenu from '../pages/AddMenu';
 import AddFormData from '../pages/AddFormData';
 import AddContactBranch from '../pages/AddContactBranch';
-const Login = lazy(() => import('../pages/Login'));
+import AddNoticeBoard from '../pages/NoticeBoard/AddNoticeBoard';
+import AddRecentlyApproved from '../pages/RecentlyApproved/AddRecentlyApproved';
+import AddPublications from '../pages/Publications/AddPublications';
+import AddTender from '../pages/Tender/AddTender';
+// const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
 const routes = [
@@ -116,8 +120,20 @@ const routes = [
 				element: <AddContactBranch />
 			},
 			{
+				path: 'Add-Notice-Board',
+				element: <AddNoticeBoard />
+			},
+			{
+				path: 'Add-Recently-Approved',
+				element: <AddRecentlyApproved/>,
+			},
+			{
 				path: 'Add-publication',
-				element: <AddPublication />
+				element: <AddPublications />
+			},
+			{
+				path: 'Add-Tender',
+				element: <AddTender />
 			},
 			{
 				path: 'Notice-Board',

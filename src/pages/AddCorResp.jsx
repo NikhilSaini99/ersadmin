@@ -14,8 +14,10 @@ import MainCard from '../components/MainCard';
 import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import dayjs from 'dayjs';
+import useFetch from '../hooks/useFetch';
 
 export function AddCorporateResponsibility() {
+	const {callAPI} = useFetch("POST",'/csr')
 	const initialValues = {
 		name: '',
 		description: '',
@@ -27,12 +29,12 @@ export function AddCorporateResponsibility() {
 		name: Yup.string().required('Name is required'),
 		description: Yup.string().required('Description is required'),
 		uploadDate: Yup.date().required('Upload Date is required'),
-		url: Yup.string().required('URL is required').url('Invalid URL format')
+		url: Yup.string().required('URL is required'),
 	});
 
 	const handleSubmit = (values) => {
 		// Handle form submission logic here
-		console.log(values);
+		callAPI(values);
 	};
 
 	return (
