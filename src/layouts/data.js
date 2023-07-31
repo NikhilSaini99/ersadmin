@@ -99,9 +99,9 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Add Tender',
+        title: 'Tender',
         icon: BsClipboard,
-        href: '/Add-Tender',
+        href: '/Tender-List',
         childrens: []
     },
     {

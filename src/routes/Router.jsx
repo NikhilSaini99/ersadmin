@@ -42,6 +42,7 @@ import AddContactBranch from '../pages/AddContactBranch';
 import AddNoticeBoard from '../pages/NoticeBoard/AddNoticeBoard';
 import AddRecentlyApproved from '../pages/RecentlyApproved/AddRecentlyApproved';
 import AddPublications from '../pages/Publications/AddPublications';
+import ListTender from '../pages/Tender/ListTender';
 import AddTender from '../pages/Tender/AddTender';
 // const Login = lazy(() => import('../pages/Login'));
 
@@ -132,7 +133,11 @@ const routes = [
 				element: <AddPublications />
 			},
 			{
-				path: 'Add-Tender',
+				path: 'Tender-List',
+				element: <ListTender />
+			},
+			{
+				path: 'AddTender',
 				element: <AddTender />
 			},
 			{

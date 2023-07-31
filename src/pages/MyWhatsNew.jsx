@@ -1,4 +1,3 @@
-
 import { Box, Typography, Button,Grid } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -16,8 +15,6 @@ const MyWhatsNew = () => {
     useEffect(() => {
         callAPI();
     }, [])
-
-    // console.log(newsData?.data[0].name)
 
     const myBox = {
         display: 'flex',
@@ -40,7 +37,6 @@ const MyWhatsNew = () => {
 					{' '}
 					Add News
 				</Button>
-                {/* <Button variant='contained' sx={{ fontWeight: 'bold' }} >Add News </Button> */}
                 </Link>
             </Box>
             
