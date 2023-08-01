@@ -31,20 +31,7 @@ export default function useFetch(method, url) {
 		error: null,
 		loading: false
 	});
-	// useEffect(() => {
-	//     dispatch({ type: 'fetch' })
-	//     request(method, url, body)
-	//         .then(([err, response]) => {
-	//             if (err)
-	//                 return dispatch({ type: 'error', err })
-	//             dispatch({ type: 'success', data: response })
-	//         })
-	//         .catch((e) => {
-	//             console.warn(e.message)
-	//             dispatch({ type: 'error', err: e })
-	//         })
-	// }, [url])
-
+	
 	const callAPI = useCallback(
 		(body) => {
 			// console.log('receivin body',body,method)

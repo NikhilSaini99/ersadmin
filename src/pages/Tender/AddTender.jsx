@@ -17,17 +17,19 @@ import { useState } from 'react';
 import useUpload from '../../hooks/useUpload';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useNavigate } from 'react-router-dom';
 
 const AddTender = () => {
-    const { uploadPdfFile } = useUpload();
+	const { uploadPdfFile } = useUpload();
 	const { callAPI } = useFetch('POST', '/tender');
 	const [selectedFile, setSelected] = useState();
+	const navigate = useNavigate()
 
 	const newsSchema = Yup.object().shape({
 		tenderName: Yup.string().required('Name is required'),
 		reference: Yup.string().required('Reference is required'),
-        deadline: Yup.date().required('Upload Date is required'),
-        publishedDate: Yup.date().required('Published Date is required')
+		deadline: Yup.date().required('Upload Date is required'),
+		publishedDate: Yup.date().required('Published Date is required')
 	});
 
 	const initialValues = {
@@ -53,6 +55,8 @@ const AddTender = () => {
 			});
 			// Reset the form after successful submission
 			resetForm();
+			navigate('/Tender-List')
+
 		} else {
 			console.log('error');
 		}
@@ -62,9 +66,9 @@ const AddTender = () => {
 		const file = event.target.files[0];
 		setSelected(file);
 	};
-  return (
-    <>
-    <MainCard
+	return (
+		<>
+			<MainCard
 				title="Add Tender Data"
 				border={false}
 				elevation={16}
@@ -79,8 +83,6 @@ const AddTender = () => {
 					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
 						<Form>
 							<Grid container direction="column">
-								
-
 								<Grid item xs={12}>
 									<Field
 										as={TextField}
@@ -91,11 +93,9 @@ const AddTender = () => {
 										margin="normal"
 									/>
 									<ErrorMessage name="tenderName" component={FormHelperText} />
-
-
 								</Grid>
 								<Grid item xs={12}>
-                                <Field name="deadline">
+									<Field name="deadline">
 										{({ field }) => (
 											<LocalizationProvider dateAdapter={AdapterDayjs}>
 												<DatePicker
@@ -118,7 +118,7 @@ const AddTender = () => {
 											</LocalizationProvider>
 										)}
 									</Field>
-                                    <ErrorMessage name="deadline">
+									<ErrorMessage name="deadline">
 										{(errorMsg) => (
 											<FormHelperText style={{ color: 'red' }}>
 												{errorMsg}
@@ -128,7 +128,7 @@ const AddTender = () => {
 								</Grid>
 
 								<Grid item xs={12} mt={1.5}>
-                                <Field name="publishedDate">
+									<Field name="publishedDate">
 										{({ field }) => (
 											<LocalizationProvider dateAdapter={AdapterDayjs}>
 												<DatePicker
@@ -151,7 +151,7 @@ const AddTender = () => {
 											</LocalizationProvider>
 										)}
 									</Field>
-                                    <ErrorMessage name="publishedDate">
+									<ErrorMessage name="publishedDate">
 										{(errorMsg) => (
 											<FormHelperText style={{ color: 'red' }}>
 												{errorMsg}
@@ -195,7 +195,12 @@ const AddTender = () => {
 								<Box
 									sx={{ p: 1.25, display: 'flex', justifyContent: 'center' }}
 								>
-									<Button type="submit" variant="contained" color="primary" disabled={!selectedFile}>
+									<Button
+										type="submit"
+										variant="contained"
+										color="primary"
+										disabled={!selectedFile}
+									>
 										Submit
 									</Button>
 								</Box>
@@ -204,8 +209,8 @@ const AddTender = () => {
 					</Box>
 				</Formik>
 			</MainCard>
-    </>
-  )
-}
+		</>
+	);
+};
 
-export default AddTender
+export default AddTender;
