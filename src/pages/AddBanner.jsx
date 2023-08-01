@@ -111,10 +111,6 @@ export function AddBanner() {
 						</LocalizationProvider>
 					</Grid>
 
-					{/* <Grid item xs={12}>
-                    <TextField fullWidth label="Event Date" id="fullWidth" />
-                </Grid> */}
-
 					<Grid item xs={12}>
 						<UploadImage maxImg={1} {...{ images, setImages }} />
 					</Grid>
@@ -130,7 +126,6 @@ export function AddBanner() {
 						disabled={
 							(images.length == 1 ? false : true) || formik.isSubmitting
 						}
-						fullWidth
 					>
 						Save
 					</Button>

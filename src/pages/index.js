@@ -1,7 +1,6 @@
 export * from './AddBanner'
 export * from './AddCorResp'
 export * from './AddNews'
-export * from './AddPublication'
 export * from './AddWhatNew'
 export * from './Banner'
 export * from './CreateImage'

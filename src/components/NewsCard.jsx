@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 export default function NewsCard({ img, title, description, id, refresh }) {
 	
 	const navigate = useNavigate()
-	const { loading, data, error, callAPI } = useFetch(
+	const { loading, data, callAPI } = useFetch(
 		'DELETE',
 		`/news-images/${id}`
 	);

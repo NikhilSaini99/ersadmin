@@ -98,7 +98,6 @@ const AddFormData = () => {
 										fullWidth
 										variant="outlined"
 										margin="normal"
-										helperText="Enter form name"
 									/>
 									<ErrorMessage name="formName">
 										{(errorMsg) => (
@@ -119,7 +118,6 @@ const AddFormData = () => {
 												</MenuItem>
 											))}
 										</Field>
-										<FormHelperText>Select category</FormHelperText>
 										<ErrorMessage name="category">
 											{(errorMsg) => (
 												<FormHelperText style={{ color: 'red' }}>
@@ -138,7 +136,6 @@ const AddFormData = () => {
 										fullWidth
 										variant="outlined"
 										margin="normal"
-										helperText="Enter description"
 									/>
 									<ErrorMessage name="description">
 										{(errorMsg) => (
@@ -203,11 +200,11 @@ const AddFormData = () => {
 							</Grid>
 							<Divider />
 
-							<Box sx={{ p: 1.25, display: 'flex', justifyContent: 'center' }}>
+							
 								<Button type="submit" variant="contained" color="primary">
 									Submit
 								</Button>
-							</Box>
+							
 						</Form>
 					</Box>
 				</Formik>

@@ -6,9 +6,10 @@ import { MdCorporateFare, MdFeedback, MdLabelImportant, MdOutlineApproval } from
 import { TbReceiptTax } from 'react-icons/tb'
 import { TfiGallery, TfiMenuAlt, } from 'react-icons/tfi'
 import { MdSettings } from 'react-icons/md'
-import {BsFillMenuButtonFill} from "react-icons/bs"
+import {BsClipboard} from "react-icons/bs"
 import {MdOutlineContactEmergency} from 'react-icons/md'
 import {FaWpforms} from "react-icons/fa"
+
 
 
 
@@ -79,12 +80,30 @@ const Menuitems = [
         href: '/Add-Contact-Branch',
         childrens: []
     },
-    // {
-    //     title: 'Add publication',
-    //     icon: MdOutlinePublic,
-    //     href: '/Add-publication',
-    //     childrens: []
-    // },
+    {
+        title: 'Add Notice Board',
+        icon: BsClipboard,
+        href: '/Add-Notice-Board',
+        childrens: []
+    },
+    {
+        title: 'Add Recently Approved',
+        icon: BsClipboard,
+        href: '/Add-Recently-Approved',
+        childrens: []
+    },
+    {
+        title: 'Add publication',
+        icon: BsClipboard,
+        href: '/Add-publication',
+        childrens: []
+    },
+    {
+        title: 'Add Tender',
+        icon: BsClipboard,
+        href: '/Add-Tender',
+        childrens: []
+    },
     {
         title: 'Upload Gallery Image',
         icon: TfiGallery,

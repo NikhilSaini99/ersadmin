@@ -17,6 +17,8 @@ const UploadImage = ({ maxImg, images, setImages }) => {
 		return URL.createObjectURL(file);
 	};
 
+	
+
 	return (
 		<>
 			{images.length + 1 <= maxImg && (
