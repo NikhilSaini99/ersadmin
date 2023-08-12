@@ -30,7 +30,7 @@ const AddTender = () => {
 		`/tender/${location?.state?.formdata?.id}`
 	);
 	const [selectedFile, setSelected] = useState();
-	console.log(location?.state?.formdata?.id);
+	console.log(location?.state?.status);
 
 	const updateformValues = location?.state?.formdata;
 
@@ -51,8 +51,6 @@ const AddTender = () => {
 		reference: location?.state?.status ? updateformValues.reference : '',
 		documentUrl: ''
 	};
-
-	console.log(updateformValues);
 
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values);
