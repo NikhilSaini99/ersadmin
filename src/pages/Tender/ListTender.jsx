@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import React from 'react';
 import {
 	Box,
@@ -12,16 +13,18 @@ import {
 	TableBody,
 	Paper,
 	TablePagination,
+	IconButton
 } from '@mui/material';
 
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import useFetch from '../../hooks/useFetch';
 import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ListTender = () => {
 	const { loading, error, data: tender, callAPI } = useFetch('GET', '/tender');
@@ -37,12 +40,12 @@ const ListTender = () => {
 		setPage(0); // Reset to the first page when changing rows per page
 	};
 
-    // Calculate the starting index and ending index for the current page
-  const startIndex = page * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
+	// Calculate the starting index and ending index for the current page
+	const startIndex = page * rowsPerPage;
+	const endIndex = startIndex + rowsPerPage;
 
-  // Get the current page's data from the 'tender' array
-  const currentPageData = tender?.data?.slice(startIndex, endIndex) || [];
+	// Get the current page's data from the 'tender' array
+	const currentPageData = tender?.data?.slice(startIndex, endIndex) || [];
 
 	useEffect(() => {
 		callAPI();
@@ -99,9 +102,8 @@ const ListTender = () => {
 									<TableCell>Deadline</TableCell>
 									<TableCell>Published</TableCell>
 									<TableCell>Reference</TableCell>
-									<TableCell>
-										<DeleteIcon />
-									</TableCell>
+									<TableCell>Delete</TableCell>
+									<TableCell>Update</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -115,6 +117,7 @@ const ListTender = () => {
 										reference={item.reference}
 										refresh={callAPI}
 										id={item.id}
+										item={item}
 									/>
 								))}
 							</TableBody>
@@ -127,8 +130,6 @@ const ListTender = () => {
 							page={page}
 							onPageChange={handleChangePage}
 							onRowsPerPageChange={handleChangeRowsPerPage}
-							// Add the following line if you want to localize the text
-							// labelRowsPerPage="Rows per page:"
 						/>
 					</TableContainer>
 				</Box>
@@ -146,8 +147,10 @@ const MyTenderList = ({
 	docURL,
 	reference,
 	refresh,
-	id
+	id,
+	item
 }) => {
+	const navigate = useNavigate();
 	const { data, callAPI } = useFetch('DELETE', `/tender/${id}`);
 
 	useEffect(() => {
@@ -156,6 +159,10 @@ const MyTenderList = ({
 
 	function handleDelete() {
 		callAPI();
+	}
+
+	function handleUpdate(){
+		navigate("/AddTender", {state:{formdata:item, status:true}})
 	}
 
 	return (
@@ -175,14 +182,14 @@ const MyTenderList = ({
 				<TableCell>{dayjs(publishedDate).format('DD-MM-YYYY')}</TableCell>
 				<TableCell>{reference}</TableCell>
 				<TableCell>
-					<Button
-						variant="contained"
-						color="primary"
-						sx={{ backgroundColor: '#BC3433 !important' }}
-						onClick={handleDelete}
-					>
-						Delete
-					</Button>
+					<IconButton onClick={handleDelete}>
+						<DeleteIcon sx={{ color: "red" }}/>
+					</IconButton>
+				</TableCell>
+				<TableCell>
+					<IconButton onClick={handleUpdate}>
+						<EditIcon sx={{ color: "lightgreen" }}/>
+					</IconButton>
 				</TableCell>
 			</TableRow>
 		</>
