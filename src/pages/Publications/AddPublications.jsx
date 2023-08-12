@@ -60,15 +60,11 @@ const AddPublications = () => {
 	const handleChangeCover = (event) => {
 		const file = event.target.files[0];
 		const imgURL = URL.createObjectURL(file);
-		console.log('New selectedCover:', { onPageUrl: imgURL, serverImgUrl: file });
 		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
-		console.log(selectedCover);
 	};
 
 
 	const handleSubmit = async (values, { resetForm }) => {
-		console.log(values);
-
 
 		if(!selectedFile){
 			return
@@ -86,6 +82,7 @@ const AddPublications = () => {
 			'/files/publication-image',
 			selectedCover.serverImgUrl
 		);
+
 
 		if (uploadURL.success) {
 			location?.state?.status
