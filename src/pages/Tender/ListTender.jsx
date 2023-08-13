@@ -168,8 +168,7 @@ const MyTenderList = ({
 					'&:hover': {
 						background: '#F2F2F2'
 					}
-				}}
-			>
+				}}>
 				<TableCell>{tenderName}</TableCell>
 				<TableCell>{dayjs(deadline).format('DD-MM-YYYY')}</TableCell>
 				<TableCell>{dayjs(publishedDate).format('DD-MM-YYYY')}</TableCell>
