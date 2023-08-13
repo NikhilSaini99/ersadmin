@@ -20,35 +20,51 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useState } from 'react';
 import useUpload from '../../hooks/useUpload';
 import UsePdfCover from '../RecentlyApproved/UsePdfCover';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const AddPublications = () => {
 	const { uploadPdfFile } = useUpload();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/publication/${location?.state?.formdata?.id}`
+	);
 	const { uploadCover } = UsePdfCover();
 	const { callAPI } = useFetch('POST', '/publication');
 	const [selectedFile, setSelected] = useState();
+	const updateformValues = location?.state?.formdata;
 	const [selectedCover, setselectedCover] = useState({
 		onPageUrl: undefined,
 		serverImgUrl: undefined
 	});
 
+	console.log(updateformValues)
+
 	const newsSchema = Yup.object().shape({
-		name: Yup.string().required('Name is required'),
+		// name: Yup.string().required('Name is required'),
 		description: Yup.string().required('Description is required'),
 		documentName: Yup.string().required('Document Name is required')
 	});
 
 	const initialValues = {
-		type: '',
-		name: '',
-		documentName: '',
-		description: '',
+		type: location?.state?.status ? updateformValues.type :'',
+		// name: location?.state?.status ? updateformValues.name :'',
+		documentName: location?.state?.status ? updateformValues.documentName :'',
+		description: location?.state?.status ? updateformValues.description :'',
 		documentUrl: '',
 		coverPhoto: ''
 	};
 
-	const handleSubmit = async (values, { resetForm }) => {
-		console.log(values);
+	const handleChangeCover = (event) => {
+		const file = event.target.files[0];
+		const imgURL = URL.createObjectURL(file);
+		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
+	};
 
+
+	const handleSubmit = async (values, { resetForm }) => {
 
 		if(!selectedFile){
 			return
@@ -67,14 +83,22 @@ const AddPublications = () => {
 			selectedCover.serverImgUrl
 		);
 
+
 		if (uploadURL.success) {
-			callAPI({
+			location?.state?.status
+				? updateformAPI({
+						...values,
+						documentUrl: uploadURL.data.url.toString(),
+						coverPhoto: uploadCoverUrl.data.url.toString()
+				}):
+				callAPI({
 				...values,
 				documentUrl: uploadURL.data.url.toString(),
 				coverPhoto: uploadCoverUrl.data.url.toString()
 			});
 			// Reset the form after successful submission
 			resetForm();
+			navigate('/Publications-List');
 		} else {
 			console.log('error');
 		}
@@ -85,17 +109,12 @@ const AddPublications = () => {
 		setSelected(file);
 	};
 
-	const handleChangeCover = (event) => {
-		const file = event.target.files[0];
-		const imgURL = URL.createObjectURL(file);
-		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
-		console.log(selectedCover);
-	};
 
+console.log(selectedCover)
 	return (
 		<>
 			<MainCard
-				title="Add Publications"
+				title={location?.state?.status?"Update Publications":"Add Publications"}
 				border={false}
 				elevation={16}
 				content={false}
@@ -122,7 +141,7 @@ const AddPublications = () => {
 									<ErrorMessage name="type" component={FormHelperText} />
 								</Grid>
 
-								<Grid item xs={12}>
+								{/* <Grid item xs={12}>
 									<Field
 										as={TextField}
 										name="name"
@@ -132,7 +151,7 @@ const AddPublications = () => {
 										margin="normal"
 									/>
 									<ErrorMessage name="name" component={FormHelperText} />
-								</Grid>
+								</Grid> */}
 
 								<Grid item xs={12}>
 									<Field
@@ -227,7 +246,7 @@ const AddPublications = () => {
 										color="primary"
 										disabled={!(selectedFile && selectedCover)}
 									>
-										Submit
+										{location?.state?.status?"Update":"Submit"}
 									</Button>
 								</Box>
 							</Grid>

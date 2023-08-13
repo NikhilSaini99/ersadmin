@@ -57,12 +57,6 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Recently Approved',
-        icon: MdOutlineApproval,
-        href: '/Recently-Approved',
-        childrens: []
-    },
-    {
         title: 'Add Corporate Responsibility',
         icon: MdCorporateFare,
         href: '/Add-Corporate-Responsibility',
@@ -87,15 +81,15 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Add Recently Approved',
-        icon: BsClipboard,
-        href: '/Add-Recently-Approved',
+        title: 'Recently Approved',
+        icon: MdOutlineApproval,
+        href: '/Recently-Approved-List',
         childrens: []
     },
     {
-        title: 'Add publication',
+        title: 'Publication',
         icon: BsClipboard,
-        href: '/Add-publication',
+        href: '/Publications-List',
         childrens: []
     },
     {

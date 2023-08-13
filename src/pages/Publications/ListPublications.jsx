@@ -13,7 +13,8 @@ import {
 	TableBody,
 	Paper,
 	TablePagination,
-	IconButton
+	IconButton,
+    Avatar
 } from '@mui/material';
 
 import { Link } from 'react-router-dom';
@@ -27,8 +28,9 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const ListTender = () => {
-	const { loading, error, data: tender, callAPI } = useFetch('GET', '/tender');
+
+const ListPublications = () => {
+    const { loading, error, data: publications, callAPI } = useFetch('GET', '/publication');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -46,7 +48,7 @@ const ListTender = () => {
 	const endIndex = startIndex + rowsPerPage;
 
 	// Get the current page's data from the 'tender' array
-	const currentPageData = tender?.data?.slice(startIndex, endIndex) || [];
+	const currentPageData = publications?.data?.slice(startIndex, endIndex) || [];
 
 	useEffect(() => {
 		callAPI();
@@ -58,11 +60,13 @@ const ListTender = () => {
 		color: '#72b8bf'
 	};
 
-	return (
-		<>
-			<Box sx={myBox}>
-				<Typography variant="h4">Tender List</Typography>
-				<Link to="/AddTender">
+    
+console.log(publications)
+  return (
+   <>
+        <Box sx={myBox}>
+				<Typography variant="h4">Publications List</Typography>
+				<Link to="/Add-publication">
 					<Button
 						variant="contained"
 						size="large"
@@ -70,7 +74,7 @@ const ListTender = () => {
 						startIcon={<BiAddToQueue size={25} />}
 					>
 						{' '}
-						Add Tender
+						Add Publications
 					</Button>
 				</Link>
 			</Box>
@@ -99,24 +103,24 @@ const ListTender = () => {
 										}
 									}}
 								>
-									<TableCell width="30%">Title</TableCell>
-									<TableCell>Deadline</TableCell>
-									<TableCell>Published</TableCell>
-									<TableCell>Reference</TableCell>
+									<TableCell width="15%">Type</TableCell>
+									<TableCell>Description</TableCell>
+									<TableCell>Document Name</TableCell>
+									<TableCell>PDF</TableCell>
+                                    <TableCell>Cover Photo</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
-									<TableCell>PDF</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{currentPageData?.map((item, key) => (
-									<MyTenderList
+									<MyPublicationList
 										key={key}
-										tenderName={item.tenderName}
-										deadline={item.deadline}
-										publishedDate={item.publishedDate}
+										type={item.type}
+										description={item.description}
+										documentName={item.documentName}
 										docURL={item.documentUrl}
-										reference={item.reference}
+										coverPhoto={item.coverPhoto}
 										refresh={callAPI}
 										id={item.id}
 										item={item}
@@ -127,7 +131,7 @@ const ListTender = () => {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={tender?.data?.length || 0}
+							count={publications?.data?.length || 0}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
@@ -136,24 +140,26 @@ const ListTender = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-		</>
-	);
-};
+   </>
+  )
+}
 
-export default ListTender;
+export default ListPublications
 
-const MyTenderList = ({
-	tenderName,
-	deadline,
-	publishedDate,
+
+const MyPublicationList = ({
+	type,
+	description,
+	documentName,
 	docURL,
-	reference,
+	coverPhoto,
 	refresh,
 	id,
 	item
 }) => {
 	const navigate = useNavigate();
-	const { data, callAPI } = useFetch('DELETE', `/tender/${id}`);
+	const { data, callAPI } = useFetch('DELETE', `/publication/${id}`);
+
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
@@ -162,23 +168,23 @@ const MyTenderList = ({
 		callAPI();
 	}
 
-	function handleUpdate() {
-		navigate('/AddTender', { state: { formdata: item, status: true } });
+	function handleUpdate(){
+		navigate("/Add-publication", {state:{formdata:item, status:true}})
 	}
 
-	function handleDownloadPDF(pdfURL) {
+	function handlePDFdownload(pdfURL){
 		fetch(pdfURL)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const url = window.URL.createObjectURL(blob);
-				const link = document.createElement('a');
-				link.setAttribute('href', url);
-				link.setAttribute('download', 'tender.pdf');
-				link.click();
-			})
-			.catch((error) => {
-				console.error('Error downloading PDF:', error);
-			});
+		.then((response) => response.blob())
+		.then((blob) => {
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.setAttribute('href', url);
+			link.setAttribute('download', 'Publications.pdf');
+			link.click();
+		})
+		.catch((error) => {
+			console.error('Error downloading PDF:', error);
+		});
 	}
 
 	return (
@@ -191,24 +197,30 @@ const MyTenderList = ({
 					'&:hover': {
 						background: '#F2F2F2'
 					}
-				}}>
-				<TableCell>{tenderName}</TableCell>
-				<TableCell>{dayjs(deadline).format('DD-MM-YYYY')}</TableCell>
-				<TableCell>{dayjs(publishedDate).format('DD-MM-YYYY')}</TableCell>
-				<TableCell>{reference}</TableCell>
+				}}
+			>
+				<TableCell>{type}</TableCell>
+				<TableCell>{description}</TableCell>
+				<TableCell>{documentName}</TableCell>
 				<TableCell>
-					<IconButton onClick={() => handleDownloadPDF(docURL)}>
-						<PictureAsPdfIcon />
+					<IconButton onClick={()=>handlePDFdownload(docURL)}>
+						<PictureAsPdfIcon sx={{ color: "red"}}/>
 					</IconButton>
 				</TableCell>
+                <TableCell sx={{display:"flex", justifyContent:"center"}}>
+                    <Avatar width={36} height={36}>
+                        <img src={coverPhoto} alt="photo" loading='lazy'/>
+                    </Avatar>
+                    
+                    </TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
-						<DeleteIcon sx={{ color: 'red' }} />
+						<DeleteIcon sx={{ color: "red" }}/>
 					</IconButton>
 				</TableCell>
 				<TableCell>
 					<IconButton onClick={handleUpdate}>
-						<EditIcon sx={{ color: 'lightgreen' }} />
+						<EditIcon sx={{ color: "lightgreen" }}/>
 					</IconButton>
 				</TableCell>
 			</TableRow>

@@ -44,6 +44,8 @@ import AddRecentlyApproved from '../pages/RecentlyApproved/AddRecentlyApproved';
 import AddPublications from '../pages/Publications/AddPublications';
 import ListTender from '../pages/Tender/ListTender';
 import AddTender from '../pages/Tender/AddTender';
+import ListPublications from '../pages/Publications/ListPublications';
+import ListRecentlyApproved from '../pages/RecentlyApproved/ListRecentlyApproved';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -125,8 +127,16 @@ const routes = [
 				element: <AddNoticeBoard />
 			},
 			{
+				path: 'Recently-Approved-List',
+				element: <ListRecentlyApproved/>,
+			},
+			{
 				path: 'Add-Recently-Approved',
 				element: <AddRecentlyApproved/>,
+			},
+			{
+				path: 'Publications-List',
+				element: <ListPublications />
 			},
 			{
 				path: 'Add-publication',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainCard from '../../components/MainCard';
 import {
 	Box,
@@ -18,12 +18,21 @@ import useUpload from '../../hooks/useUpload';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const AddTender = () => {
 	const { uploadPdfFile } = useUpload();
+	const location = useLocation();
+	const navigate = useNavigate();
 	const { callAPI } = useFetch('POST', '/tender');
+	const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/tender/${location?.state?.formdata?.id}`
+	);
 	const [selectedFile, setSelected] = useState();
-	const navigate = useNavigate()
+	console.log(location?.state?.status);
+
+	const updateformValues = location?.state?.formdata;
 
 	const newsSchema = Yup.object().shape({
 		tenderName: Yup.string().required('Name is required'),
@@ -32,11 +41,14 @@ const AddTender = () => {
 		publishedDate: Yup.date().required('Published Date is required')
 	});
 
+	const deadline = updateformValues?.deadline.split('T')[0];
+	const publishedDate = updateformValues?.publishedDate.split('T')[0];
+
 	const initialValues = {
-		tenderName: '',
-		deadline: null,
-		publishedDate: null,
-		reference: '',
+		tenderName: location?.state?.status ? updateformValues.tenderName : '',
+		deadline: location?.state?.status ? dayjs(deadline) : null,
+		publishedDate: location?.state?.status ? dayjs(publishedDate) : null,
+		reference: location?.state?.status ? updateformValues.reference : '',
 		documentUrl: ''
 	};
 
@@ -47,16 +59,21 @@ const AddTender = () => {
 			'/files/publication-files',
 			selectedFile
 		);
+		console.log(uploadURL)
 		if (uploadURL.success) {
 			// console.log(uploadURL)
-			callAPI({
-				...values,
-				documentUrl: uploadURL.data.url.toString()
-			});
+			location?.state?.status
+				? updateformAPI({
+						...values,
+						documentUrl: uploadURL.data.url.toString()
+				})
+				: callAPI({
+						...values,
+						documentUrl: uploadURL.data.url.toString()
+				});
 			// Reset the form after successful submission
 			resetForm();
-			navigate('/Tender-List')
-
+			navigate('/Tender-List');
 		} else {
 			console.log('error');
 		}
@@ -69,7 +86,9 @@ const AddTender = () => {
 	return (
 		<>
 			<MainCard
-				title="Add Tender Data"
+				title={
+					location?.state?.status ? 'Update Tender Data' : 'Add Tender Data'
+				}
 				border={false}
 				elevation={16}
 				content={false}
@@ -94,6 +113,40 @@ const AddTender = () => {
 									/>
 									<ErrorMessage name="tenderName" component={FormHelperText} />
 								</Grid>
+
+								<Grid item xs={12} mb={1.5}>
+									<Field name="publishedDate">
+										{({ field }) => (
+											<LocalizationProvider dateAdapter={AdapterDayjs}>
+												<DatePicker
+													{...field}
+													label="Published Date"
+													inputFormat="MM/dd/yyyy"
+													slotProps={{ textField: { fullWidth: true } }}
+													value={field.value || null}
+													defaultValue={dayjs()}
+													onChange={(value) => {
+														const event = {
+															target: {
+																name: 'publishedDate',
+																value: dayjs(value).toISOString()
+															}
+														};
+														field.onChange(event);
+													}}
+												/>
+											</LocalizationProvider>
+										)}
+									</Field>
+									<ErrorMessage name="publishedDate">
+										{(errorMsg) => (
+											<FormHelperText style={{ color: 'red' }}>
+												{errorMsg}
+											</FormHelperText>
+										)}
+									</ErrorMessage>
+								</Grid>
+
 								<Grid item xs={12}>
 									<Field name="deadline">
 										{({ field }) => (
@@ -119,39 +172,6 @@ const AddTender = () => {
 										)}
 									</Field>
 									<ErrorMessage name="deadline">
-										{(errorMsg) => (
-											<FormHelperText style={{ color: 'red' }}>
-												{errorMsg}
-											</FormHelperText>
-										)}
-									</ErrorMessage>
-								</Grid>
-
-								<Grid item xs={12} mt={1.5}>
-									<Field name="publishedDate">
-										{({ field }) => (
-											<LocalizationProvider dateAdapter={AdapterDayjs}>
-												<DatePicker
-													{...field}
-													label="Published Date"
-													inputFormat="MM/dd/yyyy"
-													slotProps={{ textField: { fullWidth: true } }}
-													value={field.value || null}
-													defaultValue={dayjs()}
-													onChange={(value) => {
-														const event = {
-															target: {
-																name: 'publishedDate',
-																value: dayjs(value).toISOString()
-															}
-														};
-														field.onChange(event);
-													}}
-												/>
-											</LocalizationProvider>
-										)}
-									</Field>
-									<ErrorMessage name="publishedDate">
 										{(errorMsg) => (
 											<FormHelperText style={{ color: 'red' }}>
 												{errorMsg}
@@ -201,7 +221,7 @@ const AddTender = () => {
 										color="primary"
 										disabled={!selectedFile}
 									>
-										Submit
+										{location?.state?.status ? 'Update' : 'Submit'}
 									</Button>
 								</Box>
 							</Grid>
