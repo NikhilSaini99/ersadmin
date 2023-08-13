@@ -18,23 +18,32 @@ import * as Yup from 'yup';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useState } from 'react';
 import useUpload from '../../hooks/useUpload';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const AddRecentlyApproved = () => {
+const AddRecentlyApproved = () => {	
 	const { uploadPdfFile } = useUpload();
+	const location = useLocation();
+	const navigate = useNavigate();
 	const { callAPI } = useFetch('POST', '/recentlyApproved');
+	const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/recentlyApproved/${location?.state?.formdata?.id}`
+	);
 	const [selectedFile, setSelected] = useState();
-
+	console.log(location)
+	const updateformValues = location?.state?.formdata;
 	const newsSchema = Yup.object().shape({
 		name: Yup.string().required('Name is required'),
 		description: Yup.string().required('Description is required'),
-		documentName: Yup.string().required('Document Name is required'),
+		documentName: Yup.string().required('Document Name is required')
 	});
 
 	const initialValues = {
-		type: '',
-		name: '',
-		documentName: '',
-		description: '',
+		type: location?.state?.status ? updateformValues.type : '',
+		name:  location?.state?.status ? updateformValues.name : '',
+		documentName:  location?.state?.status ? updateformValues.documentName : '',
+		description:  location?.state?.status ? updateformValues.description : '',
 		documentUrl: ''
 	};
 
@@ -47,12 +56,18 @@ const AddRecentlyApproved = () => {
 		);
 		if (uploadURL.success) {
 			// console.log(uploadURL)
-			callAPI({
-				...values,
-				documentUrl: uploadURL.data.url.toString()
-			});
+			location?.state?.status
+				? updateformAPI({
+						...values,
+						documentUrl: uploadURL.data.url.toString()
+				})
+				: callAPI({
+						...values,
+						documentUrl: uploadURL.data.url.toString()
+				});
 			// Reset the form after successful submission
 			resetForm();
+			navigate('/Recently-Approved-List');
 		} else {
 			console.log('error');
 		}
@@ -62,10 +77,14 @@ const AddRecentlyApproved = () => {
 		const file = event.target.files[0];
 		setSelected(file);
 	};
-  return (
-    <>
+	return (
+		<>
 			<MainCard
-				title="Add Recently Approved"
+				title={
+					location?.state?.status
+						? 'Update Recently Approved'
+						: 'Add Recently Approved'
+				}
 				border={false}
 				elevation={16}
 				content={false}
@@ -83,9 +102,15 @@ const AddRecentlyApproved = () => {
 									<FormControl margin="normal" fullWidth variant="outlined">
 										<InputLabel>Recently Approved</InputLabel>
 										<Field as={Select} name="type" label="Notice Board">
-											<MenuItem value="Approved Guidelines">Approved Guidelines</MenuItem>
-											<MenuItem value="Approved Practice Notes">Approved Practice Notes</MenuItem>
-											<MenuItem value="Recently Approved Forms">Recently Approved Forms</MenuItem>
+											<MenuItem value="Approved Guidelines">
+												Approved Guidelines
+											</MenuItem>
+											<MenuItem value="Approved Practice Notes">
+												Approved Practice Notes
+											</MenuItem>
+											<MenuItem value="Recently Approved Forms">
+												Recently Approved Forms
+											</MenuItem>
 											<MenuItem value="Publications">Publications</MenuItem>
 										</Field>
 									</FormControl>
@@ -153,8 +178,13 @@ const AddRecentlyApproved = () => {
 								<Box
 									sx={{ p: 1.25, display: 'flex', justifyContent: 'center' }}
 								>
-									<Button type="submit" variant="contained" color="primary" disabled={!selectedFile}>
-										Submit
+									<Button
+										type="submit"
+										variant="contained"
+										color="primary"
+										disabled={!selectedFile}
+									>
+										{location?.state?.status ? 'Update' : 'Submit'}
 									</Button>
 								</Box>
 							</Grid>
@@ -163,8 +193,7 @@ const AddRecentlyApproved = () => {
 				</Formik>
 			</MainCard>
 		</>
-  )
-}
-
+	);
+};
 
 export default AddRecentlyApproved;

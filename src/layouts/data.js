@@ -81,9 +81,9 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Add Recently Approved',
+        title: 'Recently Approved',
         icon: MdOutlineApproval,
-        href: '/Add-Recently-Approved',
+        href: '/Recently-Approved-List',
         childrens: []
     },
     {

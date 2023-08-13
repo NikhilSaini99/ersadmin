@@ -26,6 +26,7 @@ import useFetch from '../../hooks/useFetch';
 import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 
 const ListPublications = () => {
@@ -171,6 +172,21 @@ const MyPublicationList = ({
 		navigate("/Add-publication", {state:{formdata:item, status:true}})
 	}
 
+	function handlePDFdownload(pdfURL){
+		fetch(pdfURL)
+		.then((response) => response.blob())
+		.then((blob) => {
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.setAttribute('href', url);
+			link.setAttribute('download', 'Publications.pdf');
+			link.click();
+		})
+		.catch((error) => {
+			console.error('Error downloading PDF:', error);
+		});
+	}
+
 	return (
 		<>
 			<TableRow
@@ -186,8 +202,12 @@ const MyPublicationList = ({
 				<TableCell>{type}</TableCell>
 				<TableCell>{description}</TableCell>
 				<TableCell>{documentName}</TableCell>
-				<TableCell>{docURL}</TableCell>
-                <TableCell>
+				<TableCell>
+					<IconButton onClick={()=>handlePDFdownload(docURL)}>
+						<PictureAsPdfIcon sx={{ color: "red"}}/>
+					</IconButton>
+				</TableCell>
+                <TableCell sx={{display:"flex", justifyContent:"center"}}>
                     <Avatar width={36} height={36}>
                         <img src={coverPhoto} alt="photo" loading='lazy'/>
                     </Avatar>

@@ -59,6 +59,7 @@ const AddTender = () => {
 			'/files/publication-files',
 			selectedFile
 		);
+		console.log(uploadURL)
 		if (uploadURL.success) {
 			// console.log(uploadURL)
 			location?.state?.status

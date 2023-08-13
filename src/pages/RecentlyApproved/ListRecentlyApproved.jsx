@@ -27,8 +27,8 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const ListTender = () => {
-	const { loading, error, data: tender, callAPI } = useFetch('GET', '/tender');
+const ListRecentlyApproved = () => {
+    const { loading, error, data: tender, callAPI } = useFetch('GET', '/recentlyApproved');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -57,12 +57,11 @@ const ListTender = () => {
 		justifyContent: 'space-between',
 		color: '#72b8bf'
 	};
-
-	return (
-		<>
-			<Box sx={myBox}>
-				<Typography variant="h4">Tender List</Typography>
-				<Link to="/AddTender">
+  return (
+    <>
+        <Box sx={myBox}>
+				<Typography variant="h4">Recently Approved List</Typography>
+				<Link to="/Add-Recently-Approved">
 					<Button
 						variant="contained"
 						size="large"
@@ -99,24 +98,24 @@ const ListTender = () => {
 										}
 									}}
 								>
-									<TableCell width="30%">Title</TableCell>
-									<TableCell>Deadline</TableCell>
-									<TableCell>Published</TableCell>
-									<TableCell>Reference</TableCell>
-									<TableCell>Delete</TableCell>
-									<TableCell>Update</TableCell>
+									<TableCell width="30%">Type</TableCell>
+									<TableCell>Name</TableCell>
+									<TableCell>Description</TableCell>
+									<TableCell>Document Name</TableCell>
 									<TableCell>PDF</TableCell>
+                                    <TableCell>Delete</TableCell>
+									<TableCell>Update</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{currentPageData?.map((item, key) => (
-									<MyTenderList
+									<MyRecentlyList
 										key={key}
-										tenderName={item.tenderName}
-										deadline={item.deadline}
-										publishedDate={item.publishedDate}
+                                        type={item.type}
+										name={item.name}
+										description={item.description}
+										documentName={item.documentName}
 										docURL={item.documentUrl}
-										reference={item.reference}
 										refresh={callAPI}
 										id={item.id}
 										item={item}
@@ -136,24 +135,26 @@ const ListTender = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-		</>
-	);
-};
+    </>
+  )
+}
 
-export default ListTender;
+export default ListRecentlyApproved
 
-const MyTenderList = ({
-	tenderName,
-	deadline,
-	publishedDate,
-	docURL,
+
+const MyRecentlyList = ({
+	type,
+	name,
+	description,
+	documentName,
 	reference,
+    docURL,
 	refresh,
 	id,
 	item
 }) => {
 	const navigate = useNavigate();
-	const { data, callAPI } = useFetch('DELETE', `/tender/${id}`);
+	const { data, callAPI } = useFetch('DELETE', `/recentlyApproved/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
@@ -163,7 +164,7 @@ const MyTenderList = ({
 	}
 
 	function handleUpdate() {
-		navigate('/AddTender', { state: { formdata: item, status: true } });
+		navigate('/Add-Recently-Approved', { state: { formdata: item, status: true } });
 	}
 
 	function handleDownloadPDF(pdfURL) {
@@ -173,7 +174,7 @@ const MyTenderList = ({
 				const url = window.URL.createObjectURL(blob);
 				const link = document.createElement('a');
 				link.setAttribute('href', url);
-				link.setAttribute('download', 'tender.pdf');
+				link.setAttribute('download', 'Recentlyapproved.pdf');
 				link.click();
 			})
 			.catch((error) => {
@@ -193,10 +194,10 @@ const MyTenderList = ({
 					}
 				}}
 			>
-				<TableCell>{tenderName}</TableCell>
-				<TableCell>{dayjs(deadline).format('DD-MM-YYYY')}</TableCell>
-				<TableCell>{dayjs(publishedDate).format('DD-MM-YYYY')}</TableCell>
-				<TableCell>{reference}</TableCell>
+				<TableCell>{type}</TableCell>
+				<TableCell>{name}</TableCell>
+				<TableCell>{description}</TableCell>
+				<TableCell>{documentName}</TableCell>
 				<TableCell>
 					<IconButton onClick={() => handleDownloadPDF(docURL)}>
 						<PictureAsPdfIcon />
