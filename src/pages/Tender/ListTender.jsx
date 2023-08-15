@@ -103,9 +103,9 @@ const ListTender = () => {
 									<TableCell>Deadline</TableCell>
 									<TableCell>Published</TableCell>
 									<TableCell>Reference</TableCell>
+									<TableCell>PDF</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
-									<TableCell>PDF</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
