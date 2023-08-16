@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import MainCard from '../../components/MainCard';
 import {
 	Box,
@@ -6,7 +6,8 @@ import {
 	FormHelperText,
 	Grid,
 	TextField,
-	Button
+	Button,
+	Typography
 } from '@mui/material';
 import dayjs from 'dayjs';
 import useFetch from '../../hooks/useFetch';
@@ -29,9 +30,8 @@ const AddTender = () => {
 		'PUT',
 		`/tender/${location?.state?.formdata?.id}`
 	);
+	const myRef = useRef({ fileName: '', fileUrl: '' });
 	const [selectedFile, setSelected] = useState();
-	console.log(location?.state?.status);
-
 	const updateformValues = location?.state?.formdata;
 
 	const newsSchema = Yup.object().shape({
@@ -49,17 +49,19 @@ const AddTender = () => {
 		deadline: location?.state?.status ? dayjs(deadline) : null,
 		publishedDate: location?.state?.status ? dayjs(publishedDate) : null,
 		reference: location?.state?.status ? updateformValues.reference : '',
-		documentUrl: ''
+		documentUrl: location?.state?.status ? updateformValues.documentUrl: ''
 	};
 
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values);
 
-		const uploadURL = await uploadPdfFile(
+		
+		const uploadURL =  await uploadPdfFile(
 			'/files/publication-files',
 			selectedFile
 		);
-		console.log(uploadURL)
+		
+		console.log('yo',uploadURL);
 		if (uploadURL.success) {
 			// console.log(uploadURL)
 			location?.state?.status
@@ -82,9 +84,13 @@ const AddTender = () => {
 	const handleChange = (event) => {
 		const file = event.target.files[0];
 		setSelected(file);
+		myRef.current.fileName = event.target.files[0].name;
+		myRef.current.fileUrl = URL.createObjectURL(event.target.files[0]);
 	};
+
 	return (
 		<>
+		{location?.state?.status && console.log(initialValues.documentUrl)}
 			<MainCard
 				title={
 					location?.state?.status ? 'Update Tender Data' : 'Add Tender Data'
@@ -193,23 +199,36 @@ const AddTender = () => {
 								</Grid>
 
 								<Grid item xs={12}>
-									<Button
-										variant="outlined"
-										component="label"
-										sx={{ mt: '1.5rem' }}
+									<Box
+										sx={{
+											display: 'flex',
+											gap: '0.5rem',
+											flexDirection: { xs: 'column', sm: 'row' },
+											alignItems: 'center'
+										}}
 									>
-										<AiOutlineCloudUpload size={30} className="mr-2" />
-										Upload File
-										<input
-											type="file"
-											hidden
-											name="file"
-											onChange={handleChange}
-											accept=".*pdf"
-										/>
-									</Button>
-								</Grid>
+										<Button variant="outlined" component="label">
+											<AiOutlineCloudUpload size={30} className="mr-2" />
+											Upload File
+											<input
+												type="file"
+												hidden
+												name="file"
+												onChange={handleChange}
+												accept=".*pdf"
+											/>
+										</Button>
 
+										<Typography
+											variant="body1"
+											component="a"
+											href={myRef.current.fileUrl}
+											target="_blank"
+										>
+											{myRef.current.fileName}
+										</Typography>
+									</Box>
+								</Grid>
 								<Divider sx={{ my: '1.8rem' }} />
 
 								<Box
@@ -219,7 +238,13 @@ const AddTender = () => {
 										type="submit"
 										variant="contained"
 										color="primary"
-										disabled={!selectedFile}
+										disabled={
+											location?.state?.status
+												? false
+												: !selectedFile
+												? true
+												: false
+										}
 									>
 										{location?.state?.status ? 'Update' : 'Submit'}
 									</Button>

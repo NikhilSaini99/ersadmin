@@ -4,7 +4,6 @@ const useUpload = () => {
         async function uploadPdfFile(url,selectedFile){
             const formData = new FormData();
             formData.append('file', selectedFile);
-
             var requestOptions = {
                 method: 'POST',
                 body: formData,

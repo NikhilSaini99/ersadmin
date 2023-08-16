@@ -150,7 +150,8 @@ const MyTenderList = ({
 	reference,
 	refresh,
 	id,
-	item
+	item,
+	
 }) => {
 	const navigate = useNavigate();
 	const { data, callAPI } = useFetch('DELETE', `/tender/${id}`);
