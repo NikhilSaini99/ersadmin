@@ -103,9 +103,9 @@ const ListTender = () => {
 									<TableCell>Deadline</TableCell>
 									<TableCell>Published</TableCell>
 									<TableCell>Reference</TableCell>
+									<TableCell>PDF</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
-									<TableCell>PDF</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -192,8 +192,7 @@ const MyTenderList = ({
 					'&:hover': {
 						background: '#F2F2F2'
 					}
-				}}
-			>
+				}}>
 				<TableCell>{tenderName}</TableCell>
 				<TableCell>{dayjs(deadline).format('DD-MM-YYYY')}</TableCell>
 				<TableCell>{dayjs(publishedDate).format('DD-MM-YYYY')}</TableCell>

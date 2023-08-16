@@ -30,13 +30,6 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'News',
-        icon: BiNews,
-        href: '/News',
-        childrens: [
-        ]
-    },
-    {
         title: 'Upload Home banner',
         icon: ImFolderUpload,
         href: '/banner',
@@ -44,23 +37,10 @@ const Menuitems = [
 
         ]
     },
-    // {
-    //     title: 'Add What New',
-    //     icon: AiFillFolderAdd,
-    //     href: '/Add-what-new',
-    //     childrens: []
-    // },
     {
-        title: 'Add Tax Calender Data',
-        icon: TbReceiptTax,
-        href: '/Add-Text-Calender-Data',
-        childrens: []
-    },
-    {
-        title: 'Add Corporate Responsibility',
-        icon: MdCorporateFare,
-        href: '/Add-Corporate-Responsibility',
-        childrens: []
+        title: 'Whats New',
+        icon: AiFillFolderAdd,
+        href: '/MyWhatsNew'
     },
     {
         title: 'Add Form Data',
@@ -69,34 +49,11 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Add Contact Branch',
-        icon: MdOutlineContactEmergency,
-        href: '/Add-Contact-Branch',
-        childrens: []
-    },
-    {
-        title: 'Add Notice Board',
-        icon: BsClipboard,
-        href: '/Add-Notice-Board',
-        childrens: []
-    },
-    {
-        title: 'Recently Approved',
-        icon: MdOutlineApproval,
-        href: '/Recently-Approved-List',
-        childrens: []
-    },
-    {
-        title: 'Publication',
-        icon: BsClipboard,
-        href: '/Publications-List',
-        childrens: []
-    },
-    {
-        title: 'Tender',
-        icon: BsClipboard,
-        href: '/Tender-List',
-        childrens: []
+        title: 'News',
+        icon: BiNews,
+        href: '/News',
+        childrens: [
+        ]
     },
     {
         title: 'Upload Gallery Image',
@@ -111,15 +68,65 @@ const Menuitems = [
         childrens: ['/Admin/Project/Forms/Edit-Form', '/Admin/Project/Forms/Form-View']
     },
     {
-        title: 'Notice Board',
-        icon: BiNotification,
-        href: '/Notice-Board'
+        title: 'Add Contact Branch',
+        icon: MdOutlineContactEmergency,
+        href: '/Add-Contact-Branch',
+        childrens: []
     },
     {
-        title: 'Important Links',
-        icon: MdLabelImportant,
-        href: '/Important-Links'
-    }, {
+        title: 'Recently Approved',
+        icon: MdOutlineApproval,
+        href: '/Recently-Approved-List',
+        childrens: []
+    },
+    {
+        title: 'Tender',
+        icon: BsClipboard,
+        href: '/Tender-List',
+        childrens: []
+    },
+    // {
+    //     title: 'Add What New',
+    //     icon: AiFillFolderAdd,
+    //     href: '/Add-what-new',
+    //     childrens: []
+    // },
+    {
+        title: 'Add Tax Calender Data',
+        icon: TbReceiptTax,
+        href: '/Add-Text-Calender-Data',
+        childrens: []
+    },
+    {
+        title: 'Publication',
+        icon: BsClipboard,
+        href: '/Publications-List',
+        childrens: []
+    },
+    {
+        title: 'Add Corporate Responsibility',
+        icon: MdCorporateFare,
+        href: '/Add-Corporate-Responsibility',
+        childrens: []
+    },
+    // {
+    //     title: 'Add Notice Board',
+    //     icon: BsClipboard,
+    //     href: '/Add-Notice-Board',
+    //     childrens: []
+    // },
+    // {
+    //     title: 'Notice Board',
+    //     icon: BiNotification,
+    //     href: '/Notice-Board'
+    // },
+    // {
+    //     title: 'Important Links',
+    //     icon: MdLabelImportant,
+    //     href: '/Important-Links'
+    // },
+    
+    {
         title: 'User FeedBacks',
         icon: MdFeedback,
         href: '/User-FeedBacks'
@@ -128,11 +135,6 @@ const Menuitems = [
         title: 'Settings',
         icon: MdSettings,
         href: '/setting'
-    },
-    {
-        title: 'Whats New',
-        icon: AiFillFolderAdd,
-        href: '/MyWhatsNew'
     },
     {
         title: 'FAQ',
