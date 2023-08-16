@@ -13,7 +13,6 @@ const useUpload = () => {
             let response;
             const res = await fetch(API_HOST + url, requestOptions);
             response = await res.json();
-           
             return response;
         } 
 

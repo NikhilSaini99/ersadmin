@@ -31,6 +31,7 @@ const AddTender = () => {
 		`/tender/${location?.state?.formdata?.id}`
 	);
 	const myRef = useRef({ fileName: '', fileUrl: '' });
+	const upload_URL_FLAG_REF = useRef(false);
 	const [selectedFile, setSelected] = useState();
 	const updateformValues = location?.state?.formdata;
 
@@ -49,35 +50,34 @@ const AddTender = () => {
 		deadline: location?.state?.status ? dayjs(deadline) : null,
 		publishedDate: location?.state?.status ? dayjs(publishedDate) : null,
 		reference: location?.state?.status ? updateformValues.reference : '',
-		documentUrl: location?.state?.status ? updateformValues.documentUrl: ''
+		documentUrl: location?.state?.status ? updateformValues.documentUrl : null
 	};
-
+	console.log(updateformValues?.documentUrl)
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values);
-
 		
-		const uploadURL =  await uploadPdfFile(
+       const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/publication-files',
 			selectedFile
 		);
+
 		
-		console.log('yo',uploadURL);
-		if (uploadURL.success) {
-			// console.log(uploadURL)
+
+		console.log('yo', updatepdfURL);
+		if (updatepdfURL.success || updateformValues.documentUrl) {
 			location?.state?.status
 				? updateformAPI({
+							...values,
+							documentUrl:  upload_URL_FLAG_REF.current ? updatepdfURL.data.url.toString() : updateformValues?.documentUrl
+					}) : callAPI({
 						...values,
-						documentUrl: uploadURL.data.url.toString()
-				})
-				: callAPI({
-						...values,
-						documentUrl: uploadURL.data.url.toString()
+						documentUrl: updatepdfURL.data.url.toString()
 				});
 			// Reset the form after successful submission
 			resetForm();
 			navigate('/Tender-List');
 		} else {
-			console.log('error');
+			console.log('tender submit error');
 		}
 	};
 
@@ -86,11 +86,13 @@ const AddTender = () => {
 		setSelected(file);
 		myRef.current.fileName = event.target.files[0].name;
 		myRef.current.fileUrl = URL.createObjectURL(event.target.files[0]);
+		upload_URL_FLAG_REF.current= true;
 	};
 
+	console.log(upload_URL_FLAG_REF.current)
 	return (
 		<>
-		{location?.state?.status && console.log(initialValues.documentUrl)}
+			{location?.state?.status && console.log(initialValues.documentUrl)}
 			<MainCard
 				title={
 					location?.state?.status ? 'Update Tender Data' : 'Add Tender Data'
