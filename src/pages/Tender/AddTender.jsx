@@ -61,8 +61,7 @@ const AddTender = () => {
 			selectedFile
 		);
 
-		
-
+	
 		console.log('yo', updatepdfURL);
 		if (updatepdfURL.success || updateformValues.documentUrl) {
 			location?.state?.status
