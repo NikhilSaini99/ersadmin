@@ -105,9 +105,6 @@ const AddRecentlyApproved = () => {
 											<MenuItem value="Approved Guidelines">
 												Approved Guidelines
 											</MenuItem>
-											<MenuItem value="Approved Practice Notes">
-												Approved Practice Notes
-											</MenuItem>
 											<MenuItem value="Recently Approved Forms">
 												Recently Approved Forms
 											</MenuItem>

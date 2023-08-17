@@ -46,6 +46,7 @@ import ListTender from '../pages/Tender/ListTender';
 import AddTender from '../pages/Tender/AddTender';
 import ListPublications from '../pages/Publications/ListPublications';
 import ListRecentlyApproved from '../pages/RecentlyApproved/ListRecentlyApproved';
+import ListNoticeBoard from '../pages/NoticeBoard/ListNoticeBoard';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -185,7 +186,15 @@ const routes = [
 			{
 				path: 'AddFAQ',
 				element: <AddFAQ />
-			}
+			},
+			{
+				path: 'Add-Notice-Board',
+				element: <AddNoticeBoard />
+			},
+			{
+				path: 'List-Notice-Board',
+				element: <ListNoticeBoard />
+			},
 		]
 	}
 	// {

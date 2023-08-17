@@ -10,11 +10,6 @@ import {BsClipboard} from "react-icons/bs"
 import {MdOutlineContactEmergency} from 'react-icons/md'
 import {FaWpforms} from "react-icons/fa"
 
-
-
-
-
-
 const Menuitems = [
     {
         title: 'Home',
@@ -24,7 +19,7 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Menu',
+        title: 'Menu (Update)',
         icon: TfiMenuAlt,
         href: '/Menu',
         childrens: []
@@ -38,12 +33,12 @@ const Menuitems = [
         ]
     },
     {
-        title: 'Whats New',
+        title: 'Whats New (Upload deocument, Update)',
         icon: AiFillFolderAdd,
         href: '/MyWhatsNew'
     },
     {
-        title: 'Add Form Data',
+        title: 'Add Form Data (List, Edit , Delete)',
         icon: FaWpforms,
         href: '/Add-Form-Data',
         childrens: []
@@ -68,9 +63,21 @@ const Menuitems = [
         childrens: ['/Admin/Project/Forms/Edit-Form', '/Admin/Project/Forms/Form-View']
     },
     {
-        title: 'Add Contact Branch',
+        title: 'Add Contact Branch (List, Edit, Delete)',
         icon: MdOutlineContactEmergency,
         href: '/Add-Contact-Branch',
+        childrens: []
+    },
+    {
+        title: 'Public Meetings (Not Done)',
+        icon: MdOutlineApproval,
+        href: '/',
+        childrens: []
+    },
+    {
+        title: 'Notice Board (Not Done)',
+        icon: MdOutlineApproval,
+        href: '/List-Notice-Board',
         childrens: []
     },
     {
@@ -92,7 +99,7 @@ const Menuitems = [
     //     childrens: []
     // },
     {
-        title: 'Add Tax Calender Data',
+        title: 'Add Tax Calender Data (List, Delete, edit)',
         icon: TbReceiptTax,
         href: '/Add-Text-Calender-Data',
         childrens: []
@@ -104,7 +111,7 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Add Corporate Responsibility',
+        title: 'Add Corporate Responsibility (List, Edit, Delete)',
         icon: MdCorporateFare,
         href: '/Add-Corporate-Responsibility',
         childrens: []
@@ -127,7 +134,7 @@ const Menuitems = [
     // },
     
     {
-        title: 'User FeedBacks',
+        title: 'User Feedbacks',
         icon: MdFeedback,
         href: '/User-FeedBacks'
     },
@@ -140,6 +147,16 @@ const Menuitems = [
         title: 'FAQ',
         icon: FaQuestion,
         href: '/FAQ'
+    },
+    {
+        title: 'Add Tax Item Code (Not Done)',
+        icon: FaQuestion,
+        href: '/'
+    },
+    {
+        title: 'Practice Note (Not Done)',
+        icon: FaQuestion,
+        href: '/'
     },
 ];
 
