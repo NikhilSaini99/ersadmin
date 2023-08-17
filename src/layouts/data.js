@@ -38,9 +38,9 @@ const Menuitems = [
         href: '/MyWhatsNew'
     },
     {
-        title: 'Add Form Data (List, Edit , Delete)',
+        title: 'Add Form Data',
         icon: FaWpforms,
-        href: '/Add-Form-Data',
+        href: '/List-Form-Data',
         childrens: []
     },
     {
@@ -63,9 +63,9 @@ const Menuitems = [
         childrens: ['/Admin/Project/Forms/Edit-Form', '/Admin/Project/Forms/Form-View']
     },
     {
-        title: 'Add Contact Branch (List, Edit, Delete)',
+        title: 'Add Contact Branch',
         icon: MdOutlineContactEmergency,
-        href: '/Add-Contact-Branch',
+        href: '/ListContactBranch',
         childrens: []
     },
     {
@@ -75,7 +75,7 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Notice Board (Not Done)',
+        title: 'Notice Board',
         icon: MdOutlineApproval,
         href: '/List-Notice-Board',
         childrens: []
@@ -111,9 +111,9 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Add Corporate Responsibility (List, Edit, Delete)',
+        title: 'Add Corporate Responsibility',
         icon: MdCorporateFare,
-        href: '/Add-Corporate-Responsibility',
+        href: '/CorporateResponsibility',
         childrens: []
     },
     // {

@@ -47,6 +47,9 @@ import AddTender from '../pages/Tender/AddTender';
 import ListPublications from '../pages/Publications/ListPublications';
 import ListRecentlyApproved from '../pages/RecentlyApproved/ListRecentlyApproved';
 import ListNoticeBoard from '../pages/NoticeBoard/ListNoticeBoard';
+import CorporateResponsibility from '../pages/CorporateResponsibility/CorporateResponsibility';
+import ListContactBranch from '../pages/ContactBranch/ListContactBranch';
+import ListFormData from '../pages/FormData/ListFormData';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -116,12 +119,24 @@ const routes = [
 				element: <AddCorporateResponsibility />
 			},
 			{
+				path: 'CorporateResponsibility',
+				element: <CorporateResponsibility />
+			},
+			{
 				path: 'Add-Form-Data',
 				element: <AddFormData />
 			},
 			{
+				path: 'List-Form-Data',
+				element: <ListFormData/>
+			},
+			{
 				path: 'Add-Contact-Branch',
 				element: <AddContactBranch />
+			},
+			{
+				path: 'ListContactBranch',
+				element: <ListContactBranch />
 			},
 			{
 				path: 'Add-Notice-Board',

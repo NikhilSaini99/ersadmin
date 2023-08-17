@@ -7,7 +7,11 @@ import {
 	Grid,
 	TextField,
 	Button,
-	Typography
+	Typography,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem
 } from '@mui/material';
 import dayjs from 'dayjs';
 import useFetch from '../../hooks/useFetch';
@@ -34,27 +38,29 @@ const AddNoticeBoard = () => {
 	const upload_URL_FLAG_REF = useRef(false);
 	const [selectedFile, setSelected] = useState();
 	const updateformValues = location?.state?.formdata;
+	const date = updateformValues?.date.split('T')[0];
 
 	const newsSchema = Yup.object().shape({
-		tenderName: Yup.string().required('Name is required'),
-		reference: Yup.string().required('Reference is required'),
-		deadline: Yup.date().required('Upload Date is required'),
-		publishedDate: Yup.date().required('Published Date is required')
+		name: Yup.string().required('Name is required'),
+		date: Yup.date().required('Published Date is required'),
+		notice: Yup.string().required('Notice is required'),
+		description: Yup.string().required('Description is required'),
+		documentName: Yup.string().required('Document Name is required'),
 	});
 
-	const deadline = updateformValues?.deadline.split('T')[0];
-	const publishedDate = updateformValues?.publishedDate.split('T')[0];
-
+	
 	const initialValues = {
-		tenderName: location?.state?.status ? updateformValues.tenderName : '',
-		deadline: location?.state?.status ? dayjs(deadline) : null,
-		publishedDate: location?.state?.status ? dayjs(publishedDate) : null,
-		reference: location?.state?.status ? updateformValues.reference : '',
+		name: location?.state?.status ? updateformValues.name :'',
+		documentName: location?.state?.status ? updateformValues.documentName :'',
+		description: location?.state?.status ? updateformValues.description :'',
+		date: location?.state?.status ? dayjs(date) : null,
+		notice: location?.state?.status ?  updateformValues.notice : "",
 		documentUrl: location?.state?.status ? updateformValues.documentUrl : null
 	};
+
 	console.log(updateformValues?.documentUrl)
 	const handleSubmit = async (values, { resetForm }) => {
-		console.log(values);
+		console.log("hekki");
 		
        const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/noticeboard-files',
@@ -76,9 +82,10 @@ const AddNoticeBoard = () => {
 			resetForm();
 			navigate('/List-Notice-Board');
 		} else {
-			console.log('tender submit error');
+			console.log('submit error');
 		}
 	};
+
 
 	const handleChange = (event) => {
 		const file = event.target.files[0];
@@ -91,7 +98,6 @@ const AddNoticeBoard = () => {
 	console.log(upload_URL_FLAG_REF.current)
 	return (
 		<>
-			{location?.state?.status && console.log(initialValues.documentUrl)}
 			<MainCard
 				title={
 					location?.state?.status ? 'Update Notice Board Data' : 'Add Notice Board Data'
@@ -109,39 +115,64 @@ const AddNoticeBoard = () => {
 					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
 						<Form>
 							<Grid container direction="column">
-								<Grid item xs={12}>
+							
+							<Grid item xs={12}>
 									<Field
 										as={TextField}
-										name="tenderName"
-										label="Enten Name"
+										name="name"
+										label="Enter Name"
 										fullWidth
 										variant="outlined"
 										margin="normal"
 									/>
-									<ErrorMessage name="tenderName" component={FormHelperText} />
+									<ErrorMessage name="name" component={FormHelperText} />
+								</Grid>
+
+								<Grid item xs={12}>
+									<Field
+										as={TextField}
+										name="documentName"
+										label="Enter Document Name"
+										fullWidth
+										variant="outlined"
+										margin="normal"
+									/>
+									<ErrorMessage name="documentName" component={FormHelperText} />
+								</Grid>
+
+
+								<Grid item xs={12}>
+									<Field
+										as={TextField}
+										name="description"
+										label="Enter Description"
+										fullWidth
+										variant="outlined"
+										margin="normal"
+									/>
+									<ErrorMessage name="description" component={FormHelperText} />
 								</Grid>
 
 								<Grid container direction="column">
 								<Grid item xs={12}>
 									<Field
 										as={TextField}
-										name="tenderName"
-										label="Enten Description"
+										name="notice"
+										label="Enter Notice"
 										fullWidth
 										variant="outlined"
 										margin="normal"
 									/>
-									<ErrorMessage name="tenderName" component={FormHelperText} />
+									<ErrorMessage name="notice" component={FormHelperText} />
 								</Grid>
 								</Grid>
-
 								<Grid item xs={12} mb={1.5}>
-									<Field name="publishedDate">
+									<Field name="date">
 										{({ field }) => (
 											<LocalizationProvider dateAdapter={AdapterDayjs}>
 												<DatePicker
 													{...field}
-													label="Published Date"
+													label="Date"
 													inputFormat="MM/dd/yyyy"
 													slotProps={{ textField: { fullWidth: true } }}
 													value={field.value || null}
@@ -149,7 +180,7 @@ const AddNoticeBoard = () => {
 													onChange={(value) => {
 														const event = {
 															target: {
-																name: 'publishedDate',
+																name: 'date',
 																value: dayjs(value).toISOString()
 															}
 														};
@@ -159,7 +190,7 @@ const AddNoticeBoard = () => {
 											</LocalizationProvider>
 										)}
 									</Field>
-									<ErrorMessage name="publishedDate">
+									<ErrorMessage name="date">
 										{(errorMsg) => (
 											<FormHelperText style={{ color: 'red' }}>
 												{errorMsg}
@@ -168,18 +199,6 @@ const AddNoticeBoard = () => {
 									</ErrorMessage>
 								</Grid>
 
-								
-								<Grid item xs={12}>
-									<Field
-										as={TextField}
-										name="reference"
-										label="Enter Notice"
-										fullWidth
-										variant="outlined"
-										margin="normal"
-									/>
-									<ErrorMessage name="reference" component={FormHelperText} />
-								</Grid>
 
 								<Grid item xs={12}>
 									<Box

@@ -16,7 +16,6 @@ import {
 	IconButton
 } from '@mui/material';
 
-
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
@@ -28,8 +27,8 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const ListNoticeBoard = () => {
-	const { loading, error, data: noticeBoard, callAPI } = useFetch('GET', '/noticeBoard');
+const CorporateResponsibility = () => {
+    const { loading, error, data: CSR, callAPI } = useFetch('GET', '/csr');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -47,7 +46,7 @@ const ListNoticeBoard = () => {
 	const endIndex = startIndex + rowsPerPage;
 
 	// Get the current page's data from the 'tender' array
-	const currentPageData = noticeBoard?.data?.slice(startIndex, endIndex) || [];
+	const currentPageData = CSR?.data?.slice(startIndex, endIndex) || [];
 
 	useEffect(() => {
 		callAPI();
@@ -59,11 +58,11 @@ const ListNoticeBoard = () => {
 		color: '#72b8bf'
 	};
 
-	return (
-		<>
-			<Box sx={myBox}>
-				<Typography variant="h4">Notice Board List</Typography>
-				<Link to="/Add-Notice-Board">
+  return (
+    <>
+    <Box sx={myBox}>
+				<Typography variant="h4">Corporate Responsibility List</Typography>
+				<Link to="/Add-Corporate-Responsibility">
 					<Button
 						variant="contained"
 						size="large"
@@ -71,16 +70,16 @@ const ListNoticeBoard = () => {
 						startIcon={<BiAddToQueue size={25} />}
 					>
 						{' '}
-						Add Notice Board
+						Add CSR
 					</Button>
 				</Link>
 			</Box>
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: '90%',
+						width: {xs:"100%", sm:'90%'},
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
+						px: {xs:"1rem", md: '2rem', lg: '3rem,', xl: '8rem' },
 						py: '2rem'
 					}}
 				>
@@ -100,27 +99,25 @@ const ListNoticeBoard = () => {
 										}
 									}}
 								>
-									<TableCell>Name</TableCell>
-									<TableCell>Description</TableCell>
-									<TableCell>Notice</TableCell>
-									<TableCell>Document</TableCell>
-									<TableCell>Date</TableCell>
-									<TableCell>PDF</TableCell>
+									<TableCell width="20%">Name</TableCell>
+									<TableCell width="30%">Description</TableCell>
+									<TableCell width="15%">Upload Date</TableCell>
+									<TableCell>URL</TableCell>
 									<TableCell>Delete</TableCell>
-									<TableCell>Update</TableCell>
+                                    <TableCell>Update</TableCell>
+									
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{currentPageData?.map((item, key) => (
-									<NoticeList
+									<CorporateList
+                                       id={item.id}
 										key={key}
 										name={item.name}
 										description={item.description}
-										docURL={item.documentUrl}
-										documentName={item.documentName}
-										notice={item.notice}
-										refresh={callAPI}
-										id={item.id}
+										uploadDate={item.uploadDate}
+										url={item.url}
+										refresh={callAPI}										
 										item={item}
 									/>
 								))}
@@ -129,7 +126,7 @@ const ListNoticeBoard = () => {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={noticeBoard?.data?.length || 0}
+							count={CSR?.data?.length || 0}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
@@ -138,26 +135,25 @@ const ListNoticeBoard = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-		</>
-	);
-};
+    </>
+  )
+}
 
-export default ListNoticeBoard;
+export default CorporateResponsibility
 
-const NoticeList = ({
+
+const CorporateList = ({
 	name,
-	notice,
 	description,
-	docURL,
-	documentName,
+	uploadDate,
+	url,
 	refresh,
 	id,
 	item,
-	date
 	
 }) => {
 	const navigate = useNavigate();
-	const { data, callAPI } = useFetch('DELETE', `/noticeBoard/${id}`);
+	const { data, callAPI } = useFetch('DELETE', `/csr/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
@@ -167,7 +163,7 @@ const NoticeList = ({
 	}
 
 	function handleUpdate() {
-		navigate('/Add-Notice-Board', { state: { formdata: item, status: true } });
+		navigate('/Add-Corporate-Responsibility', { state: { formdata: item, status: true } });
 	}
 
 	function handleDownloadPDF(pdfURL) {
@@ -198,13 +194,9 @@ const NoticeList = ({
 				}}>
 				<TableCell>{name}</TableCell>
 				<TableCell>{description}</TableCell>
-				<TableCell>{notice}</TableCell>
-				<TableCell>{documentName}</TableCell>
-				<TableCell>{dayjs(date).format('DD-MM-YYYY')}</TableCell>
+				<TableCell>{dayjs(uploadDate).format('DD-MM-YYYY')}</TableCell>
 				<TableCell>
-					<IconButton onClick={() => handleDownloadPDF(docURL)}>
-						<PictureAsPdfIcon />
-					</IconButton>
+					{url}
 				</TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
@@ -220,3 +212,5 @@ const NoticeList = ({
 		</>
 	);
 };
+
+

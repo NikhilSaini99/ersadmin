@@ -128,18 +128,7 @@ console.log(selectedCover)
 					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
 						<Form>
 							<Grid container direction="column">
-								<Grid item xs={12}>
-									<FormControl margin="normal" fullWidth variant="outlined">
-										<InputLabel>Publications</InputLabel>
-										<Field as={Select} name="type" label="Notice Board">
-											<MenuItem value="Strategic Plans">
-												Strategic Plans
-											</MenuItem>
-											<MenuItem value="Annual Reports">Annual Reports</MenuItem>
-										</Field>
-									</FormControl>
-									<ErrorMessage name="type" component={FormHelperText} />
-								</Grid>
+							
 
 								{/* <Grid item xs={12}>
 									<Field

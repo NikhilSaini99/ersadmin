@@ -26,10 +26,9 @@ import useFetch from '../../hooks/useFetch';
 import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const ListNoticeBoard = () => {
-	const { loading, error, data: noticeBoard, callAPI } = useFetch('GET', '/noticeBoard');
+const ListContactBranch = () => {
+    const { loading, error, data: contactBranch, callAPI } = useFetch('GET', '/contact');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -47,7 +46,7 @@ const ListNoticeBoard = () => {
 	const endIndex = startIndex + rowsPerPage;
 
 	// Get the current page's data from the 'tender' array
-	const currentPageData = noticeBoard?.data?.slice(startIndex, endIndex) || [];
+	const currentPageData = contactBranch?.data?.slice(startIndex, endIndex) || [];
 
 	useEffect(() => {
 		callAPI();
@@ -58,12 +57,11 @@ const ListNoticeBoard = () => {
 		justifyContent: 'space-between',
 		color: '#72b8bf'
 	};
-
-	return (
-		<>
-			<Box sx={myBox}>
-				<Typography variant="h4">Notice Board List</Typography>
-				<Link to="/Add-Notice-Board">
+  return (
+    <>
+    <Box sx={myBox}>
+				<Typography variant="h4">Contact Branch</Typography>
+				<Link to="/Add-Contact-Branch">
 					<Button
 						variant="contained"
 						size="large"
@@ -71,7 +69,7 @@ const ListNoticeBoard = () => {
 						startIcon={<BiAddToQueue size={25} />}
 					>
 						{' '}
-						Add Notice Board
+						Add Contact Branch
 					</Button>
 				</Link>
 			</Box>
@@ -100,25 +98,30 @@ const ListNoticeBoard = () => {
 										}
 									}}
 								>
-									<TableCell>Name</TableCell>
-									<TableCell>Description</TableCell>
-									<TableCell>Notice</TableCell>
-									<TableCell>Document</TableCell>
-									<TableCell>Date</TableCell>
-									<TableCell>PDF</TableCell>
+									<TableCell>Branch Name</TableCell>
+									<TableCell>Location</TableCell>
+									<TableCell>City</TableCell>
+									<TableCell>State</TableCell>
+									<TableCell>Contact</TableCell>
+									<TableCell>Lat</TableCell>
+									<TableCell>long</TableCell>
+									<TableCell>HeadQuarter</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{currentPageData?.map((item, key) => (
-									<NoticeList
+									<ContactBranchList
 										key={key}
-										name={item.name}
-										description={item.description}
-										docURL={item.documentUrl}
-										documentName={item.documentName}
-										notice={item.notice}
+										branchName={item.branchName}
+										branchLocation={item.branchLocation}
+										branchCity={item.branchCity}
+										branchState={item.branchState}
+										contactNo={item.contactNo}
+										lat={item.lat}
+										long={item.long}
+										isHeadQuater={item.isHeadQuater}
 										refresh={callAPI}
 										id={item.id}
 										item={item}
@@ -129,7 +132,7 @@ const ListNoticeBoard = () => {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={noticeBoard?.data?.length || 0}
+							count={contactBranch?.data?.length || 0}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
@@ -138,26 +141,29 @@ const ListNoticeBoard = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-		</>
-	);
-};
+    </>
+  )
+}
 
-export default ListNoticeBoard;
+export default ListContactBranch
 
-const NoticeList = ({
-	name,
-	notice,
-	description,
-	docURL,
-	documentName,
-	refresh,
-	id,
+const ContactBranchList = ({
+	branchName,
+	branchLocation,
+	branchCity,
+	branchState,
+	contactNo,
+    lat,
+	long,
+	isHeadQuater,
 	item,
-	date
+	refresh,
+    id,
+
 	
 }) => {
 	const navigate = useNavigate();
-	const { data, callAPI } = useFetch('DELETE', `/noticeBoard/${id}`);
+	const { data, callAPI } = useFetch('DELETE', `/contact/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
@@ -167,23 +173,9 @@ const NoticeList = ({
 	}
 
 	function handleUpdate() {
-		navigate('/Add-Notice-Board', { state: { formdata: item, status: true } });
+		navigate('/Add-Contact-Branch', { state: { formdata: item, status: true } });
 	}
 
-	function handleDownloadPDF(pdfURL) {
-		fetch(pdfURL)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const url = window.URL.createObjectURL(blob);
-				const link = document.createElement('a');
-				link.setAttribute('href', url);
-				link.setAttribute('download', 'tender.pdf');
-				link.click();
-			})
-			.catch((error) => {
-				console.error('Error downloading PDF:', error);
-			});
-	}
 
 	return (
 		<>
@@ -196,16 +188,14 @@ const NoticeList = ({
 						background: '#F2F2F2'
 					}
 				}}>
-				<TableCell>{name}</TableCell>
-				<TableCell>{description}</TableCell>
-				<TableCell>{notice}</TableCell>
-				<TableCell>{documentName}</TableCell>
-				<TableCell>{dayjs(date).format('DD-MM-YYYY')}</TableCell>
-				<TableCell>
-					<IconButton onClick={() => handleDownloadPDF(docURL)}>
-						<PictureAsPdfIcon />
-					</IconButton>
-				</TableCell>
+				<TableCell>{branchName}</TableCell>
+				<TableCell>{branchLocation}</TableCell>
+				<TableCell>{branchCity}</TableCell>
+				<TableCell>{branchState}</TableCell>
+				<TableCell>{contactNo}</TableCell>
+				<TableCell>{lat}</TableCell>
+				<TableCell>{long}</TableCell>
+				<TableCell>{isHeadQuater?"Yes":"No"}</TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
 						<DeleteIcon sx={{ color: 'red' }} />

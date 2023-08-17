@@ -15,32 +15,51 @@ import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import dayjs from 'dayjs';
 import useFetch from '../hooks/useFetch';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function AddCorporateResponsibility() {
-	const {callAPI} = useFetch("POST",'/csr')
+	const location = useLocation();
+	const navigate = useNavigate();
+	const updateformValues = location?.state?.formdata;
+	const uploadDate = updateformValues?.uploadDate.split('T')[0];
+
+	const { callAPI } = useFetch('POST', '/csr');
+	const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/csr/${location?.state?.formdata?.id}`
+	);
 	const initialValues = {
-		name: '',
-		description: '',
-		uploadDate: null,
-		url: ''
+		name: location?.state?.status ? updateformValues.name : '',
+		description: location?.state?.status ? updateformValues.description : '',
+		uploadDate: location?.state?.status ? dayjs(uploadDate) : null,
+		url: location?.state?.status ? updateformValues.url : ''
 	};
 
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required('Name is required'),
 		description: Yup.string().required('Description is required'),
 		uploadDate: Yup.date().required('Upload Date is required'),
-		url: Yup.string().required('URL is required'),
+		url: Yup.string().required('URL is required')
 	});
 
-	const handleSubmit = (values) => {
+	const handleSubmit = (values, { resetForm }) => {
 		// Handle form submission logic here
-		callAPI(values);
+		location?.state?.status ? updateformAPI(values) : callAPI(values);
+
+		// Reset the form after successful submission
+		resetForm();
+		navigate('/CorporateResponsibility');
 	};
 
 	return (
 		<>
 			<MainCard
-				title="Add Corporate Responsibility "
+				title={
+					location?.state?.status
+						? 'Update Corporate Responsibility'
+						: 'Add Corporate Responsibility'
+				}
 				border={false}
 				elevation={16}
 				content={false}
@@ -138,7 +157,7 @@ export function AddCorporateResponsibility() {
 
 							<CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
 								<Button size="large" variant="contained" type="submit">
-									Save
+									{location?.state?.status ? 'Update' : 'Submit'}
 								</Button>
 							</CardActions>
 						</Form>

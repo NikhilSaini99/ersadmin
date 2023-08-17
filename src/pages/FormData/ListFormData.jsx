@@ -16,7 +16,6 @@ import {
 	IconButton
 } from '@mui/material';
 
-
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
@@ -28,8 +27,8 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-const ListNoticeBoard = () => {
-	const { loading, error, data: noticeBoard, callAPI } = useFetch('GET', '/noticeBoard');
+const ListFormData = () => {
+  const { loading, error, data: formData, callAPI } = useFetch('GET', '/form');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -47,7 +46,7 @@ const ListNoticeBoard = () => {
 	const endIndex = startIndex + rowsPerPage;
 
 	// Get the current page's data from the 'tender' array
-	const currentPageData = noticeBoard?.data?.slice(startIndex, endIndex) || [];
+	const currentPageData = formData?.data?.slice(startIndex, endIndex) || [];
 
 	useEffect(() => {
 		callAPI();
@@ -58,12 +57,11 @@ const ListNoticeBoard = () => {
 		justifyContent: 'space-between',
 		color: '#72b8bf'
 	};
-
-	return (
-		<>
-			<Box sx={myBox}>
-				<Typography variant="h4">Notice Board List</Typography>
-				<Link to="/Add-Notice-Board">
+  return (
+    <>
+    <Box sx={myBox}>
+				<Typography variant="h4">Form Data</Typography>
+				<Link to="/Add-Form-Data">
 					<Button
 						variant="contained"
 						size="large"
@@ -71,7 +69,7 @@ const ListNoticeBoard = () => {
 						startIcon={<BiAddToQueue size={25} />}
 					>
 						{' '}
-						Add Notice Board
+						Add Form Data
 					</Button>
 				</Link>
 			</Box>
@@ -100,11 +98,11 @@ const ListNoticeBoard = () => {
 										}
 									}}
 								>
-									<TableCell>Name</TableCell>
+									<TableCell width="30%">Form Name</TableCell>
+									<TableCell>Category</TableCell>
+									<TableCell>File Size</TableCell>
 									<TableCell>Description</TableCell>
-									<TableCell>Notice</TableCell>
-									<TableCell>Document</TableCell>
-									<TableCell>Date</TableCell>
+									<TableCell>UploadDate</TableCell>
 									<TableCell>PDF</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
@@ -112,13 +110,14 @@ const ListNoticeBoard = () => {
 							</TableHead>
 							<TableBody>
 								{currentPageData?.map((item, key) => (
-									<NoticeList
+									<FormDataList
 										key={key}
-										name={item.name}
+										formName={item.formName}
+										category={item.category}
+										fileSize={item.fileSize}
 										description={item.description}
-										docURL={item.documentUrl}
-										documentName={item.documentName}
-										notice={item.notice}
+										fileUrl={item.fileUrl}
+										uploadDate={item.uploadDate}
 										refresh={callAPI}
 										id={item.id}
 										item={item}
@@ -129,7 +128,7 @@ const ListNoticeBoard = () => {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={noticeBoard?.data?.length || 0}
+							count={formData?.data?.length || 0}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
@@ -138,26 +137,26 @@ const ListNoticeBoard = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-		</>
-	);
-};
+      </>
+  )
+}
 
-export default ListNoticeBoard;
+export default ListFormData
 
-const NoticeList = ({
-	name,
-	notice,
+const FormDataList = ({
+	formName,
+	category,
+	fileSize,
 	description,
-	docURL,
-	documentName,
+	fileUrl,
+  uploadDate,
 	refresh,
 	id,
 	item,
-	date
 	
 }) => {
 	const navigate = useNavigate();
-	const { data, callAPI } = useFetch('DELETE', `/noticeBoard/${id}`);
+	const { data, callAPI } = useFetch('DELETE', `/form/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
@@ -167,7 +166,7 @@ const NoticeList = ({
 	}
 
 	function handleUpdate() {
-		navigate('/Add-Notice-Board', { state: { formdata: item, status: true } });
+		navigate('/Add-Form-Data', { state: { formdata: item, status: true } });
 	}
 
 	function handleDownloadPDF(pdfURL) {
@@ -196,13 +195,13 @@ const NoticeList = ({
 						background: '#F2F2F2'
 					}
 				}}>
-				<TableCell>{name}</TableCell>
+				<TableCell>{formName}</TableCell>
+				<TableCell>{category}</TableCell>
+				<TableCell>{fileSize}</TableCell>
 				<TableCell>{description}</TableCell>
-				<TableCell>{notice}</TableCell>
-				<TableCell>{documentName}</TableCell>
-				<TableCell>{dayjs(date).format('DD-MM-YYYY')}</TableCell>
+				<TableCell>{dayjs(uploadDate).format('DD-MM-YYYY')}</TableCell>
 				<TableCell>
-					<IconButton onClick={() => handleDownloadPDF(docURL)}>
+					<IconButton onClick={() => handleDownloadPDF(fileUrl)}>
 						<PictureAsPdfIcon />
 					</IconButton>
 				</TableCell>

@@ -21,17 +21,26 @@ import {
     FormLabel
 } from '@mui/material';
 import useFetch from '../hooks/useFetch';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const AddContactBranch = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+	const updateformValues = location?.state?.formdata;
 	const {callAPI} = useFetch('POST','/contact')
+	const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/contact/${location?.state?.formdata?.id}`
+	);
 	const initialValues = {
-		branchName: '',
-		branchLocation: '',
-		branchCity: '',
-		branchState: '',
-		contactNo: '',
-		lat: '',
-		long: '',
-		isHeadQuater: ''
+		branchName: location?.state?.status ? updateformValues.branchName :'',
+		branchLocation:location?.state?.status ? updateformValues.branchLocation : '',
+		branchCity: location?.state?.status ? updateformValues.branchCity :'',
+		branchState: location?.state?.status ? updateformValues.branchState :'',
+		contactNo: location?.state?.status ? updateformValues.contactNo :'',
+		lat: location?.state?.status ? updateformValues.lat :'',
+		long: location?.state?.status ? updateformValues.long :'',
+		isHeadQuater: location?.state?.status ? updateformValues.isHeadQuater :''
 	};
 
 	const validationSchema = Yup.object().shape({
@@ -45,17 +54,17 @@ const AddContactBranch = () => {
 		isHeadQuater: Yup.string().required('Is Headquarter is required')
 	});
 
-	const handleSubmit = (values) => {
+	const handleSubmit = (values, {resetForm}) => {
 		// Handle form submission logic here
-		console.log(values);
-		callAPI(values)
-
+		resetForm();
+			navigate('/ListContactBranch');
+			location?.state?.status ? updateformAPI(values) : callAPI(values)
 	};
 
 	return (
 		<>
 			<MainCard
-				title="Add Contact Branch"
+				title={location?.state?.status?"Update Contact Branch Data": "Add Contact Branch"}
 				border={false}
 				elevation={16}
 				content={false}
@@ -163,7 +172,7 @@ const AddContactBranch = () => {
 
 							<Box sx={{ textAlign: 'center' }}>
 								<Button type="submit" variant="contained" color="primary">
-									Submit
+									{location?.state?.status?"Update":"Submit"}
 								</Button>
 							</Box>
 						</Form>

@@ -18,9 +18,13 @@ import {
 	InputLabel,
 	Box,
 	Divider,
-	Grid
+	Grid,
+	Typography
 } from '@mui/material';
 import useFetch from '../hooks/useFetch';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const newsSchema = Yup.object().shape({
 	formName: Yup.string().required('Form Name is required'),
@@ -34,43 +38,64 @@ const newsSchema = Yup.object().shape({
 
 const AddFormData = () => {
 	const { uploadPdfFile } = useUpload();
+	const location = useLocation();
+	const navigate = useNavigate();
+	const myRef = useRef({ fileName: '', fileUrl: '' });
+	const upload_URL_FLAG_REF = useRef(false);
 	const { callAPI } = useFetch('POST', '/form');
+	const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/form/${location?.state?.formdata?.id}`
+	);
 	const [selectedFile, setSelected] = useState();
+	const updateformValues = location?.state?.formdata;
 
 	const handleChange = (event) => {
 		const file = event.target.files[0];
 		setSelected(file);
+		myRef.current.fileName = event.target.files[0].name;
+		myRef.current.fileUrl = URL.createObjectURL(event.target.files[0]);
+		upload_URL_FLAG_REF.current= true;
 	};
 
+	console.log(selectedFile)
+
+	const uploadDate = updateformValues?.uploadDate.split('T')[0];
+
 	const initialValues = {
-		formName: '',
-		category: '',
-		fileSize: '',
-		fileType: '',
-		description: '',
-		fileUrl: '',
-		uploadDate: null
+		formName: location?.state?.status ? updateformValues.formName : '',
+		category: location?.state?.status ? updateformValues.category : '',
+		fileSize: location?.state?.status ? updateformValues.fileSize : '',
+		fileType: location?.state?.status ? updateformValues.fileType : '',
+		description: location?.state?.status ? updateformValues.description : '',
+		fileUrl: location?.state?.status ? updateformValues.fileUrl : '',
+		uploadDate: location?.state?.status ? dayjs(uploadDate) : null,
 	};
 
 	const categories = ['Category 1', 'Category 2', 'Category 3'];
 
 	const handleSubmit = async (values,{resetForm}) => {
 		// Handle form submission logic here
-		// const file = URL.createObjectURL(selectedFile).toString();
-		// console.log(selectedFile);
-
-		const uploadURL = await uploadPdfFile('/files/form-files', selectedFile);
-		if (uploadURL.success) {
-			// console.log(uploadURL)
-			callAPI({
-				...values,
-				fileUrl: uploadURL.data.url.toString(),
-				fileSize: uploadURL.data.size.toString()
-			});
+			const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.fileUrl: await uploadPdfFile(
+			'/files/form-files',
+			selectedFile
+		);
+		
+		if (updatepdfURL.success || updateformValues.fileUrl) {
+			location?.state?.status
+				? updateformAPI({
+							...values,
+							fileUrl:  upload_URL_FLAG_REF.current ? updatepdfURL.data.url.toString() : updateformValues?.fileUrl,
+					}) : callAPI({
+						...values,
+						fileUrl: updatepdfURL.data.url.toString(),
+						fileSize: updatepdfURL.data.size.toString()
+				});
 			// Reset the form after successful submission
 			resetForm();
+			navigate('/List-Form-Data');
 		} else {
-			console.log('error');
+			console.log('tender submit error');
 		}
 	};
 	return (
@@ -147,7 +172,7 @@ const AddFormData = () => {
 								</Grid>
 
 								{/* Use MUI Date Picker for the uploadDate field */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sx={{ mt: '1rem' }}>
 									<Field name="uploadDate">
 										{({ field }) => (
 											<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -181,30 +206,56 @@ const AddFormData = () => {
 								</Grid>
 
 								<Grid item xs={12}>
-									<Button
-										variant="outlined"
-										component="label"
-										sx={{ mt: '1.5rem' }}
+									<Box
+										sx={{
+											display: 'flex',
+											gap: '0.5rem',
+											flexDirection: { xs: 'column', sm: 'row' },
+											alignItems: 'center',
+											mt:"1rem",
+										}}
 									>
-										<AiOutlineCloudUpload size={30} className="mr-2" />
-										Upload File
-										<input
-											type="file"
-											hidden
-											name="file"
-											onChange={handleChange}
-											accept=".*pdf"
-										/>
-									</Button>
+										<Button variant="outlined" component="label">
+											<AiOutlineCloudUpload size={30} className="mr-2" />
+											Upload File
+											<input
+												type="file"
+												hidden
+												name="file"
+												onChange={handleChange}
+												accept=".*pdf"
+											/>
+										</Button>
+
+										<Typography
+											variant="body1"
+											component="a"
+											href={myRef.current.fileUrl}
+											target="_blank"
+										>
+											{myRef.current.fileName}
+										</Typography>
+									</Box>
 								</Grid>
 							</Grid>
-							<Divider />
+							<Divider sx={{ my: '1.8rem' }}/>
 
-							
-								<Button type="submit" variant="contained" color="primary">
-									Submit
-								</Button>
-							
+								<Box sx={{ textAlign: 'center' }}>
+								<Button
+										type="submit"
+										variant="contained"
+										color="primary"
+										disabled={
+											location?.state?.status
+												? false
+												: !selectedFile
+												? true
+												: false
+										}
+									>
+										{location?.state?.status ? 'Update' : 'Submit'}
+									</Button>
+							</Box>
 						</Form>
 					</Box>
 				</Formik>
