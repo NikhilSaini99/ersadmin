@@ -2,6 +2,7 @@ import {
 	Box,
 	Container,
 	Hidden,
+	Typography,
 	experimentalStyled,
 	useMediaQuery
 } from '@mui/material';
@@ -9,9 +10,13 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import DashboardNavbar from './Header';
 import Sidebar from './Sidebar';
-
+import HeaderImg from '../../public/images/2.svg';
+import subHeader from '../../public/images/3.svg';
+import Logo from '../../public/images/ers-logo.png';
+import { SidebarWidth } from './Sidebar';
 // Create a theme instance.
-const TopbarHeight = 70;
+const TopbarHeight = 120;
+const subHeadHeight = 60;
 
 const MainWrapper = experimentalStyled('div')(() => ({
 	display: 'flex',
@@ -28,7 +33,7 @@ const PageWrapper = experimentalStyled('div')(({ theme }) => ({
 
 	backgroundColor: 'theme.palette.background.default',
 	[theme.breakpoints.up('lg')]: {
-		paddingTop: TopbarHeight
+		// paddingTop: TopbarHeight
 	},
 	[theme.breakpoints.down('lg')]: {
 		paddingTop: '64px'
@@ -52,15 +57,15 @@ const MainLayout = () => {
 				<Container
 					maxWidth={false}
 					sx={{
-						// paddingTop: '20px'
 						paddingRight: '0!important',
 						paddingLeft: isSidebarOpen && lgUp ? '347px!important' : ''
 					}}
 				>
+					<HeaderNew TopbarHeight={TopbarHeight}/>
 					<Box
 						sx={{
 							minHeight: 'calc(100vh - 170px)',
-							p: 3
+							p: "0 0 8px 0"
 						}}
 					>
 						<Outlet />
@@ -72,3 +77,45 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
+
+const HeaderNew = ({TopbarHeight}) => {
+	return (
+		<>
+			<Box sx={{ position: 'relative', maxHeight:`${TopbarHeight}px`, }}>
+				<Box>
+				<img
+					src={HeaderImg}
+					alt="img"
+					width="100%"
+					style={{ objectFit: 'cover' }}
+				/>
+				</Box>
+				
+				<Box sx={{ position: 'absolute', bottom: '0' }}>
+					<img src={Logo} width="100%" height="100%" alt="logo" />
+				</Box>
+			</Box>
+		</>
+	);
+};
+
+export const SubHeader = ({title}) => {
+	return (
+		<>
+			<Box sx={{ position: 'relative', height:`min-content` }}>
+				<Box>
+				<img
+					src={subHeader}
+					width="100%"
+					height="100%"
+					alt="logo"
+					style={{ objectFit: 'cover' }}
+				/>
+				</Box>
+				<Box sx={{position:"absolute", bottom: "calc(100% - 80%)", pl:"24px"}}>
+					<Typography variant='h5' fontWeight={600}>{title}</Typography>
+				</Box>
+			</Box>
+		</>
+	);
+};

@@ -16,7 +16,6 @@ import {
 	IconButton
 } from '@mui/material';
 
-
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
@@ -27,9 +26,15 @@ import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { SubHeader } from '../../layouts/MainLayout';
 
 const ListNoticeBoard = () => {
-	const { loading, error, data: noticeBoard, callAPI } = useFetch('GET', '/noticeBoard');
+	const {
+		loading,
+		error,
+		data: noticeBoard,
+		callAPI
+	} = useFetch('GET', '/noticeBoard');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -55,14 +60,25 @@ const ListNoticeBoard = () => {
 
 	const myBox = {
 		display: 'flex',
-		justifyContent: 'space-between',
-		color: '#72b8bf'
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb:"2rem",
 	};
 
 	return (
 		<>
-			<Box sx={myBox}>
-				<Typography variant="h4">Notice Board List</Typography>
+			<SubHeader title={'Notice Board'} />
+			{/* <Box sx={myBox}></Box> */}
+			<LoaderContainer {...{ loading, error }}>
+				<Box
+					sx={{
+						width: '90%',
+						margin: { xs: '0 auto', lg: '0  auto' },
+						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
+						py: '2rem'
+					}}
+				>
+					<Box sx={myBox}>
 				<Link to="/Add-Notice-Board">
 					<Button
 						variant="contained"
@@ -74,16 +90,7 @@ const ListNoticeBoard = () => {
 						Add Notice Board
 					</Button>
 				</Link>
-			</Box>
-			<LoaderContainer {...{ loading, error }}>
-				<Box
-					sx={{
-						width: '90%',
-						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
-						py: '2rem'
-					}}
-				>
+				</Box>
 					<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
@@ -154,7 +161,6 @@ const NoticeList = ({
 	id,
 	item,
 	date
-	
 }) => {
 	const navigate = useNavigate();
 	const { data, callAPI } = useFetch('DELETE', `/noticeBoard/${id}`);
@@ -195,7 +201,8 @@ const NoticeList = ({
 					'&:hover': {
 						background: '#F2F2F2'
 					}
-				}}>
+				}}
+			>
 				<TableCell>{name}</TableCell>
 				<TableCell>{description}</TableCell>
 				<TableCell>{notice}</TableCell>
