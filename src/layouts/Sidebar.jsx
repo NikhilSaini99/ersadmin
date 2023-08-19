@@ -42,7 +42,7 @@ const Sidebar = (props) => {
 			}}
 		>
 			<PerfectScrollbar>
-				<Box sx={{ py: 5, px:2, background: '#05234C', height: '180px', width:"100%" }}>
+				<Box sx={{ py: 5, px:2, background: '#373164', height: '162px', width:"100%" }}>
 					<Box
 						sx={{
 							display: 'flex',
@@ -61,7 +61,7 @@ const Sidebar = (props) => {
 						/>
 						</Box>
 						<Box>
-						<Typography variant="h6" color="white" fontWeight="bold">ERS ADMIN</Typography>
+						<Typography variant="h6" color="white" fontWeight="bold">ERS Admin</Typography>
 						</Box>
 					</Box>
 				</Box>

@@ -20,6 +20,8 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { SubHeader } from '../../layouts/MainLayout';
+
 
 const AddTender = () => {
 	const { uploadPdfFile } = useUpload();
@@ -92,10 +94,13 @@ const AddTender = () => {
 	return (
 		<>
 			{location?.state?.status && console.log(initialValues.documentUrl)}
-			<MainCard
-				title={
+			<SubHeader title={
 					location?.state?.status ? 'Update Tender Data' : 'Add Tender Data'
-				}
+				} />
+			<MainCard
+				// title={
+				// 	location?.state?.status ? 'Update Tender Data' : 'Add Tender Data'
+				// }
 				border={false}
 				elevation={16}
 				content={false}
@@ -106,7 +111,7 @@ const AddTender = () => {
 					onSubmit={handleSubmit}
 					validationSchema={newsSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2rem 4rem 6rem 6rem' }}>
 						<Form>
 							<Grid container direction="column">
 								<Grid item xs={12}>

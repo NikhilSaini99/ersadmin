@@ -26,9 +26,10 @@ import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { SubHeader } from '../../layouts/MainLayout';
 
 const CorporateResponsibility = () => {
-    const { loading, error, data: CSR, callAPI } = useFetch('GET', '/csr');
+	const { loading, error, data: CSR, callAPI } = useFetch('GET', '/csr');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -54,35 +55,36 @@ const CorporateResponsibility = () => {
 
 	const myBox = {
 		display: 'flex',
-		justifyContent: 'space-between',
-		color: '#72b8bf'
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb: "1rem",
 	};
 
-  return (
-    <>
-    <Box sx={myBox}>
-				<Typography variant="h4">Corporate Responsibility List</Typography>
-				<Link to="/Add-Corporate-Responsibility">
-					<Button
-						variant="contained"
-						size="large"
-						sx={{ fontWeight: 600, py: 2 }}
-						startIcon={<BiAddToQueue size={25} />}
-					>
-						{' '}
-						Add CSR
-					</Button>
-				</Link>
-			</Box>
+	return (
+		<>
+			<SubHeader title={'Corporate Responsibility List'} />
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: {xs:"100%", sm:'90%'},
+						width: { xs: "100%" },
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: {xs:"1rem", md: '2rem', lg: '3rem,', xl: '8rem' },
-						py: '2rem'
+						px: { md: '3rem', lg: '5rem,', xl: '10rem'  },
+						py: '1rem'
 					}}
 				>
+					<Box sx={myBox}>
+						<Link to="/Add-Corporate-Responsibility">
+							<Button
+								variant="contained"
+								size="large"
+								sx={{ fontWeight: 600, py: 1.5 }}
+								startIcon={<BiAddToQueue size={25} />}
+							>
+								{' '}
+								Add CSR
+							</Button>
+						</Link>
+					</Box>
 					<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
@@ -104,20 +106,20 @@ const CorporateResponsibility = () => {
 									<TableCell width="15%">Upload Date</TableCell>
 									<TableCell>URL</TableCell>
 									<TableCell>Delete</TableCell>
-                                    <TableCell>Update</TableCell>
-									
+									<TableCell>Update</TableCell>
+
 								</TableRow>
 							</TableHead>
 							<TableBody>
 								{currentPageData?.map((item, key) => (
 									<CorporateList
-                                       id={item.id}
+										id={item.id}
 										key={key}
 										name={item.name}
 										description={item.description}
 										uploadDate={item.uploadDate}
 										url={item.url}
-										refresh={callAPI}										
+										refresh={callAPI}
 										item={item}
 									/>
 								))}
@@ -135,8 +137,8 @@ const CorporateResponsibility = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-    </>
-  )
+		</>
+	)
 }
 
 export default CorporateResponsibility
@@ -150,7 +152,7 @@ const CorporateList = ({
 	refresh,
 	id,
 	item,
-	
+
 }) => {
 	const navigate = useNavigate();
 	const { data, callAPI } = useFetch('DELETE', `/csr/${id}`);

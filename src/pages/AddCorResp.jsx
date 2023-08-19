@@ -17,6 +17,8 @@ import dayjs from 'dayjs';
 import useFetch from '../hooks/useFetch';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { SubHeader } from '../layouts/MainLayout';
+
 
 export function AddCorporateResponsibility() {
 	const location = useLocation();
@@ -54,12 +56,12 @@ export function AddCorporateResponsibility() {
 
 	return (
 		<>
-			<MainCard
-				title={
+		<SubHeader title={
 					location?.state?.status
-						? 'Update Corporate Responsibility'
-						: 'Add Corporate Responsibility'
-				}
+					? 'Update Corporate Responsibility'
+					: 'Add Corporate Responsibility'
+				} />
+			<MainCard
 				border={false}
 				elevation={16}
 				content={false}
@@ -70,7 +72,7 @@ export function AddCorporateResponsibility() {
 					onSubmit={handleSubmit}
 					validationSchema={validationSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2em 4rem 6rem 6rem' }}>
 						<Form>
 							<Field
 								as={TextField}

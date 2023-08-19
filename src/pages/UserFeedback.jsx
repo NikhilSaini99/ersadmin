@@ -3,6 +3,7 @@ import useFetch from '../hooks/useFetch';
 import { Box, Stack, Typography, Avatar, Paper, Grid } from '@mui/material';
 import { Button } from '@mui/base';
 import LoaderContainer from '../components/LoaderContainer';
+import { SubHeader } from '../layouts/MainLayout';
 
 export function UserFeedBacks() {
     const { data: feedbackData, loading, error,
@@ -21,10 +22,10 @@ export function UserFeedBacks() {
     return (
 
         <>
-            <Box sx={myBox}>
-                <Typography variant='h4'>User Feedback</Typography>
+            <Box>
+            <SubHeader title={'Notice Board'} />
                 <LoaderContainer {...{ loading, error }}>
-                    <Grid container spacing={2} my={5}>
+                    <Grid container spacing={2} mt={3} ml={3} mr={3}>
                         {feedbackData?.data.map((item, index) => (
                             <FeedBackPrint key={index}
                                 id={item.id}

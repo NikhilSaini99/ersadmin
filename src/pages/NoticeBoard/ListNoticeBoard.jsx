@@ -16,6 +16,7 @@ import {
 	IconButton
 } from '@mui/material';
 
+
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
@@ -62,7 +63,7 @@ const ListNoticeBoard = () => {
 		display: 'flex',
 		justifyContent: 'flex-end',
 		color: '#72b8bf',
-		pb:"2rem",
+		pb: "1rem",
 	};
 
 	return (
@@ -72,29 +73,28 @@ const ListNoticeBoard = () => {
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: '90%',
+						width: '100%',
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
-						py: '2rem'
-					}}
-				>
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
+						py: '1rem'
+					}}>
+
 					<Box sx={myBox}>
-				<Link to="/Add-Notice-Board">
-					<Button
-						variant="contained"
-						size="large"
-						sx={{ fontWeight: 600, py: 2 }}
-						startIcon={<BiAddToQueue size={25} />}
-					>
-						{' '}
-						Add Notice Board
-					</Button>
-				</Link>
-				</Box>
+						<Link to="/Add-Notice-Board">
+							<Button
+								variant="contained"
+								size="large"
+								sx={{ fontWeight: 600, py: 1.5 }}
+								startIcon={<BiAddToQueue size={20} />}
+							>
+								{' '}
+								Add Notice Board
+							</Button>
+						</Link>
+					</Box>
 					<TableContainer
 						component={Paper}
-						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
-					>
+						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}>
 						<Table aria-label="Tender-Table">
 							<TableHead>
 								<TableRow

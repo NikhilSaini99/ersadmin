@@ -5,6 +5,7 @@ import LoaderContainer from '../components/LoaderContainer';
 import NewsCard from '../components/NewsCard';
 import PageHeader from '../components/PageHeader';
 import useFetch from '../hooks/useFetch';
+import { SubHeader } from '../layouts/MainLayout';
 
 export function News() {
 	const {

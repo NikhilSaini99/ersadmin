@@ -9,6 +9,8 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
 import useUpload from '../hooks/useUpload';
+import { SubHeader } from '../layouts/MainLayout';
+
 import {
 	TextField,
 	Select,
@@ -100,8 +102,9 @@ const AddFormData = () => {
 	};
 	return (
 		<>
+		<SubHeader title="Add Form Data" />
 			<MainCard
-				title="Add Form Data"
+				// title="Add Form Data"
 				border={false}
 				elevation={16}
 				content={false}
@@ -112,7 +115,7 @@ const AddFormData = () => {
 					onSubmit={handleSubmit}
 					validationSchema={newsSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2rem 4rem 6rem 6rem' }}>
 						<Form>
 							<Grid container direction="column">
 								<Grid item xs={12}>

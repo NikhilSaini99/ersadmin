@@ -23,6 +23,8 @@ import {
 import useFetch from '../hooks/useFetch';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { SubHeader } from '../layouts/MainLayout';
+
 const AddContactBranch = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -63,8 +65,11 @@ const AddContactBranch = () => {
 
 	return (
 		<>
+		<SubHeader title={
+					location?.state?.status?"Update Contact Branch Data": "Add Contact Branch"
+				} />
 			<MainCard
-				title={location?.state?.status?"Update Contact Branch Data": "Add Contact Branch"}
+				// title={location?.state?.status?"Update Contact Branch Data": "Add Contact Branch"}
 				border={false}
 				elevation={16}
 				content={false}
@@ -75,7 +80,7 @@ const AddContactBranch = () => {
 					onSubmit={handleSubmit}
 					validationSchema={validationSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2rem 4rem 6rem 6rem' }}>
 						<Form>
 							<Field
 								as={TextField}

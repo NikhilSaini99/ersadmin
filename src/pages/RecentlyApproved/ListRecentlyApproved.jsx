@@ -26,10 +26,13 @@ import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { SubHeader } from '../../layouts/MainLayout';
+
+
 
 const ListRecentlyApproved = () => {
-    const { loading, error, data: recentlyApproved, callAPI } = useFetch('GET', '/recentlyApproved');
-	
+	const { loading, error, data: recentlyApproved, callAPI } = useFetch('GET', '/recentlyApproved');
+
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -55,34 +58,36 @@ const ListRecentlyApproved = () => {
 
 	const myBox = {
 		display: 'flex',
-		justifyContent: 'space-between',
-		color: '#72b8bf'
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb: "1rem",
 	};
-  return (
-    <>
-        <Box sx={myBox}>
-				<Typography variant="h4">Recently Approved List</Typography>
-				<Link to="/Add-Recently-Approved">
-					<Button
-						variant="contained"
-						size="large"
-						sx={{ fontWeight: 600, py: 2 }}
-						startIcon={<BiAddToQueue size={25} />}
-					>
-						{' '}
-						Add Recently Approved
-					</Button>
-				</Link>
-			</Box>
+	return (
+		<>
+			<SubHeader title={'Recently Approved List'} />
+
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: '90%',
+						width: '100%',
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
-						py: '2rem'
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
+						py: '1rem'
 					}}
 				>
+					<Box sx={myBox}>
+						<Link to="/Add-Recently-Approved">
+							<Button
+								variant="contained"
+								size="large"
+								sx={{ fontWeight: 600, py: 1.5 }}
+								startIcon={<BiAddToQueue size={25} />}
+							>
+								{' '}
+								Add Recently Approved
+							</Button>
+						</Link>
+					</Box>
 					<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
@@ -104,7 +109,7 @@ const ListRecentlyApproved = () => {
 									<TableCell>Description</TableCell>
 									<TableCell>Document Name</TableCell>
 									<TableCell>PDF</TableCell>
-                                    <TableCell>Delete</TableCell>
+									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
 								</TableRow>
 							</TableHead>
@@ -112,7 +117,7 @@ const ListRecentlyApproved = () => {
 								{currentPageData?.map((item, key) => (
 									<MyRecentlyList
 										key={key}
-                                        type={item.type}
+										type={item.type}
 										name={item.name}
 										description={item.description}
 										documentName={item.documentName}
@@ -136,8 +141,8 @@ const ListRecentlyApproved = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-    </>
-  )
+		</>
+	)
 }
 
 export default ListRecentlyApproved
@@ -149,7 +154,7 @@ const MyRecentlyList = ({
 	description,
 	documentName,
 	reference,
-    docURL,
+	docURL,
 	refresh,
 	id,
 	item

@@ -21,6 +21,8 @@ import {
 } from '@mui/material';
 import { Container, } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
+import { SubHeader } from '../layouts/MainLayout';
+
 
 const socialMediaFields = [
     { name: 'Facebook', id: 'facebook' },
@@ -47,9 +49,10 @@ export function Setting() {
 
     return (
         <>
-            <MainCard title="Social Media" border={false} elevation={16} content={false} boxShadow >
+        <SubHeader title="Social Media" />
+            <MainCard  border={false} elevation={16} content={false} boxShadow >
 
-                <Grid container direction="column" spacing={2} padding={4} >
+                <Grid container direction="column" spacing={2} padding={8} >
                     {socialMediaFields.map((field) => (
                         <Grid xs={12} key={field.id} sx={{ display: "", marginBottom: "16px" }} alignItems="center">
                             <TextField
@@ -82,7 +85,7 @@ export function Setting() {
             </MainCard>
 
             <MainCard title="Opening Time" sx={{ marginTop: "20px" }} border={false} elevation={16} content={false} boxShadow >
-                <Grid container direction="column" spacing={2} padding={4} >
+                <Grid container direction="column" spacing={2} padding={8} >
 
                     <Grid xs={12} sx={{ display: "", marginBottom: "16px" }} alignItems="center">
                         <TextField
@@ -120,7 +123,7 @@ export function Setting() {
 
             <MainCard title="Contact Details" sx={{ marginTop: "20px" }} border={false} elevation={16} content={false} boxShadow >
 
-                <Grid container direction="column" spacing={2} padding={4} >
+                <Grid container direction="column" spacing={2} padding={8} >
 
                     <Grid xs={12} sx={{ display: "", marginBottom: "16px" }} alignItems="center">
                         <TextField

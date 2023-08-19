@@ -26,9 +26,11 @@ import useFetch from '../../hooks/useFetch';
 import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import { SubHeader } from '../../layouts/MainLayout';
+
 
 const ListContactBranch = () => {
-    const { loading, error, data: contactBranch, callAPI } = useFetch('GET', '/contact');
+	const { loading, error, data: contactBranch, callAPI } = useFetch('GET', '/contact');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -54,34 +56,35 @@ const ListContactBranch = () => {
 
 	const myBox = {
 		display: 'flex',
-		justifyContent: 'space-between',
-		color: '#72b8bf'
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb: "1rem",
 	};
-  return (
-    <>
-    <Box sx={myBox}>
-				<Typography variant="h4">Contact Branch</Typography>
-				<Link to="/Add-Contact-Branch">
-					<Button
-						variant="contained"
-						size="large"
-						sx={{ fontWeight: 600, py: 2 }}
-						startIcon={<BiAddToQueue size={25} />}
-					>
-						{' '}
-						Add Contact Branch
-					</Button>
-				</Link>
-			</Box>
+	return (
+		<>
+			<SubHeader title={'Contact Branch'} />
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: '90%',
+						width: '100%',
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
-						py: '2rem'
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
+						py: '1rem'
 					}}
 				>
+					<Box sx={myBox}>
+						<Link to="/Add-Contact-Branch">
+							<Button
+								variant="contained"
+								size="large"
+								sx={{ fontWeight: 600, py: 1.5 }}
+								startIcon={<BiAddToQueue size={25} />}
+							>
+								{' '}
+								Add Contact Branch
+							</Button>
+						</Link>
+					</Box>
 					<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
@@ -141,8 +144,8 @@ const ListContactBranch = () => {
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-    </>
-  )
+		</>
+	)
 }
 
 export default ListContactBranch
@@ -153,14 +156,14 @@ const ContactBranchList = ({
 	branchCity,
 	branchState,
 	contactNo,
-    lat,
+	lat,
 	long,
 	isHeadQuater,
 	item,
 	refresh,
-    id,
+	id,
 
-	
+
 }) => {
 	const navigate = useNavigate();
 	const { data, callAPI } = useFetch('DELETE', `/contact/${id}`);
@@ -195,7 +198,7 @@ const ContactBranchList = ({
 				<TableCell>{contactNo}</TableCell>
 				<TableCell>{lat}</TableCell>
 				<TableCell>{long}</TableCell>
-				<TableCell>{isHeadQuater?"Yes":"No"}</TableCell>
+				<TableCell>{isHeadQuater ? "Yes" : "No"}</TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
 						<DeleteIcon sx={{ color: 'red' }} />

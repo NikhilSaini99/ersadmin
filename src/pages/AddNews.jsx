@@ -21,6 +21,8 @@ import useFile from '../hooks/useFile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SunEditor from 'suneditor-react';
 import "suneditor/dist/css/suneditor.min.css";
+import { SubHeader } from '../layouts/MainLayout';
+
 
 const newsSchema = Yup.object().shape({
 	news: Yup.string().required('News Name is required'),
@@ -89,14 +91,14 @@ export function AddNews() {
 				isSubmitting
 			}) => (
 				<Form>
+					<SubHeader title="Add News" />
 					<MainCard
-						title="Add News"
 						border={false}
 						elevation={16}
 						content={false}
 						boxShadow
 					>
-						<Grid container spacing={2} padding={4}>
+						<Grid container spacing={2} padding={6}>
 							<Grid item xs={6} md={6}>
 								<Field
 									fullWidth

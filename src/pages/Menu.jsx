@@ -1,11 +1,12 @@
 
-import { Box, Typography,Button, Grid, Paper } from '@mui/material';
+import { Box, Typography, Button, Grid, Paper } from '@mui/material';
 import React from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import LoaderContainer from '../components/LoaderContainer';
 import useFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
+import { SubHeader } from '../layouts/MainLayout';
 
 export function Menu() {
 
@@ -20,40 +21,43 @@ export function Menu() {
 
     const myBox = {
         display: 'flex',
-        justifyContent: 'space-between',
-        color: "#72b8bf"
+        justifyContent: 'flex-end',
+        color: '#72b8bf',
+        pb: "1rem",
+        mt:"1rem",
+        mr:"3rem"
     }
 
     return (
 
         <>
-         <Box sx={myBox}>
-                <Typography variant='h4'>Menu List</Typography>
-                <Link to="/AddMenu"> 
-                <Button
-					variant="contained"
-					size="large"
-					sx={{ fontWeight: 600, py: 2 }}
-					startIcon={<BiAddToQueue size={25} />}
-				>
-					{' '}
-					Add Menu Items
-				</Button>
-                </Link>
-            </Box>
+            <SubHeader title={'Menu List'} />
 
             <LoaderContainer {...{ loading, error }}>
-            <Grid container spacing={2} mt={2}>
-                {newsData?.data?.map((item,key) => (
-                    <AllMenuList 
-                        key={key}
-                        names={item.menuName}
-                        subMenu={item.sumMenuName}
-                        id={item.id}
-                        refresh={callAPI}
-                    />
-                   
-                ))}
+            <Box sx={myBox}>
+                <Link to="/AddMenu">
+                    <Button
+                        variant="contained"
+                        size="large"
+                        sx={{ fontWeight: 600, py: 1.5 }}
+                        startIcon={<BiAddToQueue size={25} />}
+                    >
+                        {' '}
+                        Add Menu Items
+                    </Button>
+                </Link>
+            </Box>
+                <Grid container spacing={2} mt={1} ml={4}>
+                    {newsData?.data?.map((item, key) => (
+                        <AllMenuList
+                            key={key}
+                            names={item.menuName}
+                            subMenu={item.sumMenuName}
+                            id={item.id}
+                            refresh={callAPI}
+                        />
+
+                    ))}
                 </Grid>
             </LoaderContainer>
 
@@ -64,10 +68,10 @@ export function Menu() {
 
 
 //Printing Menu List on Menu Page
-const AllMenuList = ({ names, subMenu, refresh, id })=>{
+const AllMenuList = ({ names, subMenu, refresh, id }) => {
     const { loading, data, error, callAPI } = useFetch('DELETE', `/menuService/${id}`);
 
-    
+
     useEffect(() => {
         if (data?.success) refresh();
     }, [data])
@@ -87,7 +91,7 @@ const AllMenuList = ({ names, subMenu, refresh, id })=>{
 
     }
 
-    return(
+    return (
         <>
             <Grid item xs={3}>
                 <Paper elevation={20}>

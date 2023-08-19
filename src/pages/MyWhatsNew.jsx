@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import LoaderContainer from '../components/LoaderContainer'
 import MyNewsPrint from './MyNewsPrint'
 import { BiAddToQueue } from 'react-icons/bi'
+import { SubHeader } from '../layouts/MainLayout';
+
 
 const MyWhatsNew = () => {
 
@@ -18,20 +20,25 @@ const MyWhatsNew = () => {
 
     const myBox = {
         display: 'flex',
-        justifyContent: 'space-between',
-        color: "#72b8bf"
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb:"1rem",
+        mt:"1rem",
+        mr:"2rem"
     }
 
 
     return (
         <>
+        	<SubHeader title={'Whats New'} />
+            
+            <LoaderContainer {...{ loading, error }}>
             <Box sx={myBox}>
-                <Typography variant='h4'>Whats New</Typography>
                 <Link to="/AddMyWhatsNews"> 
                 <Button
 					variant="contained"
 					size="large"
-					sx={{ fontWeight: 600, py: 2 }}
+					sx={{ fontWeight: 600, py: 1.5 }}
 					startIcon={<BiAddToQueue size={25} />}
 				>
 					{' '}
@@ -39,9 +46,7 @@ const MyWhatsNew = () => {
 				</Button>
                 </Link>
             </Box>
-            
-            <LoaderContainer {...{ loading, error }}>
-            <Grid container spacing={2} mt={2}>
+            <Grid container spacing={2} mt={1} ml={3}>
                 {newsData?.data?.map((item,key) => (
                     <MyNewsPrint 
                         key={key}
