@@ -50,6 +50,8 @@ import ListNoticeBoard from '../pages/NoticeBoard/ListNoticeBoard';
 import CorporateResponsibility from '../pages/CorporateResponsibility/CorporateResponsibility';
 import ListContactBranch from '../pages/ContactBranch/ListContactBranch';
 import ListFormData from '../pages/FormData/ListFormData';
+import PublicMeeting from '../pages/PublicMeeting/PublicMeeting';
+import ListPublicMeeting from '../pages/PublicMeeting/ListPublicMeeting';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -209,6 +211,14 @@ const routes = [
 			{
 				path: 'List-Notice-Board',
 				element: <ListNoticeBoard />
+			},
+			{
+				path: 'List-Public-Meetings',
+				element: <ListPublicMeeting />
+			},
+			{
+				path: 'Add-Public-Meetings',
+				element: <PublicMeeting />
 			},
 		]
 	}

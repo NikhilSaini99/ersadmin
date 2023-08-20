@@ -69,9 +69,9 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Public Meetings (Not Done)',
+        title: 'Public Meetings',
         icon: MdOutlineApproval,
-        href: '/',
+        href: '/List-Public-Meetings',
         childrens: []
     },
     {

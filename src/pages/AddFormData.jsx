@@ -72,7 +72,7 @@ const AddFormData = () => {
 		uploadDate: location?.state?.status ? dayjs(uploadDate) : null,
 	};
 
-	const categories = ['Category 1', 'Category 2', 'Category 3'];
+	const categories = ['VAT', 'Income Tax', 'Customs & Excise'];
 
 	const handleSubmit = async (values,{resetForm}) => {
 		// Handle form submission logic here
