@@ -16,6 +16,7 @@ import UploadImage from '../components/UploadImage';
 import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
 import { useNavigate } from 'react-router-dom';
+import { SubHeader } from '../layouts/MainLayout';
 
 export function Image() {
 	const navigate = useNavigate();
@@ -51,15 +52,15 @@ export function Image() {
 	}, [groups]);
 	return (
 		<>
+		<SubHeader title=" Create Image " />
 			<MainCard
-				title=" Create Image "
 				border={false}
 				elevation={16}
 				content={false}
 				boxShadow
 			>
 				<form onSubmit={formik.handleSubmit}>
-					<Grid container direction="column" spacing={2} padding={4}>
+					<Grid container direction="column" spacing={2} padding={6}>
 						<Grid item xs={12}>
 							<Autocomplete
 								id="asynchronous-demo"

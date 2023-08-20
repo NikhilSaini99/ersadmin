@@ -14,7 +14,7 @@ import {
 	Paper,
 	TablePagination,
 	IconButton,
-    Avatar
+	Avatar
 } from '@mui/material';
 
 import { Link } from 'react-router-dom';
@@ -27,10 +27,12 @@ import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { SubHeader } from '../../layouts/MainLayout';
+
 
 
 const ListPublications = () => {
-    const { loading, error, data: publications, callAPI } = useFetch('GET', '/publication');
+	const { loading, error, data: publications, callAPI } = useFetch('GET', '/publication');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -56,37 +58,39 @@ const ListPublications = () => {
 
 	const myBox = {
 		display: 'flex',
-		justifyContent: 'space-between',
-		color: '#72b8bf'
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb: "1rem",
 	};
 
-    
-console.log(publications)
-  return (
-   <>
-        <Box sx={myBox}>
-				<Typography variant="h4">Publications List</Typography>
-				<Link to="/Add-publication">
-					<Button
-						variant="contained"
-						size="large"
-						sx={{ fontWeight: 600, py: 2 }}
-						startIcon={<BiAddToQueue size={25} />}
-					>
-						{' '}
-						Add Publications
-					</Button>
-				</Link>
-			</Box>
+
+	console.log(publications)
+	return (
+		<>
+			<SubHeader title={'Publications List'} />
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: '90%',
+						width: '100%',
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '5rem', lg: '5rem,', xl: '10rem' },
-						py: '2rem'
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
+						py: '1rem'
 					}}
 				>
+
+					<Box sx={myBox}>
+						<Link to="/Add-publication">
+							<Button
+								variant="contained"
+								size="large"
+								sx={{ fontWeight: 600, py: 1.5 }}
+								startIcon={<BiAddToQueue size={25} />}
+							>
+								{' '}
+								Add Publications
+							</Button>
+						</Link>
+					</Box>
 					<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
@@ -107,7 +111,7 @@ console.log(publications)
 									<TableCell>Description</TableCell>
 									<TableCell>Document Name</TableCell>
 									<TableCell>PDF</TableCell>
-                                    <TableCell>Cover Photo</TableCell>
+									<TableCell>Cover Photo</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
 								</TableRow>
@@ -140,8 +144,8 @@ console.log(publications)
 					</TableContainer>
 				</Box>
 			</LoaderContainer>
-   </>
-  )
+		</>
+	)
 }
 
 export default ListPublications
@@ -168,23 +172,23 @@ const MyPublicationList = ({
 		callAPI();
 	}
 
-	function handleUpdate(){
-		navigate("/Add-publication", {state:{formdata:item, status:true}})
+	function handleUpdate() {
+		navigate("/Add-publication", { state: { formdata: item, status: true } })
 	}
 
-	function handlePDFdownload(pdfURL){
+	function handlePDFdownload(pdfURL) {
 		fetch(pdfURL)
-		.then((response) => response.blob())
-		.then((blob) => {
-			const url = window.URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.setAttribute('href', url);
-			link.setAttribute('download', 'Publications.pdf');
-			link.click();
-		})
-		.catch((error) => {
-			console.error('Error downloading PDF:', error);
-		});
+			.then((response) => response.blob())
+			.then((blob) => {
+				const url = window.URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.setAttribute('href', url);
+				link.setAttribute('download', 'Publications.pdf');
+				link.click();
+			})
+			.catch((error) => {
+				console.error('Error downloading PDF:', error);
+			});
 	}
 
 	return (
@@ -203,24 +207,24 @@ const MyPublicationList = ({
 				<TableCell>{description}</TableCell>
 				<TableCell>{documentName}</TableCell>
 				<TableCell>
-					<IconButton onClick={()=>handlePDFdownload(docURL)}>
-						<PictureAsPdfIcon sx={{ color: "red"}}/>
+					<IconButton onClick={() => handlePDFdownload(docURL)}>
+						<PictureAsPdfIcon sx={{ color: "red" }} />
 					</IconButton>
 				</TableCell>
-                <TableCell sx={{display:"flex", justifyContent:"center"}}>
-                    <Avatar width={36} height={36}>
-                        <img src={coverPhoto} alt="photo" loading='lazy'/>
-                    </Avatar>
-                    
-                    </TableCell>
+				<TableCell sx={{ display: "flex", justifyContent: "center" }}>
+					<Avatar width={36} height={36}>
+						<img src={coverPhoto} alt="photo" loading='lazy' />
+					</Avatar>
+
+				</TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
-						<DeleteIcon sx={{ color: "red" }}/>
+						<DeleteIcon sx={{ color: "red" }} />
 					</IconButton>
 				</TableCell>
 				<TableCell>
 					<IconButton onClick={handleUpdate}>
-						<EditIcon sx={{ color: "lightgreen" }}/>
+						<EditIcon sx={{ color: "lightgreen" }} />
 					</IconButton>
 				</TableCell>
 			</TableRow>

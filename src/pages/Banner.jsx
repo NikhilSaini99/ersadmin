@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BannerImg from '../components/BannerImg';
 import LoaderContainer from '../components/LoaderContainer';
 import useFetch from '../hooks/useFetch';
+import { SubHeader } from '../layouts/MainLayout';
 
 // import { link } from 'fs';
 
@@ -23,7 +24,7 @@ export function Banner() {
 		<>
 			<div className="basis-3/4 flex flex-col  justify-items-end gap-16 mr-16 py-6">
 				<div className="flex justify-between  items-center">
-					<h1 className=" text-4xl text-[#72B8BF] font-semibold">All Banner</h1>
+				<SubHeader title={'All Banner'} />
 					<Link to="/Add-Banner">
 						<div className="text-end">
 							<button

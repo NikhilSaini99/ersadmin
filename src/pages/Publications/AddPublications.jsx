@@ -22,6 +22,7 @@ import useUpload from '../../hooks/useUpload';
 import UsePdfCover from '../RecentlyApproved/UsePdfCover';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { SubHeader } from '../../layouts/MainLayout';
 
 const AddPublications = () => {
 	const { uploadPdfFile } = useUpload();
@@ -113,8 +114,10 @@ const AddPublications = () => {
 console.log(selectedCover)
 	return (
 		<>
+		<SubHeader title={
+				location?.state?.status?"Update Publications":"Add Publications"
+				} />
 			<MainCard
-				title={location?.state?.status?"Update Publications":"Add Publications"}
 				border={false}
 				elevation={16}
 				content={false}
@@ -125,7 +128,7 @@ console.log(selectedCover)
 					onSubmit={handleSubmit}
 					validationSchema={newsSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2rem 4rem 6rem 6rem' }}>
 						<Form>
 							<Grid container direction="column">
 							

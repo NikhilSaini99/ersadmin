@@ -11,6 +11,8 @@ import UploadImage from '../components/UploadImage';
 import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
 import { useNavigate } from 'react-router-dom';
+import { SubHeader } from '../layouts/MainLayout';
+
 
 export function AddBanner() {
 	const { UploadFile } = useFile();
@@ -39,15 +41,16 @@ export function AddBanner() {
 	});
 
 	return (
+		<>
+		<SubHeader title={'Add Banner'} />
 		<MainCard
-			title="Add Banner"
 			border={false}
 			elevation={16}
 			content={false}
 			boxShadow
 		>
 			<form onSubmit={formik.handleSubmit}>
-				<Grid container direction="column" spacing={2} padding={4}>
+				<Grid container direction="column" spacing={2} padding={6}>
 					<Grid item xs={12}>
 						<TextField
 							fullWidth
@@ -132,6 +135,7 @@ export function AddBanner() {
 				</CardActions>
 			</form>
 		</MainCard>
+		</>
 	);
 	async function createBanner(values) {
 		const result = await UploadFile('/files/banner-image', images);

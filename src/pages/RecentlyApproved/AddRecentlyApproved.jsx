@@ -20,8 +20,10 @@ import { useState } from 'react';
 import useUpload from '../../hooks/useUpload';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { SubHeader } from '../../layouts/MainLayout';
 
-const AddRecentlyApproved = () => {	
+
+const AddRecentlyApproved = () => {
 	const { uploadPdfFile } = useUpload();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -41,9 +43,9 @@ const AddRecentlyApproved = () => {
 
 	const initialValues = {
 		type: location?.state?.status ? updateformValues.type : '',
-		name:  location?.state?.status ? updateformValues.name : '',
-		documentName:  location?.state?.status ? updateformValues.documentName : '',
-		description:  location?.state?.status ? updateformValues.description : '',
+		name: location?.state?.status ? updateformValues.name : '',
+		documentName: location?.state?.status ? updateformValues.documentName : '',
+		description: location?.state?.status ? updateformValues.description : '',
 		documentUrl: ''
 	};
 
@@ -58,12 +60,12 @@ const AddRecentlyApproved = () => {
 			// console.log(uploadURL)
 			location?.state?.status
 				? updateformAPI({
-						...values,
-						documentUrl: uploadURL.data.url.toString()
+					...values,
+					documentUrl: uploadURL.data.url.toString()
 				})
 				: callAPI({
-						...values,
-						documentUrl: uploadURL.data.url.toString()
+					...values,
+					documentUrl: uploadURL.data.url.toString()
 				});
 			// Reset the form after successful submission
 			resetForm();
@@ -79,12 +81,11 @@ const AddRecentlyApproved = () => {
 	};
 	return (
 		<>
+			<SubHeader title={
+				location?.state?.status
+					? 'Update Recently Approved'
+					: 'Add Recently Approved'} />
 			<MainCard
-				title={
-					location?.state?.status
-						? 'Update Recently Approved'
-						: 'Add Recently Approved'
-				}
 				border={false}
 				elevation={16}
 				content={false}
@@ -95,7 +96,7 @@ const AddRecentlyApproved = () => {
 					onSubmit={handleSubmit}
 					validationSchema={newsSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2em 4rem 6rem 6rem'  }}>
 						<Form>
 							<Grid container direction="column">
 								<Grid item xs={12}>

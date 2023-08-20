@@ -11,6 +11,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HelpIcon from '@mui/icons-material/Help';
 import { useState } from 'react'
+import { SubHeader } from '../layouts/MainLayout';
 
 const FAQ = () => {
 
@@ -25,18 +26,34 @@ const FAQ = () => {
 
     const myBox = {
         display: 'flex',
-        justifyContent: 'space-between',
-        color: "#72b8bf"
+        justifyContent: 'flex-end',
+        color: '#72b8bf',
+        pb: "1rem",
+        mr: '6rem'
     }
     return (
         <>
-            <Box sx={myBox}>
-                <Typography variant='h4'>ALL FAQ QUESTIONS</Typography>
-                <Link to="/AddFAQ"> <Button variant='contained' sx={{ fontWeight: 'bold' }} >Add FAQ</Button></Link>
-            </Box>
+            <SubHeader title={'ALL FAQ QUESTIONS'} />
+
+
 
             <LoaderContainer {...{ loading, error }}>
-                <Stack sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '5rem' }}>
+                <Stack sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem', ml: '2rem' }}>
+
+                    <Box sx={myBox}>
+                        <Link to="/AddFAQ">
+                            <Button
+                                variant="contained"
+                                size="large"
+                                sx={{ fontWeight: 600, py: 1.5 }}
+                            // startIcon={<BiAddToQueue size={20} />}
+                            >
+                                {' '}
+                                Add FAQ
+                            </Button>
+                        </Link>
+                    </Box>
+
                     {faqData?.data?.map((item, index) => (
                         <MyFAQPrint
                             key={index}
@@ -59,7 +76,7 @@ export default FAQ
 
 /*---------- PRINT FAQ STARTS ---------------*/
 
-const MyFAQPrint = ({ myidx, id, question, answer, category ,refresh}) => {
+const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
 
     const { loading, data, error, callAPI } = useFetch('DELETE', `/faq/${id}`);
 
@@ -148,40 +165,41 @@ export const AddFAQ = () => {
 
     return (
         <>
+            <SubHeader title="ALL FAQ QUESTIONS" />
             <MainCard
-                title="ALL FAQ QUESTIONS"
                 border={false}
                 elevation={16}
                 content={false}
                 boxShadow
             >
+              <Box sx={{ p: '1em 4rem 2rem 2rem' }}>
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container direction="column" spacing={2} padding={4}>
-                    <Grid item xs={12}>
+                        <Grid item xs={12}>
 
-<FormControl sx={{ width: { xs: '60%', md: '50%', lg: '40%' }, }}>
-    <InputLabel id="question_cat">Select Category</InputLabel>
-    <Select
-        labelId="question_cat"
-        id="question_cat"
-        name="question_cat"
-        value={formik.values.question_cat}
-        label="Select category"
-        onChange={formik.handleChange}
-        required
-    >
-        <MenuItem value={'Corporate'}>Corporate</MenuItem>
-        <MenuItem value={'VAT'}>VAT</MenuItem>
-        <MenuItem value={'Income Tax'}>Income Tax</MenuItem>
-        <MenuItem value={'Custom and Excise'}>Custom and Excise</MenuItem>
-        <MenuItem value={'e-Tax'}>e-Tax</MenuItem>
-        <MenuItem value={'Ayscuda World'}>Ayscuda World</MenuItem>
-        <MenuItem value={'Sekulula VAT Easy'}>Sekulula VAT Easy</MenuItem>
-        <MenuItem value={'Alcohol and Tabaco Levy'}>Alcohol and Tabaco Levy</MenuItem>
-    </Select>
-</FormControl>
+                            <FormControl sx={{ width: { xs: '60%', md: '50%', lg: '40%' }, }}>
+                                <InputLabel id="question_cat">Select Category</InputLabel>
+                                <Select
+                                    labelId="question_cat"
+                                    id="question_cat"
+                                    name="question_cat"
+                                    value={formik.values.question_cat}
+                                    label="Select category"
+                                    onChange={formik.handleChange}
+                                    required
+                                >
+                                    <MenuItem value={'Corporate'}>Corporate</MenuItem>
+                                    <MenuItem value={'VAT'}>VAT</MenuItem>
+                                    <MenuItem value={'Income Tax'}>Income Tax</MenuItem>
+                                    <MenuItem value={'Custom and Excise'}>Custom and Excise</MenuItem>
+                                    <MenuItem value={'e-Tax'}>e-Tax</MenuItem>
+                                    <MenuItem value={'Ayscuda World'}>Ayscuda World</MenuItem>
+                                    <MenuItem value={'Sekulula VAT Easy'}>Sekulula VAT Easy</MenuItem>
+                                    <MenuItem value={'Alcohol and Tabaco Levy'}>Alcohol and Tabaco Levy</MenuItem>
+                                </Select>
+                            </FormControl>
 
-</Grid>
+                        </Grid>
 
                         <Grid item xs={12}>
                             <TextField
@@ -220,7 +238,7 @@ export const AddFAQ = () => {
                                 required
                             />
                         </Grid>
-                       
+
 
                         <Divider sx={{ p: 2 }} />
                         <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
@@ -230,6 +248,7 @@ export const AddFAQ = () => {
                         </CardActions>
                     </Grid>
                 </form>
+                </Box>
             </MainCard>
         </>
     )

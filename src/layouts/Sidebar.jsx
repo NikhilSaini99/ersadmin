@@ -1,4 +1,4 @@
-const SidebarWidth = 350;
+export const SidebarWidth = 350;
 
 import {
 	Avatar,
@@ -18,7 +18,9 @@ import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Logo from '../assets/images/logo.jpeg';
+import sidebarBackground from '../../public/images/1.svg';
 import menue from './data';
+import profile from '../../public/images/profile.png';
 
 const Sidebar = (props) => {
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
@@ -36,58 +38,34 @@ const Sidebar = (props) => {
 				flexDirection: 'column',
 				height: '100%',
 				width: SidebarWidth,
-				background: '#D5ECEF'
+				background: `url(${sidebarBackground})`
 			}}
 		>
 			<PerfectScrollbar>
-				<Box sx={{ p: 1, px: 2 }}>
-					<Link to="/">
-						<img
-							src={Logo}
-							alt="logo"
-							style={{ width: '120px', height: '84px',mixBlendMode:'multiply' }}
-							srcSet=""
-						/>
-					</Link>
-				</Box>
-				<Box
-					sx={{
-						alignItems: 'center',
-						display: 'flex',
-						gap: '20px',
-						p: 2,
-						marginRight: '2px',
-						backgroundColor: '#72B8BF',
-						color: 'white'
-					}}
-				>
-					{/* <NavLink to="/admin/account"> */}
-					<Avatar
-						component={NavLink}
-						src={''}
+				<Box sx={{ py: 5, px:2, background: '#373164', height: '162px', width:"100%" }}>
+					<Box
 						sx={{
-							cursor: 'pointer',
-							width: 45,
-							height: 45
+							display: 'flex',
+							gap: '1rem',
+							alignItems:"center",
 						}}
-						to="/admin/account"
-					/>
-					<div>
-						<Typography
-							variant="h5"
+					>
+						<Box sx={{width:"96px"}}>
+						<img
+							src={profile}
+							alt="logo"
 							style={{
-								color: 'white',
-								margin: '10px 0 0 0'
+								width: '100%',
+								height: '100%',
 							}}
-						>
-							ERS Admin
-						</Typography>
-						<Typography color="white" variant="body2">
-							{''}
-						</Typography>
-					</div>
-					{/* </NavLink> */}
+						/>
+						</Box>
+						<Box>
+						<Typography variant="h6" color="white" fontWeight="bold">ERS Admin</Typography>
+						</Box>
+					</Box>
 				</Box>
+
 				<Divider />
 
 				<Box>
@@ -114,7 +92,7 @@ const Sidebar = (props) => {
 								>
 									<ListItemButton
 										onClick={() => {}}
-										button='true'
+										button="true"
 										className={`${isSelected && 'shadow-md'}`}
 										component={NavLink}
 										to={item.href}
@@ -124,17 +102,18 @@ const Sidebar = (props) => {
 											borderRadius: '10px',
 											mx: 1,
 											py: 1.2,
-											color: isSelected ? '#72B8BF' : '#5F748D',
+											color: isSelected ? '#000000' : '#FFF',
 											background: isSelected ? '#fff!important' : '',
 											'&:hover': {
-												background: '#fff'
+												background: '#fff',
+												color: 'black'
 											}
 										}}
 									>
 										<ListItemIcon
 											sx={{
 												minWidth: '36px',
-												color: isSelected ? '#72B8BF' : '#5F748D'
+												color: isSelected ? '#000000' : '#FBC92A'
 											}}
 										>
 											<item.icon size={22} />

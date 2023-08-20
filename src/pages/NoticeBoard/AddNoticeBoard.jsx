@@ -24,6 +24,8 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { SubHeader } from '../../layouts/MainLayout';
+
 
 const AddNoticeBoard = () => {
 	const { uploadPdfFile } = useUpload();
@@ -98,10 +100,13 @@ const AddNoticeBoard = () => {
 	console.log(upload_URL_FLAG_REF.current)
 	return (
 		<>
-			<MainCard
-				title={
+			<SubHeader title={
 					location?.state?.status ? 'Update Notice Board Data' : 'Add Notice Board Data'
-				}
+				} />
+			<MainCard
+				// title={
+				// 	location?.state?.status ? 'Update Notice Board Data' : 'Add Notice Board Data'
+				// }
 				border={false}
 				elevation={16}
 				content={false}
@@ -112,7 +117,7 @@ const AddNoticeBoard = () => {
 					onSubmit={handleSubmit}
 					validationSchema={newsSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '2em 4rem 6rem 6rem' }}>
 						<Form>
 							<Grid container direction="column">
 							
@@ -166,7 +171,7 @@ const AddNoticeBoard = () => {
 									<ErrorMessage name="notice" component={FormHelperText} />
 								</Grid>
 								</Grid>
-								<Grid item xs={12} mb={1.5}>
+								<Grid item xs={12} mb={1.5} mt={1.5}>
 									<Field name="date">
 										{({ field }) => (
 											<LocalizationProvider dateAdapter={AdapterDayjs}>
