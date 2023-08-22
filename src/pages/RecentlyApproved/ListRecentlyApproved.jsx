@@ -153,7 +153,6 @@ const MyRecentlyList = ({
 	name,
 	description,
 	documentName,
-	reference,
 	docURL,
 	refresh,
 	id,

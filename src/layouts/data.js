@@ -154,9 +154,9 @@ const Menuitems = [
         href: '/'
     },
     {
-        title: 'Practice Note (Not Done)',
+        title: 'Practice Note',
         icon: FaQuestion,
-        href: '/'
+        href: '/Practice-Notes-List'
     },
 ];
 

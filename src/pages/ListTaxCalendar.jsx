@@ -29,7 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
 
-const ListPublicMeeting = () => {
+const ListTaxCalendar = () => {
     const { loading, error, data: tender, callAPI } = useFetch('GET', '/publicMeeting');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -60,10 +60,9 @@ const ListPublicMeeting = () => {
 		color: '#72b8bf',
 		pb: "1rem",
 	};
-
   return (
     <>
-		<SubHeader title={"Public Meetings"}/>
+<SubHeader title={"Public Meetings"}/>
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
@@ -135,11 +134,12 @@ const ListPublicMeeting = () => {
 						/>
 					</TableContainer>
 				</Box>
-			</LoaderContainer></>
+			</LoaderContainer>
+    </>
   )
 }
 
-export default ListPublicMeeting
+export default ListTaxCalendar
 
 const MyPublicMeetingList = ({
 	publicMeetingName,
@@ -165,21 +165,6 @@ const MyPublicMeetingList = ({
 		navigate('/Add-Public-Meetings', { state: { formdata: item, status: true } });
 	}
 
-	// function handleDownloadPDF(pdfURL) {
-	// 	fetch(pdfURL)
-	// 		.then((response) => response.blob())
-	// 		.then((blob) => {
-	// 			const url = window.URL.createObjectURL(blob);
-	// 			const link = document.createElement('a');
-	// 			link.setAttribute('href', url);
-	// 			link.setAttribute('download', 'tender.pdf');
-	// 			link.click();
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error('Error downloading PDF:', error);
-	// 		});
-	// }
-
 	return (
 		<>
 			<TableRow
@@ -192,13 +177,6 @@ const MyPublicMeetingList = ({
 					}
 				}}>
 				<TableCell>{publicMeetingName}</TableCell>
-				<TableCell>{dayjs(uploadDate).format('DD-MM-YYYY')}</TableCell>
-                <TableCell sx={{display:"flex", justifyContent:"center"}}>
-                    <Avatar width={36} height={36}>
-                        <img src={imgUrl} alt="photo" loading='lazy'/>
-                    </Avatar>
-                    
-                    </TableCell>
 				<TableCell>{description}</TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
@@ -214,3 +192,5 @@ const MyPublicMeetingList = ({
 		</>
 	);
 };
+
+

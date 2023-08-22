@@ -52,6 +52,8 @@ import ListContactBranch from '../pages/ContactBranch/ListContactBranch';
 import ListFormData from '../pages/FormData/ListFormData';
 import PublicMeeting from '../pages/PublicMeeting/PublicMeeting';
 import ListPublicMeeting from '../pages/PublicMeeting/ListPublicMeeting';
+import AddPracticeNotes from '../pages/PracticeNotes/AddPracticeNotes';
+import ListPracticeNotes from '../pages/PracticeNotes/ListPracticeNotes';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -151,6 +153,14 @@ const routes = [
 			{
 				path: 'Add-Recently-Approved',
 				element: <AddRecentlyApproved/>,
+			},
+			{
+				path: 'Practice-Notes-List',
+				element: <ListPracticeNotes/>,
+			},
+			{
+				path: 'Add-Practice-Notes',
+				element: <AddPracticeNotes/>,
 			},
 			{
 				path: 'Publications-List',

@@ -1,4 +1,5 @@
 import {
+	Box,
 	CardActionArea,
 	CardActions,
 	CardContent,
@@ -10,10 +11,12 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import React, { useEffect } from 'react';
 import { MdDelete } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoaderContainer from '../components/LoaderContainer';
 import PageHeader from '../components/PageHeader';
 import useFetch from '../hooks/useFetch';
+import { SubHeader } from '../layouts/MainLayout';
+import { BiAddToQueue } from 'react-icons/bi';
 export function UploadGalleryImage() {
 	const {
 		loading,
@@ -24,21 +27,49 @@ export function UploadGalleryImage() {
 
 	useEffect(() => callAPI(), []);
 	// console.log(gallery)
+	const myBox = {
+		display: 'flex',
+		justifyContent: 'flex-end',
+		color: '#72b8bf',
+		pb: "1rem",
+		my:"1.5rem"
+	};
 	return (
 		<>
-			<PageHeader
-				heading={'All Images Group'}
-				buttonText="Add Image"
-				link="/Image"
+			<SubHeader
+				title={'All Images Group'}
 			/>
+			
 			<LoaderContainer {...{ loading, error }}>
-				<Grid container spacing={6}>
+			<Box
+					sx={{
+						width: '100%',
+						margin: { xs: '0 auto', lg: '0  auto' },
+						px: { md: '3rem', lg: '2rem,', xl: '2rem' },
+						py: '0rem'
+					}}
+				>
+			<Box sx={myBox}>
+						<Link to="/Image">
+							<Button
+								variant="contained"
+								size="large"
+								sx={{ fontWeight: 600, py: 1.5 }}
+								startIcon={<BiAddToQueue size={25} />}
+							>
+								{' '}
+								Add Gallery Image
+							</Button>
+						</Link>
+					</Box>
+				<Grid container spacing={6} sx={{marginLeft:"0 !important"}}>
 					{gallery?.data?.map((item, key) => (
 						<Grid item sm={6} md={4} key={key}>
 							<GalleryCard {...{ ...item }} refresh={callAPI} data={gallery} />
 						</Grid>
 					))}
 				</Grid>
+				</Box>
 			</LoaderContainer>
 		</>
 	);
@@ -103,14 +134,6 @@ function GalleryCard({ url, groupName, imageName, id, refresh, }) {
 				>
 					delete
 				</Button>
-				{/* <Button
-					variant="outlined"
-					size="small"
-					style={{ marginLeft: '15px' }}
-					startIcon={<FaRegEdit size={20} />}
-				>
-					update
-				</Button> */}
 			</CardActions>
 		</Card>
 	);

@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import UsePdfCover from '../RecentlyApproved/UsePdfCover';
+import { SubHeader } from '../../layouts/MainLayout';
 
 const PublicMeeting = () => {
 	const location = useLocation();
@@ -94,10 +95,11 @@ const PublicMeeting = () => {
 
   return (
     <>
-     <MainCard
-				title={
+	<SubHeader title={
 					location?.state?.status ? 'Update Public Meeting Data' : 'Add Public Meeting Data'
-				}
+				}/>
+     <MainCard
+				
 				border={false}
 				elevation={16}
 				content={false}
@@ -108,7 +110,7 @@ const PublicMeeting = () => {
 					onSubmit={handleSubmit}
 					validationSchema={newsSchema}
 				>
-					<Box sx={{ p: '0 2rem 2rem 2rem' }}>
+					<Box sx={{ p: '0 2rem 2rem 2rem', mt:"2rem" }}>
 						<Form>
 							<Grid container direction="column">
 								<Grid item xs={12}>

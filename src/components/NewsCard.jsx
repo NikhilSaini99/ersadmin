@@ -1,4 +1,5 @@
 import {
+	Box,
 	CardActionArea,
 	CardActions,
 	CardContent,
@@ -11,7 +12,8 @@ import React, { useEffect } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import useFetch from '../hooks/useFetch';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { BiAddToQueue } from 'react-icons/bi';
 
 export default function NewsCard({ img, title, description, id, refresh }) {
 	
@@ -29,8 +31,10 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 		console.log(description)
 		navigate('/Add-News',{state:{id:id,description:description}})
 	}
+	
 	return (
 		<>
+		
 			<Card
 				// sx={{ maxWidth: 345 }}
 				key={id}

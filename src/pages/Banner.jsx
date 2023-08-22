@@ -22,9 +22,11 @@ export function Banner() {
 	
 	return (
 		<>
-			<div className="basis-3/4 flex flex-col  justify-items-end gap-16 mr-16 py-6">
-				<div className="flex justify-between  items-center">
-				<SubHeader title={'All Banner'} />
+		<SubHeader title={'All Banner'} />
+			<div className="basis-3/4 flex flex-col  justify-items-end gap-8 mr-16 pt-6">
+			
+				<div className="flex justify-end">
+			
 					<Link to="/Add-Banner">
 						<div className="text-end">
 							<button

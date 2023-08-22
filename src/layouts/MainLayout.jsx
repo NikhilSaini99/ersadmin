@@ -16,7 +16,7 @@ import Logo from '../../public/images/ers-logo.png';
 import { SidebarWidth } from './Sidebar';
 // Create a theme instance.
 const TopbarHeight = 120;
-const subHeadHeight = 60;
+// const subHeadHeight = 60;
 
 const MainWrapper = experimentalStyled('div')(() => ({
 	display: 'flex',

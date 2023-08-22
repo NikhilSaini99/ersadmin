@@ -11,7 +11,7 @@ export default function BannerImg({
 	id,
 	refresh
 }) {
-	const { loading, data, error, callAPI } = useFetch(
+	const { loading, data, callAPI } = useFetch(
 		'DELETE',
 		`/banner-images/${id}`
 	);
@@ -20,7 +20,7 @@ export default function BannerImg({
 	}, [data]);
 console.log(img)
 	return (
-		<div>
+		<div className='px-[4rem] w-[60%]'>
 			<h1 className=" text-3xl mb-4">{title}</h1>
 			<a
 				href="https://www.youtube.com"
@@ -30,9 +30,11 @@ console.log(img)
 			</a>
 
 			<div style={{ position: 'relative' }}>
-				<img src={img} className="mt-2 w-full " />
-
+				<div className=''>
+				<img src={img} className="mt-2" style={{width:"100%", height:"100%", objectFit:"cover"}} />
+				</div>
 				<div
+					className='w-[100%]'
 					style={{
 						position: 'absolute',
 						// padding: "2px",
@@ -42,7 +44,7 @@ console.log(img)
 					}}
 				>
 					<div className="flex justify-between bg-white opacity-75 p-4">
-						<div style={{ maxWidth: '90%' }}>
+						<div>
 							<p>{description}</p>
 						</div>
 						<IconButton disabled={loading} onClick={deleteBanner}>

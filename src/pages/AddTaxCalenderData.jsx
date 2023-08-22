@@ -19,12 +19,13 @@ import {
 	Typography,
 	useMediaQuery
 } from '@mui/material';
+import { SubHeader } from '../layouts/MainLayout';
 
 export function AddTextCalenderData() {
 	return (
 		<>
+		<SubHeader title="Add Tax Calender Data"/>	
 			<MainCard
-				title="Add Tax Calender Data  "
 				border={false}
 				elevation={16}
 				content={false}
