@@ -34,6 +34,7 @@ const AddPracticeNotes = () => {
 		'PUT',
 		`/practiceNote/${location?.state?.formdata?.id}`
 	);
+	console.log(location?.state?.formdata?.id)
     const myRef = useRef({ fileName: '', fileUrl: '' });
     const upload_URL_FLAG_REF = useRef(false);
 	const [selectedFile, setSelected] = useState();
@@ -48,26 +49,27 @@ const AddPracticeNotes = () => {
 		type: location?.state?.status ? updateformValues.type : '',
 		name: location?.state?.status ? updateformValues.name : '',
 		documentName: location?.state?.status ? updateformValues.documentName : '',
-		documentUrl: ''
+		documentUrl: location?.state?.status ? updateformValues.documentUrl : null
 	};
 
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values);
 
-		const uploadURL = await uploadPdfFile(
+		const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/practicenote-files',
 			selectedFile
 		);
-		if (uploadURL.success) {
+
+		if (updatepdfURL.success || updateformValues.documentUrl) {
 			// console.log(uploadURL)
 			location?.state?.status
 				? updateformAPI({
 					...values,
-					documentUrl: uploadURL.data.url.toString()
+					documentUrl:  upload_URL_FLAG_REF.current ? updatepdfURL.data.url.toString() : updateformValues?.documentUrl
 				})
 				: callAPI({
 					...values,
-					documentUrl: uploadURL.data.url.toString()
+					documentUrl: updatepdfURL.data.url.toString()
 				});
 			// Reset the form after successful submission
 			resetForm();
@@ -188,7 +190,13 @@ const AddPracticeNotes = () => {
 										type="submit"
 										variant="contained"
 										color="primary"
-										disabled={!selectedFile}
+										disabled={
+											location?.state?.status
+												? false
+												: !selectedFile
+												? true
+												: false
+										}
 									>
 										{location?.state?.status ? 'Update' : 'Submit'}
 									</Button>

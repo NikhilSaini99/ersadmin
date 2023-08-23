@@ -11,7 +11,8 @@ import {
 	Select,
 	TextField,
 	FormControl,
-	Button
+	Button,
+	Typography
 } from '@mui/material';
 import useFetch from '../../hooks/useFetch';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -23,11 +24,16 @@ import UsePdfCover from '../RecentlyApproved/UsePdfCover';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { SubHeader } from '../../layouts/MainLayout';
+import { useRef } from 'react';
 
 const AddPublications = () => {
 	const { uploadPdfFile } = useUpload();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const upload_URL_FLAG_REF = useRef(false);
+	const upload_IMG_FLAG_REF = useRef(false);
+	const updateformValues = location?.state?.formdata;
+	const myRef = useRef({ fileName: '', fileUrl: '' });
 	const { callAPI: updateformAPI } = useFetch(
 		'PUT',
 		`/publication/${location?.state?.formdata?.id}`
@@ -35,13 +41,13 @@ const AddPublications = () => {
 	const { uploadCover } = UsePdfCover();
 	const { callAPI } = useFetch('POST', '/publication');
 	const [selectedFile, setSelected] = useState();
-	const updateformValues = location?.state?.formdata;
+	
 	const [selectedCover, setselectedCover] = useState({
 		onPageUrl: undefined,
 		serverImgUrl: undefined
 	});
 
-	console.log(updateformValues)
+	console.log("updated valeu",updateformValues?.coverPhoto);
 
 	const newsSchema = Yup.object().shape({
 		// name: Yup.string().required('Name is required'),
@@ -49,54 +55,40 @@ const AddPublications = () => {
 		documentName: Yup.string().required('Document Name is required')
 	});
 
+	console.log(location)
 	const initialValues = {
-		type: location?.state?.status ? updateformValues.type :'',
-		// name: location?.state?.status ? updateformValues.name :'',
-		documentName: location?.state?.status ? updateformValues.documentName :'',
-		description: location?.state?.status ? updateformValues.description :'',
-		documentUrl: '',
-		coverPhoto: ''
+		type: location?.state?.status ? updateformValues.type : '',
+		documentName: location?.state?.status ? updateformValues.documentName : '',
+		description: location?.state?.status ? updateformValues.description : '',
+		documentUrl: location?.state?.status ? updateformValues.documentUrl : null,
+		coverPhoto: location?.state?.status ? updateformValues?.coverPhoto : null
 	};
-
-	const handleChangeCover = (event) => {
-		const file = event.target.files[0];
-		const imgURL = URL.createObjectURL(file);
-		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
-	};
-
 
 	const handleSubmit = async (values, { resetForm }) => {
 
-		if(!selectedFile){
-			return
-		}
-		
-		const uploadURL = await uploadPdfFile(
+		const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/publication-files',
 			selectedFile
 		);
 
-		if (!(selectedCover.serverImgUrl&&selectedCover.onPageUrl)) {
-			return;
-		}
-		const uploadCoverUrl = await uploadCover(
+		const uploadCoverUrl = !upload_IMG_FLAG_REF.current ? updateformValues?.coverPhoto: await uploadCover(
 			'/files/publication-image',
-			selectedCover.serverImgUrl
+			selectedCover?.serverImgUrl
 		);
 
-
-		if (uploadURL.success) {
+		console.log("udpate img url retun", uploadCoverUrl)
+		if (updatepdfURL.success || updateformValues.documentUrl || updateformValues?.coverPhoto) {
 			location?.state?.status
 				? updateformAPI({
 						...values,
-						documentUrl: uploadURL.data.url.toString(),
+						documentUrl:  upload_URL_FLAG_REF.current ? updatepdfURL.data.url.toString() : updateformValues?.documentUrl,
+						coverPhoto:  upload_IMG_FLAG_REF.current ? uploadCoverUrl.data.url.toString() : updateformValues?.coverPhoto,
+				})
+				: callAPI({
+						...values,
+						documentUrl: updatepdfURL.data.url.toString(),
 						coverPhoto: uploadCoverUrl.data.url.toString()
-				}):
-				callAPI({
-				...values,
-				documentUrl: uploadURL.data.url.toString(),
-				coverPhoto: uploadCoverUrl.data.url.toString()
-			});
+				});
 			// Reset the form after successful submission
 			resetForm();
 			navigate('/Publications-List');
@@ -105,24 +97,30 @@ const AddPublications = () => {
 		}
 	};
 
+	const handleChangeCover = (event) => {
+		const file = event.target.files[0];
+		const imgURL = URL.createObjectURL(file);
+		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
+		upload_IMG_FLAG_REF.current= true;
+	};
+
 	const handleChange = (event) => {
 		const file = event.target.files[0];
 		setSelected(file);
+		myRef.current.fileName = event.target.files[0].name;
+		myRef.current.fileUrl = URL.createObjectURL(event.target.files[0]);
+		upload_URL_FLAG_REF.current= true;
 	};
 
-
-console.log(selectedCover)
+	console.log(selectedCover);
 	return (
 		<>
-		<SubHeader title={
-				location?.state?.status?"Update Publications":"Add Publications"
-				} />
-			<MainCard
-				border={false}
-				elevation={16}
-				content={false}
-				boxShadow
-			>
+			<SubHeader
+				title={
+					location?.state?.status ? 'Update Publications' : 'Add Publications'
+				}
+			/>
+			<MainCard border={false} elevation={16} content={false} boxShadow>
 				<Formik
 					initialValues={initialValues}
 					onSubmit={handleSubmit}
@@ -131,20 +129,18 @@ console.log(selectedCover)
 					<Box sx={{ p: '2rem 4rem 6rem 6rem' }}>
 						<Form>
 							<Grid container direction="column">
-							
-
-								{/* <Grid item xs={12}>
-									<Field
-										as={TextField}
-										name="name"
-										label="Enter Name"
-										fullWidth
-										variant="outlined"
-										margin="normal"
-									/>
-									<ErrorMessage name="name" component={FormHelperText} />
-								</Grid> */}
-
+								<Grid item xs={12}>
+									<FormControl margin="normal" fullWidth variant="outlined">
+										<InputLabel>Type</InputLabel>
+										<Field as={Select} name="type" label="Type">
+											<MenuItem value="Strategic Plans">
+												Strategic Plans
+											</MenuItem>
+											<MenuItem value="Annual Reports">Annual Reports</MenuItem>
+										</Field>
+									</FormControl>
+									<ErrorMessage name="type" component={FormHelperText} />
+								</Grid>
 								<Grid item xs={12}>
 									<Field
 										as={TextField}
@@ -172,21 +168,35 @@ console.log(selectedCover)
 									/>
 								</Grid>
 								<Grid item xs={12}>
-									<Button
-										variant="outlined"
-										component="label"
-										sx={{ mt: '1.5rem' }}
+									<Box
+										sx={{
+											display: 'flex',
+											gap: '0.5rem',
+											flexDirection: { xs: 'column', sm: 'row' },
+											alignItems: 'center'
+										}}
 									>
-										<AiOutlineCloudUpload size={30} className="mr-2" />
-										Upload File
-										<input
-											type="file"
-											hidden
-											name="file"
-											onChange={handleChange}
-											accept=".*pdf"
-										/>
-									</Button>
+										<Button variant="outlined" component="label">
+											<AiOutlineCloudUpload size={30} className="mr-2" />
+											Upload File
+											<input
+												type="file"
+												hidden
+												name="file"
+												onChange={handleChange}
+												accept=".*pdf"
+											/>
+										</Button>
+
+										<Typography
+											variant="body1"
+											component="a"
+											href={myRef.current.fileUrl}
+											target="_blank"
+										>
+											{myRef.current.fileName}
+										</Typography>
+									</Box>
 								</Grid>
 
 								<Grid item xs={12} sx={{ mt: '1.5rem' }}>
@@ -206,26 +216,38 @@ console.log(selectedCover)
 										/>
 									</Button>
 								</Grid>
-								{selectedCover?.onPageUrl && <Grid item xs={12} sx={{ mt: '1.5rem' }}>
-									<Grid container direction="row" spacing={2} padding={2}>
-										<Grid item xs={3}>
-											<img
-												src={selectedCover?.onPageUrl}
-												style={{ height: '156px' }}
-											/>
-											{selectedCover?.onPageUrl&&<Button
-												variant="outlined"
-												onClick={() => 
-													setselectedCover({ ...selectedCover, onPageUrl: "", serverImgUrl:"" })}
-												size="small"
-												sx={{ mt: 1 }}
-												startIcon={<MdDelete size={20} />}
-											>
-												Delete
-											</Button>}
+								{(selectedCover?.onPageUrl) &&(
+									<Grid item xs={12} sx={{ mt: '1.5rem' }}>
+										<Grid container direction="row" spacing={2} padding={2}>
+											<Grid item xs={3}>
+												{!upload_IMG_FLAG_REF.current ?<img
+													src={location?.state?.uploadCover}
+													style={{ height: '156px' }}
+												/> :  <img
+													src={selectedCover?.onPageUrl}
+													style={{ height: '156px' }}
+												/>}
+												{selectedCover?.onPageUrl && (
+													<Button
+														variant="outlined"
+														onClick={() =>
+															setselectedCover({
+																...selectedCover,
+																onPageUrl: '',
+																serverImgUrl: ''
+															})
+														}
+														size="small"
+														sx={{ mt: 1 }}
+														startIcon={<MdDelete size={20} />}
+													>
+														Delete
+													</Button>
+												)}
+											</Grid>
 										</Grid>
 									</Grid>
-								</Grid>}
+								)}
 
 								<Divider sx={{ my: '1.8rem' }} />
 
@@ -236,9 +258,15 @@ console.log(selectedCover)
 										type="submit"
 										variant="contained"
 										color="primary"
-										disabled={!(selectedFile && selectedCover)}
+										disabled={
+											location?.state?.status
+												? false
+												: (!selectedFile ||(!(selectedCover.serverImgUrl&&selectedCover.onPageUrl)))
+												? true
+												: false
+										}
 									>
-										{location?.state?.status?"Update":"Submit"}
+										{location?.state?.status ? 'Update' : 'Submit'}
 									</Button>
 								</Box>
 							</Grid>

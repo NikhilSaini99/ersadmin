@@ -59,7 +59,7 @@ const AddTender = () => {
 		console.log(values);
 		
        const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
-			'/files/publication-files',
+			'/files/tender-files',
 			selectedFile
 		);
 
