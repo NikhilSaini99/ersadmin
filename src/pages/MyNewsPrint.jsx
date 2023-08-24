@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react'
 import useFetch from '../hooks/useFetch';
-import { Box, Card, CardActions, CardContent, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/base';
 
-const MyNewsPrint = ({ names, description, docName, docURL, refresh, id }) => {
-
+const MyNewsPrint = ({ names, description, refresh, id,item }) => {
+    const navigate = useNavigate();
     const myBox = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         color: "#72b8bf",
         gap: '1rem',
-        padding: '2rem',
+        padding: '1rem',
         height: '280px', // Specify the desired height
-
     }
 
 
-    const { loading, data, error, callAPI } = useFetch('DELETE', `/whateNew/${id}`);
+    const { data, callAPI } = useFetch('DELETE', `/whateNew/${id}`);
 
     
     useEffect(() => {
@@ -28,10 +28,13 @@ const MyNewsPrint = ({ names, description, docName, docURL, refresh, id }) => {
         callAPI();
     }
 
+    function handleUpdate() {
+		navigate('/AddMyWhatsNews', { state: { formdata: item, status: true } });
+	}
 
     return (
         <>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 <Paper elevation={20}>
                     <Box sx={myBox} >
                         <Box>
@@ -43,8 +46,9 @@ const MyNewsPrint = ({ names, description, docName, docURL, refresh, id }) => {
                                 {description}
                             </Typography>
                         </Box>
-                        <Box>
+                        <Box sx={{display:"flex", gap:"1rem"}}>
                             <Button variant="contained" onClick={handleDelete}>Delete</Button>
+                            <Button variant="contained"  onClick={handleUpdate}>Update</Button>
                         </Box>
                     </Box>
                 </Paper>

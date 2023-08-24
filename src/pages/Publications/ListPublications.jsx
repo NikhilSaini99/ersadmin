@@ -212,7 +212,7 @@ const MyPublicationList = ({
 					</IconButton>
 				</TableCell>
 				<TableCell sx={{ display: "flex", justifyContent: "center" }}>
-					<Avatar width={36} height={36}>
+					<Avatar width={36} >
 						<img src={coverPhoto} alt="photo" loading='lazy' />
 					</Avatar>
 
