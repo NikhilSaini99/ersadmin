@@ -35,61 +35,59 @@ const AddRecentlyApproved = () => {
 		'PUT',
 		`/recentlyApproved/${location?.state?.formdata?.id}`
 	);
-	const myRef = useRef({ fileName: '', fileUrl: '' });
-	const upload_URL_FLAG_REF = useRef(false);
+	console.log(location?.state?.formdata?.id)
+    const myRef = useRef({ fileName: '', fileUrl: '' });
+    const upload_URL_FLAG_REF = useRef(false);
 	const [selectedFile, setSelected] = useState();
+	console.log(location)
 	const updateformValues = location?.state?.formdata;
-
 	const newsSchema = Yup.object().shape({
 		name: Yup.string().required('Name is required'),
-		description: Yup.string().required('Description is required'),
 		documentName: Yup.string().required('Document Name is required')
 	});
 
 	const initialValues = {
-		type: location?.state?.status ? updateformValues.type : '',
-		name: location?.state?.status ? updateformValues.name : '',
-		documentName: location?.state?.status ? updateformValues.documentName : '',
-		description: location?.state?.status ? updateformValues.description : '',
-		documentUrl: ''
+		type: location?.state?.status ? updateformValues?.type : '',
+		name: location?.state?.status ? updateformValues?.name : '',
+		description : location?.state?.status ? updateformValues?.description: "",
+		documentName: location?.state?.status ? updateformValues?.documentName : '',
+		documentUrl: location?.state?.status ? updateformValues?.documentUrl : null
 	};
-	console.log(updateformValues?.documentUrl)
+
 	const handleSubmit = async (values, { resetForm }) => {
 		console.log(values);
-		
-       const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
+
+		const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/recentapproved-files',
 			selectedFile
 		);
 
-		console.log(updatepdfURL)
-	
-		console.log('yo', updatepdfURL);
 		if (updatepdfURL.success || updateformValues.documentUrl) {
+			// console.log(uploadURL)
 			location?.state?.status
 				? updateformAPI({
-							...values,
-							documentUrl:  upload_URL_FLAG_REF.current ? updatepdfURL.data.url.toString() : updateformValues?.documentUrl
-					}) : callAPI({
-						...values,
-						documentUrl: updatepdfURL.data.url.toString()
+					...values,
+					documentUrl:  upload_URL_FLAG_REF.current ? updatepdfURL.data.url.toString() : updateformValues?.documentUrl
+				})
+				: callAPI({
+					...values,
+					documentUrl: updatepdfURL.data.url.toString()
 				});
 			// Reset the form after successful submission
 			resetForm();
 			navigate('/Recently-Approved-List');
 		} else {
-			console.log(' submit error');
+			console.log('error');
 		}
 	};
 
 	const handleChange = (event) => {
 		const file = event.target.files[0];
 		setSelected(file);
-		myRef.current.fileName = event.target.files[0].name;
+        myRef.current.fileName = event.target.files[0].name;
 		myRef.current.fileUrl = URL.createObjectURL(event.target.files[0]);
 		upload_URL_FLAG_REF.current= true;
 	};
-
 	return (
 		<>
 			<SubHeader title={
@@ -111,9 +109,9 @@ const AddRecentlyApproved = () => {
 						<Form>
 							<Grid container direction="column">
 								<Grid item xs={12}>
-									<FormControl margin="normal" fullWidth variant="outlined">
+									<FormControl margin="normal" fullWidth variant="outlined"  >
 										<InputLabel>Recently Approved</InputLabel>
-										<Field as={Select} name="type" label="Notice Board">
+										<Field as={Select} name="type" label="Recently Approved">
 											<MenuItem value="Approved Guidelines">
 												Approved Guidelines
 											</MenuItem>
@@ -205,7 +203,13 @@ const AddRecentlyApproved = () => {
 										type="submit"
 										variant="contained"
 										color="primary"
-										disabled={!selectedFile}
+										disabled={
+											location?.state?.status
+												? false
+												: !selectedFile
+												? true
+												: false
+										}
 									>
 										{location?.state?.status ? 'Update' : 'Submit'}
 									</Button>

@@ -19,7 +19,7 @@ export function Banner() {
 		callAPI();
 		
 	}, []);
-	
+	console.log(banner)
 	return (
 		<>
 		<SubHeader title={'All Banner'} />

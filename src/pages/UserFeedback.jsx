@@ -23,9 +23,17 @@ export function UserFeedBacks() {
 
         <>
             <Box>
-            <SubHeader title={'Notice Board'} />
+            <SubHeader title={'User Feedback'} />
                 <LoaderContainer {...{ loading, error }}>
-                    <Grid container spacing={2} mt={3} ml={3} mr={3}>
+                <Box
+					sx={{
+						width: '100%',
+						margin: { xs: '0 auto', lg: '0  auto' },
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
+						py: '1rem'
+					}}
+				>
+                    <Grid container spacing={2} mt={3}>
                         {feedbackData?.data.map((item, index) => (
                             <FeedBackPrint key={index}
                                 id={item.id}
@@ -38,6 +46,7 @@ export function UserFeedBacks() {
                             />
                         ))}
                     </Grid>
+                    </Box>
                 </LoaderContainer>
             </Box>
 
