@@ -19,7 +19,7 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Menu (Update)',
+        title: 'Menu',
         icon: TfiMenuAlt,
         href: '/Menu',
         childrens: []
