@@ -65,7 +65,7 @@ const AddPublications = () => {
 	};
 
 	const handleSubmit = async (values, { resetForm }) => {
-
+		
 		const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/publication-files',
 			selectedFile

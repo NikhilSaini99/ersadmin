@@ -33,7 +33,7 @@ const PublicMeeting = () => {
 		'PUT',
 		`/publicMeeting/${location?.state?.formdata?.id}`
 	);
-	const upload_URL_FLAG_REF = useRef(false);
+	const upload_IMG_FLAG_REF = useRef(false);
 	const updateformValues = location?.state?.formdata;
     const [selectedCover, setselectedCover] = useState({
 		onPageUrl: undefined,
@@ -44,6 +44,7 @@ const PublicMeeting = () => {
 		const file = event.target.files[0];
 		const imgURL = URL.createObjectURL(file);
 		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
+		upload_IMG_FLAG_REF.current= true;
 	};
 
     
@@ -52,7 +53,6 @@ const PublicMeeting = () => {
 		publicMeetingName: Yup.string().required('Public Meeting Name is required'),
 		description: Yup.string().required('Description is required'),
 		uploadDate: Yup.date().required('Upload Date Date is required'),
-		url: "",
 	});
 
 	const uploadDate = updateformValues?.uploadDate.split('T')[0];
@@ -64,28 +64,21 @@ const PublicMeeting = () => {
 		url: location?.state?.status ? updateformValues.url : ""
 	};
 	const handleSubmit = async (values, { resetForm }) => {
-		console.log(values);
-		
-
-     
-		const uploadCoverUrl = await uploadCover(
-			'/files/publicnotic-image',
-			selectedCover.serverImgUrl
+		const uploadCoverUrl = !upload_IMG_FLAG_REF.current ? updateformValues?.url: await uploadCover(
+			'/files/publicmeeting-image',
+			selectedCover?.serverImgUrl
 		);
-
-      
-            console.log(uploadCoverUrl.data.urls[0])
-		if (uploadCoverUrl.success) {
+		if (updateformValues?.url) {
 			location?.state?.status
 				? updateformAPI({
 						...values,
-						url: uploadCoverUrl.data.urls[0].toString()
+						url: upload_IMG_FLAG_REF.current ? uploadCoverUrl.data.url.toString() : updateformValues?.url,
 				}):
 				callAPI({
 				...values,
 				url: uploadCoverUrl.data.urls[0].toString()
 			});
-			// Reset the form after successful submission
+			// Reset the form after successful submission 
 			resetForm();
 			navigate('/List-Public-Meetings');
 		} else {
@@ -172,11 +165,10 @@ const PublicMeeting = () => {
 								</Grid>
 
 
-                                <Grid item xs={12} sx={{ mt: '1.5rem' }}>
+                                <Grid item xs={12} >
 									<Button
 										variant="outlined"
 										component="label"
-										sx={{ mt: '1.5rem' }}
 									>
 										<AiOutlineCloudUpload size={30} className="mr-2" />
 										Upload Image

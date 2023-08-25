@@ -13,7 +13,8 @@ import {
 	TableBody,
 	Paper,
 	TablePagination,
-	IconButton
+	IconButton,
+	Avatar
 } from '@mui/material';
 
 import { Link } from 'react-router-dom';
@@ -104,7 +105,7 @@ const CorporateResponsibility = () => {
 									<TableCell width="20%">Name</TableCell>
 									<TableCell width="30%">Description</TableCell>
 									<TableCell width="15%">Upload Date</TableCell>
-									<TableCell>URL</TableCell>
+									<TableCell>Image</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
 
@@ -168,20 +169,6 @@ const CorporateList = ({
 		navigate('/Add-Corporate-Responsibility', { state: { formdata: item, status: true } });
 	}
 
-	function handleDownloadPDF(pdfURL) {
-		fetch(pdfURL)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const url = window.URL.createObjectURL(blob);
-				const link = document.createElement('a');
-				link.setAttribute('href', url);
-				link.setAttribute('download', 'tender.pdf');
-				link.click();
-			})
-			.catch((error) => {
-				console.error('Error downloading PDF:', error);
-			});
-	}
 
 	return (
 		<>
@@ -197,9 +184,12 @@ const CorporateList = ({
 				<TableCell>{name}</TableCell>
 				<TableCell>{description}</TableCell>
 				<TableCell>{dayjs(uploadDate).format('DD-MM-YYYY')}</TableCell>
-				<TableCell>
-					{url}
-				</TableCell>
+				<TableCell sx={{display:"flex", justifyContent:"center"}}>
+                    <Avatar width={36} >
+                        <img src={url} alt="photo" loading='lazy'/>
+                    </Avatar>
+                    
+                    </TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
 						<DeleteIcon sx={{ color: 'red' }} />

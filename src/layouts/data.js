@@ -33,7 +33,7 @@ const Menuitems = [
         ]
     },
     {
-        title: 'Whats New (Upload deocument, Update)',
+        title: 'Whats New',
         icon: AiFillFolderAdd,
         href: '/MyWhatsNew'
     },
@@ -115,24 +115,7 @@ const Menuitems = [
         icon: MdCorporateFare,
         href: '/CorporateResponsibility',
         childrens: []
-    },
-    // {
-    //     title: 'Add Notice Board',
-    //     icon: BsClipboard,
-    //     href: '/Add-Notice-Board',
-    //     childrens: []
-    // },
-    // {
-    //     title: 'Notice Board',
-    //     icon: BiNotification,
-    //     href: '/Notice-Board'
-    // },
-    // {
-    //     title: 'Important Links',
-    //     icon: MdLabelImportant,
-    //     href: '/Important-Links'
-    // },
-    
+    },   
     {
         title: 'User Feedbacks',
         icon: MdFeedback,
@@ -149,9 +132,9 @@ const Menuitems = [
         href: '/FAQ'
     },
     {
-        title: 'Add Tax Item Code (Not Done)',
+        title: 'Add Tax Item Code',
         icon: FaQuestion,
-        href: '/'
+        href: '/List-Tax-Item-Code'
     },
     {
         title: 'Practice Note',

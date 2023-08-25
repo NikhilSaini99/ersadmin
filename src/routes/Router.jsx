@@ -54,6 +54,8 @@ import PublicMeeting from '../pages/PublicMeeting/PublicMeeting';
 import ListPublicMeeting from '../pages/PublicMeeting/ListPublicMeeting';
 import AddPracticeNotes from '../pages/PracticeNotes/AddPracticeNotes';
 import ListPracticeNotes from '../pages/PracticeNotes/ListPracticeNotes';
+import ListTaxItem from '../pages/TaxItemCode/ListTaxItem';
+import AddTaxItemCode from '../pages/TaxItemCode/AddTaxItemCode';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -229,6 +231,14 @@ const routes = [
 			{
 				path: 'Add-Public-Meetings',
 				element: <PublicMeeting />
+			},
+			{
+				path: 'List-Tax-Item-Code',
+				element: <ListTaxItem />
+			},
+			{
+				path: 'Add-Tax-Item-Code',
+				element: <AddTaxItemCode />
 			},
 		]
 	}

@@ -194,7 +194,7 @@ const MyPublicMeetingList = ({
 				<TableCell>{publicMeetingName}</TableCell>
 				<TableCell>{dayjs(uploadDate).format('DD-MM-YYYY')}</TableCell>
                 <TableCell sx={{display:"flex", justifyContent:"center"}}>
-                    <Avatar width={36} height={36}>
+                    <Avatar width={36} >
                         <img src={imgUrl} alt="photo" loading='lazy'/>
                     </Avatar>
                     

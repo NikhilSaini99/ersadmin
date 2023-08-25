@@ -30,7 +30,7 @@ const MyWhatsNew = () => {
 
     return (
         <>
-        	<SubHeader title={'Whats New'} />
+         <SubHeader title={'Whats New'} />
             
             <LoaderContainer {...{ loading, error }}>
             <Box sx={myBox}>
@@ -49,6 +49,7 @@ const MyWhatsNew = () => {
             <Grid container spacing={2} mt={1} ml={3}>
                 {newsData?.data?.map((item,key) => (
                     <MyNewsPrint 
+                     item={item}
                         key={key}
                         names={item.name}
                         description={item.description}
