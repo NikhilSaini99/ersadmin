@@ -124,7 +124,7 @@ export function Video() {
 	async function createVideo(values) {
 		if (formik.isValid)
 			callAPI({
-				...values
+				...values, yearofupload : dayjs(values.uploadDate).format('YYYY'),
 			});
 		formik.handleReset();
 	}

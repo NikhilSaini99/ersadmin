@@ -24,14 +24,14 @@ import { MdDelete } from 'react-icons/md';
 import UsePdfCover from '../RecentlyApproved/UsePdfCover';
 import { SubHeader } from '../../layouts/MainLayout';
 
-const PublicMeeting = () => {
+const AboutUsTeam = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
     const { uploadCover } = UsePdfCover();
-	const { callAPI } = useFetch('POST', '/publicMeeting');
+	const { callAPI } = useFetch('POST', '/aboutus');
 	const { callAPI: updateformAPI } = useFetch(
 		'PUT',
-		`/publicMeeting/${location?.state?.formdata?.id}`
+		`/aboutus/${location?.state?.formdata?.id}`
 	);
 	const upload_IMG_FLAG_REF = useRef(false);
 	const updateformValues = location?.state?.formdata;
@@ -50,22 +50,20 @@ const PublicMeeting = () => {
     
 
 	const newsSchema = Yup.object().shape({
-		publicMeetingName: Yup.string().required('Public Meeting Name is required'),
+		name: Yup.string().required('Team Member Name is required'),
 		description: Yup.string().required('Description is required'),
-		uploadDate: Yup.date().required('Upload Date Date is required'),
 	});
 
-	const uploadDate = updateformValues?.uploadDate.split('T')[0];
 
 	const initialValues = {
-		publicMeetingName: location?.state?.status ? updateformValues.publicMeetingName : '',
-		uploadDate: location?.state?.status ? dayjs(uploadDate) : null,
+		name: location?.state?.status ? updateformValues.name : '',
+		possition: location?.state?.status ? updateformValues.possition : '',
 		description: location?.state?.status ? updateformValues.description : '',
 		url: location?.state?.status ? updateformValues.url : ""
 	};
 	const handleSubmit = async (values, { resetForm }) => {
 		const uploadCoverUrl = !upload_IMG_FLAG_REF.current ? updateformValues?.url: await uploadCover(
-			'/files/publicmeeting-image',
+			'/files/about-team-image',
 			selectedCover?.serverImgUrl
 		);
 		if (uploadCoverUrl) {
@@ -80,7 +78,7 @@ const PublicMeeting = () => {
 			});
 			// Reset the form after successful submission 
 			resetForm();
-			navigate('/List-Public-Meetings');
+			navigate('/List-Team-Data');
 		} else {
 			console.log('error');
 		}
@@ -89,7 +87,7 @@ const PublicMeeting = () => {
   return (
     <>
 	<SubHeader title={
-					location?.state?.status ? 'Update Public Meeting Data' : 'Add Public Meeting Data'
+					location?.state?.status ? 'Update Team Data' : 'Add Team Data'
 				}/>
      <MainCard
 				
@@ -109,13 +107,13 @@ const PublicMeeting = () => {
 								<Grid item xs={12}>
 									<Field
 										as={TextField}
-										name="publicMeetingName"
-										label="Public Meeting Name"
+										name="name"
+										label="Team Member Name"
 										fullWidth
 										variant="outlined"
 										margin="normal"
 									/>
-									<ErrorMessage name="publicMeetingName" component={FormHelperText} />
+									<ErrorMessage name="name" component={FormHelperText} />
 								</Grid>
 
 
@@ -131,39 +129,17 @@ const PublicMeeting = () => {
 									<ErrorMessage name="description" component={FormHelperText} />
 								</Grid>
 
-                                <Grid item xs={12} mb={1.5}>
-									<Field name="uploadDate">
-										{({ field }) => (
-											<LocalizationProvider dateAdapter={AdapterDayjs}>
-												<DatePicker
-													{...field}
-													label="Upload Date"
-													inputFormat="MM-dd-yyyy"
-													slotProps={{ textField: { fullWidth: true } }}
-													value={field.value || null}
-													defaultValue={dayjs()}
-													onChange={(value) => {
-														const event = {
-															target: {
-																name: 'uploadDate',
-																value: dayjs(value).toISOString()
-															}
-														};
-														field.onChange(event);
-													}}
-												/>
-											</LocalizationProvider>
-										)}
-									</Field>
-									<ErrorMessage name="uploadDate">
-										{(errorMsg) => (
-											<FormHelperText style={{ color: 'red' }}>
-												{errorMsg}
-											</FormHelperText>
-										)}
-									</ErrorMessage>
+                                <Grid item xs={12}>
+									<Field
+										as={TextField}
+										name="possition"
+										label="Enter Position"
+										fullWidth
+										variant="outlined"
+										margin="normal"
+									/>
+									<ErrorMessage name="possition" component={FormHelperText} />
 								</Grid>
-
 
                                 <Grid item xs={12} >
 									<Button
@@ -225,4 +201,4 @@ const PublicMeeting = () => {
   )
 }
 
-export default PublicMeeting
+export default AboutUsTeam

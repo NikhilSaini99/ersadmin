@@ -56,6 +56,8 @@ import AddPracticeNotes from '../pages/PracticeNotes/AddPracticeNotes';
 import ListPracticeNotes from '../pages/PracticeNotes/ListPracticeNotes';
 import ListTaxItem from '../pages/TaxItemCode/ListTaxItem';
 import AddTaxItemCode from '../pages/TaxItemCode/AddTaxItemCode';
+import AboutUsTeam from '../pages/AboutUsTeam/AboutUsTeam';
+import ListAboutUsTeam from '../pages/AboutUsTeam/ListAboutUsTeam';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
@@ -239,6 +241,14 @@ const routes = [
 			{
 				path: 'Add-Tax-Item-Code',
 				element: <AddTaxItemCode />
+			},
+			{
+				path: 'List-Team-Data',
+				element: <ListAboutUsTeam />
+			},
+			{
+				path: 'Add-Team-Data',
+				element: <AboutUsTeam />
 			},
 		]
 	}

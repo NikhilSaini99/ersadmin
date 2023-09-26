@@ -141,6 +141,11 @@ const Menuitems = [
         icon: FaQuestion,
         href: '/Practice-Notes-List'
     },
+    {
+        title: 'Team Data',
+        icon: FaQuestion,
+        href: '/List-Team-Data'
+    },
 ];
 
 export default Menuitems;
