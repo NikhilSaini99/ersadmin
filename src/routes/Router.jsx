@@ -58,10 +58,14 @@ import ListTaxItem from '../pages/TaxItemCode/ListTaxItem';
 import AddTaxItemCode from '../pages/TaxItemCode/AddTaxItemCode';
 import AboutUsTeam from '../pages/AboutUsTeam/AboutUsTeam';
 import ListAboutUsTeam from '../pages/AboutUsTeam/ListAboutUsTeam';
+import SignInSide from '../pages/Login/Login';
 // const Login = lazy(() => import('../pages/Login'));
 
 /*****Routes******/
+
+
 const routes = [
+
 	{
 		path: '/',
 		element: <FullLayout />,
@@ -251,11 +255,11 @@ const routes = [
 				element: <AboutUsTeam />
 			},
 		]
-	}
-	// {
-	// 	path: '/login',
-	// 	element: <Login />
-	// }
+	},
+	{
+		path: "/login",
+		element: <SignInSide/>
+	},
 ];
 
 export default routes;

@@ -3,6 +3,7 @@ export const SidebarWidth = 350;
 import {
 	Avatar,
 	Box,
+	Button,
 	Divider,
 	Drawer,
 	List,
@@ -13,7 +14,7 @@ import {
 	useMediaQuery
 } from '@mui/material';
 import React from 'react';
-import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 // import { SidebarWidth } from "../../../assets/global/Theme-variable";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -21,8 +22,11 @@ import Logo from '../assets/images/logo.jpeg';
 import sidebarBackground from '../../public/images/1.svg';
 import menue from './data';
 import profile from '../../public/images/profile.png';
-
+import { useContext } from 'react';
+// import { AuthContext } from '../hooks/useContext';
 const Sidebar = (props) => {
+	// const authCont = useContext(AuthContext)
+	const navigate = useNavigate();
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 	const { pathname } = useLocation();
 	const params = useParams();
@@ -31,6 +35,11 @@ const Sidebar = (props) => {
 		pathname
 	);
 	let isSelected;
+	const handleLogout = ()=>{
+		// localStorage.setItem('userDetails', JSON.stringify({}));
+		localStorage.removeItem('userDetails');
+		navigate("/login")
+	}
 	const SidebarContent = (
 		<Box
 			sx={{
@@ -62,6 +71,7 @@ const Sidebar = (props) => {
 						</Box>
 						<Box>
 						<Typography variant="h6" color="white" fontWeight="bold">ERS Admin</Typography>
+						<Button variant="contained" color="success" onClick={handleLogout}>Logout</Button>
 						</Box>
 					</Box>
 				</Box>
