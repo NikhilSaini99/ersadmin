@@ -1,22 +1,24 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import userData from "./user.json"
-import { useNavigate } from 'react-router-dom';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 import { AuthContext } from '../../hooks/useContext';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { useContext } from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import userData from "./user.json"
 
 function Copyright(props) {
   return (
@@ -47,7 +49,9 @@ export default function SignInSide() {
     }
     if(userData?.user === loginData?.email && userData?.password===loginData?.password) {
         authUse?.dispatch({type:"login", data:{...loginData,isAuthenticated: true, isLoading:false}})
-        localStorage.setItem("userDetails",JSON.stringify({...loginData, acessToken:userData.token, isAuthenticated:true,isLoading:false}))
+        //call signin api here recieve token and store it in localstorage and then navigate to home page and set isauthenticated to true
+        localStorage.setItem("userDetails",JSON.stringify({...loginData, acessToken:userData.token,isLoading:false}));
+        localStorage.setItem("isAuthenticated",true);
         navigate("/")
   }
   else {
@@ -55,14 +59,6 @@ export default function SignInSide() {
   }
   }
 
-  useEffect(()=>{
-    const localData = JSON.parse(localStorage.getItem("userDetails"))
-        if(localData){
-            navigate("/")
-        }else{
-            navigate("/login")
-        }
-  },[authUse?.userData])
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
