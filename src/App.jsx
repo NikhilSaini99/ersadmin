@@ -2,8 +2,6 @@ import { ThemeProvider, colors, createTheme } from '@mui/material';
 import { useNavigate, useRoutes } from 'react-router-dom';
 import routes  from './routes/Router';
 import {useEffect } from 'react';
-
-
 import './App';
 import SignInSide from './pages/Login/Login';
 
