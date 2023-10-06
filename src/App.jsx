@@ -1,29 +1,21 @@
-import './App';
-
 import { ThemeProvider, colors, createTheme } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useRoutes } from 'react-router-dom';
-
-import { AuthContext } from './hooks/useContext';
-import SignInSide from './pages/Login/Login';
 import routes  from './routes/Router';
+import {useEffect } from 'react';
+import './App';
+import SignInSide from './pages/Login/Login';
 
 function App() {
-	const navigate = useNavigate();
-	const token = JSON.parse(localStorage.getItem('userDetails'))?.acessToken || null
-	console.log(token)
-	const authUse = useContext(AuthContext);
+	const navigate = useNavigate()
+	const token = localStorage.getItem('token');
 	useEffect(()=>{
 		if(!token){
-			// authUse?.dispatch({...authUse?.userData, isAuthenticated:false })
 			navigate("/login")
 		}
 		else {
-			// authUse?.dispatch({...authUse?.userData, isAuthenticated:true })
-			// setIsUserAuthenticated(authUse?.userData?.isAuthenticated);
 			navigate("/");
 		}
-	}, [token]);
+	}, []);
 	
 
 	const baseTheme = createTheme({
@@ -80,9 +72,16 @@ function App() {
 			}
 		}
 	});
-	
+
 	// eslint-disable-next-line react/react-in-jsx-scope
 	const routing = useRoutes(!token ? [{path: "/login", element:<SignInSide/>}, {path:"*", element:<SignInSide/>}] : routes);
+	
+		if(!token){
+		useNavigate("/login")
+	}
+	else if(token){
+		useNavigate("/")
+	}
 	// eslint-disable-next-line react/react-in-jsx-scope
 	return  <ThemeProvider theme={baseTheme}>
 		{routing}

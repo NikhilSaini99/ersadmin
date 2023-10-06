@@ -39,8 +39,8 @@ const Sidebar = (props) => {
 	);
 	let isSelected;
 	const handleLogout = ()=>{
-		// localStorage.setItem('userDetails', JSON.stringify({}));
-		localStorage.removeItem('userDetails');
+		localStorage.removeItem('token');
+		localStorage.removeItem('isAuthenticated');
 		navigate("/login")
 	}
 	const SidebarContent = (

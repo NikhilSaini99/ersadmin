@@ -17,8 +17,12 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useContext } from 'react';
 import { useEffect } from 'react';
+import { login } from './auth';
+import { useState } from 'react';
+import Toast from '../../components/Alert';
+import { Alert } from '@mui/material';
+import AlertComp from '../../components/Alert';
 import { useNavigate } from 'react-router-dom';
-import userData from "./user.json"
 
 function Copyright(props) {
   return (
@@ -37,30 +41,62 @@ const defaultTheme = createTheme();
 
 
 export default function SignInSide() {
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') || null)
+  const navigate = useNavigate()
+  const [alert, setAlert] = useState(false);
+  const [loginAlert, setLoginAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("")
 
-    const authUse = useContext(AuthContext);
-    const navigate = useNavigate()
-    const handleSubmit = (event) => {
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlert(false);
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const loginData={
+    const loginData = {
       email: data.get('email'),
       password: data.get('password'),
     }
-    if(userData?.user === loginData?.email && userData?.password===loginData?.password) {
-        authUse?.dispatch({type:"login", data:{...loginData,isAuthenticated: true, isLoading:false}})
-        //call signin api here recieve token and store it in localstorage and then navigate to home page and set isauthenticated to true
-        localStorage.setItem("userDetails",JSON.stringify({...loginData, acessToken:userData.token,isLoading:false}));
-        localStorage.setItem("isAuthenticated",true);
-        navigate("/")
-  }
-  else {
-    alert("Please verify");
-  }
+
+    await login(loginData)
+      .then((res) => {
+        if (res.success) {
+          localStorage.setItem('isAuthenticated', true);
+          localStorage.setItem('token', res.data.token);
+          setAlertMessage("LoggedIn Successfully")
+          setAlert(true);
+          setLoginAlert(true)
+          setTimeout(()=>{
+            setIsAuthenticated(true)
+          },1500)
+          
+        }
+        else {
+          setAlertMessage(res.error)
+          setLoginAlert(false)
+          setAlert(true);
+        }
+      }).catch((err) => {
+        console.error(err)
+      })
   }
 
+  useEffect(() => {
+    const localData = localStorage.getItem("token")
+    if (localData) {
+      navigate("/")
+    } else {
+      navigate("/login")
+    }
+  }, [isAuthenticated])
   return (
     <ThemeProvider theme={defaultTheme}>
+      {alert && <AlertComp message={alertMessage} severity={loginAlert ? "success" : "error"} color={loginAlert ? "success" : "error"} open={alert} handleClose={handleAlertClose} />}
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -122,18 +158,6 @@ export default function SignInSide() {
               >
                 Sign In
               </Button>
-              {/* <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid> */}
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
