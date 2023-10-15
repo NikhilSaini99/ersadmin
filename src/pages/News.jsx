@@ -30,7 +30,7 @@ export function News() {
 
 				<Box sx={myBox}>
 						<Link to="/Add-News">
-							<Button
+							<Button 
 								variant="contained"
 								size="large"
 								sx={{ fontWeight: 600, py: 1.5, background:"#72b8bf !important", color:"white !important" }}

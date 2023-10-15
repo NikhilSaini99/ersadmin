@@ -10,9 +10,10 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import DashboardNavbar from './Header';
 import Sidebar from './Sidebar';
-import HeaderImg from '../../public/images/2.svg';
-import subHeader from '../../public/images/3.svg';
-import Logo from '../../public/images/ers-logo.png';
+import HeaderImg from '../assets/images/2.svg';
+import subHeader from '../assets/images/3.svg';
+import Logo from '../assets/images/ers-logo.png';
+
 import { SidebarWidth } from './Sidebar';
 // Create a theme instance.
 const TopbarHeight = 120;

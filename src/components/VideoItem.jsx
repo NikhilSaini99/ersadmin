@@ -10,7 +10,7 @@ export default function VideoItem({ title, img, link, description }) {
 			<iframe
 				src={link}
 				allow="autoplay; encrypted-media"
-				allowfullscreen
+				allowFullScreen
 				title="video"
 				className="w-full h-60"
 			/>

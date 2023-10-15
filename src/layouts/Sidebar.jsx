@@ -22,8 +22,8 @@ import Logo from '../assets/images/logo.jpeg';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import React from 'react';
 import menue from './data';
-import profile from '../../public/images/profile.png';
-import sidebarBackground from '../../public/images/1.svg';
+import profile from "../assets/images/profile.png";
+import sidebarBackground from '../assets/images/1.svg';
 import { useContext } from 'react';
 
 // import { AuthContext } from '../hooks/useContext';
