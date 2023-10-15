@@ -5,7 +5,6 @@ import LoaderContainer from '../components/LoaderContainer';
 import useFetch from '../hooks/useFetch';
 import { SubHeader } from '../layouts/MainLayout';
 
-// import { link } from 'fs';
 
 export function Banner() {
 	const {
