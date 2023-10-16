@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite --port 3001",
     "build": "vite build",
-    "serve": "node ssr",
     "lint": "eslint --fix . --ext .js,.jsx",
     "lint:fix": "eslint — ext .js,.jsx,.ts,.tsx src — color --fix",
     "preview": "vite preview",
