@@ -5,33 +5,40 @@ import { GalleryImage } from '../pages/GalleryImage';
 import { UploadVideo } from '../pages/UploadVideo';
 import { Video } from '../pages/Video';
 import { Setting } from '../pages/setting';
-
 /****Layouts*****/
 const FullLayout = lazy(() => import('../layouts/MainLayout'));
 /****End Layouts*****/
 import { AddNews } from '../pages/AddNews';
 /*****Pages******/
-const AddBanner = LazyLoad('../pages', 'AddBanner');
+// const AddBanner = LazyLoad('../pages', 'AddBanner');
 // const Video = LazyLoad('../pages', 'Video');
-const CreateImage = LazyLoad('../pages', 'Image');
+// const CreateImage = LazyLoad('../pages', 'Image');
 // const AddNews = LazyLoad('../pages', 'AddNews');
-const Menu = LazyLoad('../pages', 'Menu');
-const AddWhatNew = LazyLoad('../pages', 'AddWhatNew');
-const RecentlyApproved = LazyLoad('../pages', 'RecentlyApproved');
-const AddCorporateResponsibility = LazyLoad(
-	'../pages',
-	'AddCorporateResponsibility'
-);
+// const Menu = LazyLoad('../pages', 'Menu');
+// const AddWhatNew = LazyLoad('../pages', 'AddWhatNew');
+// const RecentlyApproved = LazyLoad('../pages', 'RecentlyApproved');
+// const AddCorporateResponsibility = LazyLoad(
+// 	'../pages',
+// 	'AddCorporateResponsibility'
+// );
+const CreateImage = lazy(() => import('../pages/CreateImage'))
+const AddBanner = lazy(() => import('../pages/AddBanner'))
+const Menu = lazy(() => import('../pages'))
+const RecentlyApproved = lazy(() => import('../pages/RecentlyApproved'))
+const AddWhatNew = lazy(() => import('../pages/AddWhatNew'))
+const AddCorporateResponsibility = lazy(() => import('../pages/AddCorResp'))
+const UploadGalleryImage = lazy(() => import('../pages/UploadGalleryImage'))
 
-const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
-const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
+// const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
+// const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
+
+// import UserFeedBacks from "../pages/UserFeedback"
 // const News = LazyLoad('../pages', 'News');
 import { News } from '../pages/News';
 // const Banner = LazyLoad('../pages', 'Banner');
 import { Banner } from '../pages/Banner';
 
-const NoticeBoard = LazyLoad('../pages', 'NoticeBoard');
-const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
+// const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
 // import MyWhatsNew from '../pages/MyWhatsNew';
 // import AddMyWhatsNews from '../pages/AddMyWhatsNews';
 // import MyNewsPrint from '../pages/MyNewsPrint';
@@ -62,6 +69,8 @@ import SignInSide from '../pages/Login/Login';
 // const Login = lazy(() => import('../pages/Login'));
 
 //dynamic import
+const  ImportantLinks = lazy(()=>import('../pages/ImpLinks'));
+const  UserFeedBacks = lazy(()=>import('../pages/UserFeedback'));
 const  ListAboutUsTeam = lazy(()=>import('../pages/AboutUsTeam/ListAboutUsTeam'));
 const  AboutUsTeam = lazy(()=>import('../pages/AboutUsTeam/AboutUsTeam'));
 const  AddTaxItemCode = lazy(()=>import('../pages/TaxItemCode/AddTaxItemCode'))
@@ -211,10 +220,6 @@ const routes = [
 			{
 				path: 'AddTender',
 				element: <AddTender />
-			},
-			{
-				path: 'Notice-Board',
-				element: <NoticeBoard />
 			},
 			{
 				path: 'Important-Links',

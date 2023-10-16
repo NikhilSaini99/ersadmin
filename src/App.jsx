@@ -8,14 +8,11 @@ import SignInSide from './pages/Login/Login';
 function App() {
 	const navigate = useNavigate()
 	const token = localStorage.getItem('token');
-	useEffect(()=>{
-		if(!token){
-			navigate("/login")
-		}
-		else {
-			navigate("/");
-		}
-	}, []);
+	useEffect(() => {
+		if (!token) {
+			navigate("/login");
+		} 
+	}, [token]);
 	
 
 	const baseTheme = createTheme({
@@ -76,12 +73,6 @@ function App() {
 	// eslint-disable-next-line react/react-in-jsx-scope
 	const routing = useRoutes(!token ? [{path: "/login", element:<SignInSide/>}, {path:"*", element:<SignInSide/>}] : routes);
 	
-		if(!token){
-		useNavigate("/login")
-	}
-	else if(token){
-		useNavigate("/")
-	}
 	// eslint-disable-next-line react/react-in-jsx-scope
 	return  <ThemeProvider theme={baseTheme}>
 		{routing}

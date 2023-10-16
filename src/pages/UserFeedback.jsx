@@ -5,7 +5,7 @@ import { Button } from '@mui/base';
 import LoaderContainer from '../components/LoaderContainer';
 import { SubHeader } from '../layouts/MainLayout';
 
-export function UserFeedBacks() {
+export default function UserFeedBacks() {
     const { data: feedbackData, loading, error,
         callAPI } = useFetch('GET', '/userFeedback')
 

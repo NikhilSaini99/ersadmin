@@ -17,7 +17,7 @@ import PageHeader from '../components/PageHeader';
 import useFetch from '../hooks/useFetch';
 import { SubHeader } from '../layouts/MainLayout';
 import { BiAddToQueue } from 'react-icons/bi';
-export function UploadGalleryImage() {
+export default function UploadGalleryImage() {
 	const {
 		loading,
 		data: gallery,

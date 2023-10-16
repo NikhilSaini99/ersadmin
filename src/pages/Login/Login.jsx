@@ -23,7 +23,7 @@ import Toast from '../../components/Alert';
 import { Alert } from '@mui/material';
 import AlertComp from '../../components/Alert';
 import { useNavigate } from 'react-router-dom';
-import bgImage from "../../assets/images/banner-HIRES.png"
+import bgImage from "../../assets/images/loginpage.svg"
 
 function Copyright(props) {
   return (
@@ -106,14 +106,15 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: bgImage,
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            display:'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
-        />
+        >
+          <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", backgroundSize: 'cover', backgroundPosition: 'center',}}>
+          <img src={bgImage} alt="background" style={{width:"100%",height:"100%",objectFit:"cover", backgroundRepeat:"no-repeat",marginRight:"2rem"}}/>
+          </Box>
+          </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
