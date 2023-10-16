@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3001",
     "build": "vite build",
+    "serve": "node ssr",
     "lint": "eslint --fix . --ext .js,.jsx",
     "lint:fix": "eslint — ext .js,.jsx,.ts,.tsx src — color --fix",
     "preview": "vite preview",
@@ -48,7 +49,8 @@
     "eslint-plugin-unused-imports": "^0.1.3",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.1",
-    "vite": "^4.2.2"
+    "vite": "^4.2.2",
+    "vite-plugin-rewrite-all": "^1.0.1"
   },
   "extends": [
     "eslint:recommended",
