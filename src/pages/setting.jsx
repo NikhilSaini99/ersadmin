@@ -37,14 +37,14 @@ export function Setting() {
 
     const [formData, setFormData] = useState({});
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    };
+    // const handleInputChange = (event) => {
+    //     const { name, value } = event.target;
+    //     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    // };
 
-    const handleCancelEditMode = (id) => {
-        setEditMode((prevEditMode) => ({ ...prevEditMode, [id]: false }));
-    };
+    // const handleCancelEditMode = (id) => {
+    //     setEditMode((prevEditMode) => ({ ...prevEditMode, [id]: false }));
+    // };
 
 
     return (
@@ -54,7 +54,7 @@ export function Setting() {
 
                 <Grid container direction="column" spacing={2} padding={8} >
                     {socialMediaFields.map((field) => (
-                        <Grid xs={12} key={field.id} sx={{ display: "", marginBottom: "16px" }} alignItems="center">
+                        <Grid item xs={12} key={field.id} sx={{ display: "", marginBottom: "16px" }} alignItems="center">
                             <TextField
                                 id={field.id}
                                 label={field.id}
@@ -67,10 +67,6 @@ export function Setting() {
                             />
                         </Grid>
                     ))}
-
-
-
-
 
                 </Grid>
 

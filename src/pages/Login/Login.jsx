@@ -23,6 +23,7 @@ import Toast from '../../components/Alert';
 import { Alert } from '@mui/material';
 import AlertComp from '../../components/Alert';
 import { useNavigate } from 'react-router-dom';
+import bgImage from "../../assets/images/banner-HIRES.png"
 
 function Copyright(props) {
   return (
@@ -105,7 +106,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/images/banner-HIRES.png)',
+            backgroundImage: bgImage,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
