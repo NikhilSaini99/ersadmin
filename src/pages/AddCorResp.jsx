@@ -26,7 +26,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 
 
-export function AddCorporateResponsibility() {
+export default function AddCorporateResponsibility() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { uploadCover } = UsePdfCover();

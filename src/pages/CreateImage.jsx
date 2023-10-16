@@ -18,7 +18,7 @@ import useFile from '../hooks/useFile';
 import { useNavigate } from 'react-router-dom';
 import { SubHeader } from '../layouts/MainLayout';
 
-export function Image() {
+export default function Image() {
 	const navigate = useNavigate();
 	const { UploadFile } = useFile();
 	const {

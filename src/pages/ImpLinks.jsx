@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ImportantLinks() {
+export default function ImportantLinks() {
     return (
 
         <>

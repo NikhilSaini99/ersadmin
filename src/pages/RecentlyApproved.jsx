@@ -1,6 +1,6 @@
 import React, { useState, Link } from 'react';
 
-export  function RecentlyApproved() {
+export default function RecentlyApproved() {
     return (
 
         <>

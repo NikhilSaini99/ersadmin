@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubHeader } from '../layouts/MainLayout';
 
 
-export function AddBanner() {
+export default function AddBanner() {
 	const { UploadFile } = useFile();
 	const { callAPI } = useFetch('POST', '/banner-images');
 
