@@ -98,12 +98,12 @@ const Menuitems = [
     //     href: '/Add-what-new',
     //     childrens: []
     // },
-    {
-        title: 'Add Tax Calender Data (List, Delete, edit)',
-        icon: TbReceiptTax,
-        href: '/Add-Text-Calender-Data',
-        childrens: []
-    },
+    // {
+    //     title: 'Add Tax Calender Data (List, Delete, edit)',
+    //     icon: TbReceiptTax,
+    //     href: '/Add-Text-Calender-Data',
+    //     childrens: []
+    // },
     {
         title: 'Publication',
         icon: BsClipboard,

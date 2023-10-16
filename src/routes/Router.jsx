@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import LazyLoad from '../components/LazyLoad';
-import { AddTextCalenderData } from '../pages/AddTaxCalenderData';
+// import  {AddTextCalenderData } from '../pages/AddTaxCalenderData';
 import { GalleryImage } from '../pages/GalleryImage';
 import { UploadVideo } from '../pages/UploadVideo';
 import { Video } from '../pages/Video';
@@ -144,10 +144,10 @@ const routes = [
 				path: 'Add-what-new',
 				element: <AddWhatNew />
 			},
-			{
-				path: 'Add-Text-Calender-Data',
-				element: <AddTextCalenderData />
-			},
+			// {
+			// 	path: 'Add-Text-Calender-Data',
+			// 	element: <AddTextCalenderData />
+			// },
 			{
 				path: 'Recently-Approved',
 				element: <RecentlyApproved />
