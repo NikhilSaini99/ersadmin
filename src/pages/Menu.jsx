@@ -7,6 +7,7 @@ import LoaderContainer from '../components/LoaderContainer';
 import useFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
 import { SubHeader } from '../layouts/MainLayout';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 
 export function Menu() {
 
@@ -18,7 +19,7 @@ export function Menu() {
     }, [])
 
 
-
+    console.log(newsData?.data?.length);
     const myBox = {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -33,7 +34,7 @@ export function Menu() {
         <>
             <SubHeader title={'Menu List'} />
 
-            <LoaderContainer {...{ loading, error }}>
+            <LoaderContainer {...{ loading, error }} data={newsData?.data}>
             <Box sx={myBox}>
                 <Link to="/AddMenu">
                     <Button
@@ -46,8 +47,10 @@ export function Menu() {
                         Add Menu Items
                     </Button>
                 </Link>
-            </Box>
-                <Grid container spacing={2} mt={1} ml={4}>
+            </Box> 
+             {newsData?.data?.length===0 ? 
+                <EmptyRecords/> :
+             <Grid container spacing={2} mt={1} ml={4}>
                     {newsData?.data?.map((item, key) => (
                         <AllMenuList
                             key={key}
@@ -58,7 +61,7 @@ export function Menu() {
                         />
 
                     ))}
-                </Grid>
+                </Grid>}
             </LoaderContainer>
 
         </>
@@ -71,7 +74,7 @@ export function Menu() {
 const AllMenuList = ({ names, subMenu, refresh, id }) => {
     const { loading, data, error, callAPI } = useFetch('DELETE', `/menuService/${id}`);
 
-
+    console.log('All Menu List',loading);
     useEffect(() => {
         if (data?.success) refresh();
     }, [data])
@@ -90,10 +93,11 @@ const AllMenuList = ({ names, subMenu, refresh, id }) => {
         height: '12rem', // Specify the desired height
 
     }
+    
 
     return (
         <>
-            <Grid item xs={3}>
+         {data.length==0 ? <h1>hello</h1> : <Grid item xs={3}>
                 <Paper elevation={20}>
                     <Box sx={myBox} >
                         <Box>
@@ -110,7 +114,7 @@ const AllMenuList = ({ names, subMenu, refresh, id }) => {
                         </Box>
                     </Box>
                 </Paper>
-            </Grid>
+            </Grid>}
         </>
     )
 }

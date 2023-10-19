@@ -9,6 +9,7 @@ import { SubHeader } from '../layouts/MainLayout';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/base';
 import { BiAddToQueue } from 'react-icons/bi';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 
 export function News() {
 	const { loading, data: news, error, callAPI } = useFetch('GET', '/news');
@@ -41,7 +42,7 @@ export function News() {
 							</Button>
 						</Link>
 					</Box>
-					<Grid container spacing={6}>
+				{news?.data?.length===0 ? <EmptyRecords/> :<Grid container spacing={6}>
 						{news?.data?.map((item, key) => (
 							<Grid item sm={6} md={4} key={key}>
 								<NewsCard
@@ -53,7 +54,7 @@ export function News() {
 								/>
 							</Grid>
 						))}
-					</Grid>
+					</Grid>}
 				</LoaderContainer>
 			</Box>
 		</>

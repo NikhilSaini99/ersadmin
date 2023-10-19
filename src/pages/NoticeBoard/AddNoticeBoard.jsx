@@ -82,7 +82,7 @@ const AddNoticeBoard = () => {
 				});
 			// Reset the form after successful submission
 			resetForm();
-			navigate('/List-Notice-Board');
+			navigate('/List-Public-Board');
 		} else {
 			console.log('submit error');
 		}

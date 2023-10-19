@@ -28,9 +28,10 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
+import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
 
 const ListAboutUsTeam = () => {
-    const { loading, error, data: tender, callAPI } = useFetch('GET', '/aboutus');
+    const { loading, error, data: teamData, callAPI } = useFetch('GET', '/aboutus');
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -48,7 +49,7 @@ const ListAboutUsTeam = () => {
 	const endIndex = startIndex + rowsPerPage;
 
 	// Get the current page's data from the 'tender' array
-	const currentPageData = tender?.data?.slice(startIndex, endIndex) || [];
+	const currentPageData = teamData?.data?.slice(startIndex, endIndex) || [];
 
 	useEffect(() => {
 		callAPI();
@@ -85,7 +86,7 @@ const ListAboutUsTeam = () => {
 					</Button>
 				</Link>
 			</Box>
-					<TableContainer
+					{teamData?.data?.length===0 ? <EmptyRecords/> : <TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
 					>
@@ -127,13 +128,13 @@ const ListAboutUsTeam = () => {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={tender?.data?.length || 0}
+							count={teamData?.data?.length || 0}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							onPageChange={handleChangePage}
 							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
-					</TableContainer>
+					</TableContainer>}
 				</Box>
 			</LoaderContainer></>
   )

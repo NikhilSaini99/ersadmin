@@ -27,6 +27,7 @@ import { useEffect } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
 
 const ListNoticeBoard = () => {
 	const {
@@ -91,7 +92,7 @@ const ListNoticeBoard = () => {
 							</Button>
 						</Link>
 					</Box>
-					<TableContainer
+				{noticeBoard?.data?.length===0 ? <EmptyRecords/> :	<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}>
 						<Table aria-label="Tender-Table">
@@ -141,7 +142,7 @@ const ListNoticeBoard = () => {
 							onPageChange={handleChangePage}
 							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
-					</TableContainer>
+					</TableContainer>}
 				</Box>
 			</LoaderContainer>
 		</>

@@ -27,6 +27,7 @@ import LoaderContainer from '../../components/LoaderContainer';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { SubHeader } from '../../layouts/MainLayout';
+import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
 
 
 const ListContactBranch = () => {
@@ -85,7 +86,7 @@ const ListContactBranch = () => {
 							</Button>
 						</Link>
 					</Box>
-					<TableContainer
+					{contactBranch?.data?.length===0 ? <EmptyRecords/> : <TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
 					>
@@ -141,7 +142,7 @@ const ListContactBranch = () => {
 							onPageChange={handleChangePage}
 							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
-					</TableContainer>
+					</TableContainer>}
 				</Box>
 			</LoaderContainer>
 		</>

@@ -9,10 +9,12 @@ import * as Yup from 'yup';
 import MainCard from '../components/MainCard';
 import useFetch from '../hooks/useFetch';
 import { SubHeader } from '../layouts/MainLayout';
+import { useNavigate } from 'react-router-dom';
 
 
 export function Video() {
 	const { callAPI } = useFetch('POST', '/videos');
+	const navigate = useNavigate();
 	const formik = useFormik({
 		initialValues: {
 			name: '',
@@ -127,5 +129,6 @@ export function Video() {
 				...values, yearofupload : dayjs(values.uploadDate).format('YYYY'),
 			});
 		formik.handleReset();
+		navigate("/Upload-Video")
 	}
 }

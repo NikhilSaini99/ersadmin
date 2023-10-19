@@ -4,6 +4,7 @@ import BannerImg from '../components/BannerImg';
 import LoaderContainer from '../components/LoaderContainer';
 import useFetch from '../hooks/useFetch';
 import { SubHeader } from '../layouts/MainLayout';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 
 
 export function Banner() {
@@ -40,7 +41,7 @@ export function Banner() {
 				</div>
 			
 				<LoaderContainer {...{ loading, error }}>
-					{banner?.data?.map((item, key) => (
+					{banner?.data?.length ===0 ? <EmptyRecords/> : banner?.data?.map((item, key) => (
 						<BannerImg
 							key={key}
 							img={item.imageurl ? item.imageurl : '/images/bg.png'}

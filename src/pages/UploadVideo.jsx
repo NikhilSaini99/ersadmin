@@ -8,6 +8,7 @@ import { SubHeader } from '../layouts/MainLayout';
 import { Button } from '@mui/base';
 import { Link } from 'react-router-dom';
 import { BiAddToQueue } from 'react-icons/bi';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 
 export function UploadVideo() {
 	const { loading, data: video, error, callAPI } = useFetch('GET', '/videos/');
@@ -48,7 +49,7 @@ export function UploadVideo() {
 							</Button>
 						</Link>
 					</Box>
-				<Grid container spacing={6}>
+				{video?.data?.length===0 ? <EmptyRecords/> : <Grid container spacing={6}>
 					{video?.data?.map((item, key) => (
 						// eslint-disable-next-line react/jsx-key
 						<Grid item sm={6} md={4}>
@@ -61,7 +62,7 @@ export function UploadVideo() {
 							/>
 						</Grid>
 					))}
-				</Grid>
+				</Grid>}
 				</Box>
 			</LoaderContainer>
 		</>

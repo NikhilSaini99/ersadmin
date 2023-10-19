@@ -7,7 +7,8 @@ import {
 	Grid,
 	TextField,
 	Button,
-	Typography
+	Typography,
+	CircularProgress
 } from '@mui/material';
 import dayjs from 'dayjs';
 import useFetch from '../../hooks/useFetch';
@@ -28,8 +29,8 @@ const PublicMeeting = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
     const { uploadCover } = UsePdfCover();
-	const { callAPI } = useFetch('POST', '/publicMeeting');
-	const { callAPI: updateformAPI } = useFetch(
+	const { callAPI, loading } = useFetch('POST', '/publicMeeting');
+	const { callAPI: updateformAPI, loading: updateLoading } = useFetch(
 		'PUT',
 		`/publicMeeting/${location?.state?.formdata?.id}`
 	);
@@ -213,7 +214,7 @@ const PublicMeeting = () => {
 										variant="contained"
 										color="primary"
 									>
-										{location?.state?.status ? 'Update' : 'Submit'}
+										{loading ?  <CircularProgress /> : location?.state?.status ? 'Update' : 'Submit'}
 									</Button>
 								</Box>
 							</Grid>

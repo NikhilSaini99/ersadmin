@@ -269,7 +269,7 @@ const routes = [
 				element: <AddNoticeBoard />
 			},
 			{
-				path: 'List-Notice-Board',
+				path: 'List-Public-Board',
 				element: <ListNoticeBoard />
 			},
 			{

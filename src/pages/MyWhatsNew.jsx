@@ -7,6 +7,7 @@ import LoaderContainer from '../components/LoaderContainer'
 import MyNewsPrint from './MyNewsPrint'
 import { BiAddToQueue } from 'react-icons/bi'
 import { SubHeader } from '../layouts/MainLayout';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords'
 
 
 const MyWhatsNew = () => {
@@ -46,7 +47,7 @@ const MyWhatsNew = () => {
 				</Button>
                 </Link>
             </Box>
-            <Grid container spacing={2} mt={1} ml={3}>
+          {newsData?.data?.length===0 ? <EmptyRecords/>  : <Grid container spacing={2} mt={1} ml={3}>
                 {newsData?.data?.map((item,key) => (
                     <MyNewsPrint 
                      item={item}
@@ -60,7 +61,7 @@ const MyWhatsNew = () => {
                     />
                    
                 ))}
-                </Grid>
+                </Grid>}
             </LoaderContainer>
         </>
     )

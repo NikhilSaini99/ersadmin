@@ -28,6 +28,7 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
+import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
 
 const ListPublicMeeting = () => {
     const { loading, error, data: tender, callAPI } = useFetch('GET', '/publicMeeting');
@@ -85,7 +86,7 @@ const ListPublicMeeting = () => {
 					</Button>
 				</Link>
 			</Box>
-					<TableContainer
+					{tender?.data?.length===0 ? <EmptyRecords/> :<TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
 					>
@@ -133,7 +134,7 @@ const ListPublicMeeting = () => {
 							onPageChange={handleChangePage}
 							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
-					</TableContainer>
+					</TableContainer>}
 				</Box>
 			</LoaderContainer></>
   )

@@ -17,6 +17,7 @@ import PageHeader from '../components/PageHeader';
 import useFetch from '../hooks/useFetch';
 import { SubHeader } from '../layouts/MainLayout';
 import { BiAddToQueue } from 'react-icons/bi';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 export default function UploadGalleryImage() {
 	const {
 		loading,
@@ -62,13 +63,13 @@ export default function UploadGalleryImage() {
 							</Button>
 						</Link>
 					</Box>
-				<Grid container spacing={6} sx={{marginLeft:"0 !important"}}>
+				{gallery?.data?.length===0 ? <EmptyRecords/> : <Grid container spacing={6} sx={{marginLeft:"0 !important"}}>
 					{gallery?.data?.map((item, key) => (
 						<Grid item sm={6} md={4} key={key}>
 							<GalleryCard {...{ ...item }} refresh={callAPI} data={gallery} />
 						</Grid>
 					))}
-				</Grid>
+				</Grid>}
 				</Box>
 			</LoaderContainer>
 		</>

@@ -1,12 +1,12 @@
-import { AiFillFolderAdd,AiOutlineVideoCameraAdd } from 'react-icons/ai'
-import { BiNews, BiNotification } from 'react-icons/bi'
+import { AiFillFolderAdd,AiOutlineTeam,AiOutlineVideoCameraAdd } from 'react-icons/ai'
+import { BiNews, BiNote, BiNotification } from 'react-icons/bi'
 import { FaHome, FaVideo ,FaQuestion} from 'react-icons/fa'
 import { ImFolderUpload } from 'react-icons/im'
 import { MdCorporateFare, MdFeedback, MdLabelImportant, MdOutlineApproval } from 'react-icons/md'
 import { TbReceiptTax } from 'react-icons/tb'
 import { TfiGallery, TfiMenuAlt, } from 'react-icons/tfi'
 import { MdSettings } from 'react-icons/md'
-import {BsClipboard} from "react-icons/bs"
+import {BsClipboard, BsQrCode} from "react-icons/bs"
 import {MdOutlineContactEmergency} from 'react-icons/md'
 import {FaWpforms} from "react-icons/fa"
 
@@ -75,9 +75,9 @@ const Menuitems = [
         childrens: []
     },
     {
-        title: 'Notice Board',
+        title: 'Public  Board',
         icon: MdOutlineApproval,
-        href: '/List-Notice-Board',
+        href: '/List-Public-Board',
         childrens: []
     },
     {
@@ -133,17 +133,17 @@ const Menuitems = [
     },
     {
         title: 'Add Tax Item Code',
-        icon: FaQuestion,
+        icon: BsQrCode,
         href: '/List-Tax-Item-Code'
     },
     {
         title: 'Practice Note',
-        icon: FaQuestion,
+        icon: BiNote,
         href: '/Practice-Notes-List'
     },
     {
         title: 'Team Data',
-        icon: FaQuestion,
+        icon: AiOutlineTeam,
         href: '/List-Team-Data'
     },
 ];

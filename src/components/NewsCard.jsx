@@ -8,7 +8,7 @@ import {
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import useFetch from '../hooks/useFetch';
@@ -16,6 +16,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BiAddToQueue } from 'react-icons/bi';
 
 export default function NewsCard({ img, title, description, id, refresh }) {
+	const [showMore, setShowMore] = useState(false);
 	
 	const navigate = useNavigate()
 	const { loading, data, callAPI } = useFetch(
@@ -30,6 +31,13 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 	{
 		console.log(description)
 		navigate('/Add-News',{state:{id:id,description:description}})
+	}
+
+	const MAX_LENGTH = 250;
+
+	const truncateLength = (text)=> {
+		const finalString = text.slice(0, MAX_LENGTH)
+		return showMore ? text : finalString+"....";
 	}
 	
 	return (
@@ -60,12 +68,12 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 							variant="body2"
 							color="text.secondary"
 							dangerouslySetInnerHTML={{
-								__html: description
+								__html: truncateLength(description)
 							}}
 						></Typography>
 					</CardContent>
 				</CardActionArea>
-				<CardActions>
+				<CardActions sx={{display:'flex', flexWrap:'wrap', gap:'1rem', justifyContent:'center', alignItems:'center'}}>
 					<Button
 						variant="outlined"
 						size="small"
@@ -81,11 +89,22 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 					<Button
 						variant="outlined"
 						size="small"
-						style={{ marginLeft: '15px' }}
 						startIcon={<FaRegEdit size={20} />}
 						onClick={()=>handleEditPage(id)}
 					>
 						update
+					</Button>
+					<Button
+						variant="outlined"
+						size="small"
+						disabled={loading}
+						onClick={(e) => {
+							e.stopPropagation();
+							setShowMore(!showMore);
+						}}
+						startIcon={<MdDelete size={20} />}
+					>
+						{showMore ? "Show Less" : "Show More"}
 					</Button>
 				</CardActions>
 			</Card>

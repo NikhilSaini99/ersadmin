@@ -1,6 +1,8 @@
 import { to } from "await-to-js";
 import { API_HOST } from "../constants";
 
+const token = localStorage.getItem("token");
+console.log("printing", token);
 export default async function request(
     method,
     url,
@@ -10,10 +12,8 @@ export default async function request(
 ) {
     let headers = {
         "Content-Type": "application/json;charset=utf-8",
+        //  Authorization: `Bearer ${token}`
     };
-    //   let token =
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjZhNGIwZDIwNDI3MzBjMWM2OGJmY2EiLCJyb2xlIjoiQWRtaW4iLCJwbGF0Zm9ybU5hbWUiOiJBZG1pbl9QYW5lbCIsImlhdCI6MTY1ODQwMjY5MSwiZXhwIjoxNjc1NjgyNjkxfQ.YIGenq4yAcb9x4BGU5-r-YCMRa3eLIdYPKP_NKgvHCU";
-    //   if (token !== null) headers.Authorization = `Bearer ${token}`;
 
     let err, response;
 
@@ -57,3 +57,4 @@ export default async function request(
     }
     return [err, response];
 }
+

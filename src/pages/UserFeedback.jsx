@@ -4,6 +4,7 @@ import { Box, Stack, Typography, Avatar, Paper, Grid } from '@mui/material';
 import { Button } from '@mui/base';
 import LoaderContainer from '../components/LoaderContainer';
 import { SubHeader } from '../layouts/MainLayout';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 
 export default function UserFeedBacks() {
     const { data: feedbackData, loading, error,
@@ -33,7 +34,7 @@ export default function UserFeedBacks() {
 						py: '1rem'
 					}}
 				>
-                    <Grid container spacing={2} mt={3}>
+                   {feedbackData?.data?.length===0 ? <EmptyRecords/> : <Grid container spacing={2} mt={3}>
                         {feedbackData?.data.map((item, index) => (
                             <FeedBackPrint key={index}
                                 id={item.id}
@@ -45,7 +46,7 @@ export default function UserFeedBacks() {
                                 createddate={item.createdAt}
                             />
                         ))}
-                    </Grid>
+                    </Grid>}
                     </Box>
                 </LoaderContainer>
             </Box>

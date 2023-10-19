@@ -28,6 +28,7 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
+import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
 
 const CorporateResponsibility = () => {
 	const { loading, error, data: CSR, callAPI } = useFetch('GET', '/csr');
@@ -58,7 +59,7 @@ const CorporateResponsibility = () => {
 		display: 'flex',
 		justifyContent: 'flex-end',
 		color: '#72b8bf',
-		pb: "1rem",
+		pb: '1rem'
 	};
 
 	return (
@@ -67,9 +68,9 @@ const CorporateResponsibility = () => {
 			<LoaderContainer {...{ loading, error }}>
 				<Box
 					sx={{
-						width: { xs: "100%" },
+						width: { xs: '100%' },
 						margin: { xs: '0 auto', lg: '0  auto' },
-						px: { md: '3rem', lg: '5rem,', xl: '10rem'  },
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
 						py: '1rem'
 					}}
 				>
@@ -86,7 +87,7 @@ const CorporateResponsibility = () => {
 							</Button>
 						</Link>
 					</Box>
-					<TableContainer
+					{CSR?.data?.length===0 ? <EmptyRecords/> : <TableContainer
 						component={Paper}
 						sx={{ '& th, & td': { border: '0.1rem solid rgba(0,0,0,0.1)' } }}
 					>
@@ -108,7 +109,6 @@ const CorporateResponsibility = () => {
 									<TableCell>Image</TableCell>
 									<TableCell>Delete</TableCell>
 									<TableCell>Update</TableCell>
-
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -135,15 +135,14 @@ const CorporateResponsibility = () => {
 							onPageChange={handleChangePage}
 							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
-					</TableContainer>
+					</TableContainer>}
 				</Box>
 			</LoaderContainer>
 		</>
-	)
-}
+	);
+};
 
-export default CorporateResponsibility
-
+export default CorporateResponsibility;
 
 const CorporateList = ({
 	name,
@@ -152,11 +151,11 @@ const CorporateList = ({
 	url,
 	refresh,
 	id,
-	item,
-
+	item
 }) => {
 	const navigate = useNavigate();
 	const { data, callAPI } = useFetch('DELETE', `/csr/${id}`);
+	const [showMore, setShowMore] = useState(false);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
@@ -166,9 +165,17 @@ const CorporateList = ({
 	}
 
 	function handleUpdate() {
-		navigate('/Add-Corporate-Responsibility', { state: { formdata: item, status: true } });
+		navigate('/Add-Corporate-Responsibility', {
+			state: { formdata: item, status: true }
+		});
 	}
 
+	const MAX_LENGTH = 80;
+
+	const truncateLength = (text) => {
+		const finalString = text.slice(0, MAX_LENGTH);
+		return showMore ? text : finalString + '....';
+	};
 
 	return (
 		<>
@@ -180,16 +187,23 @@ const CorporateList = ({
 					'&:hover': {
 						background: '#F2F2F2'
 					}
-				}}>
+				}}
+			>
 				<TableCell>{name}</TableCell>
-				<TableCell>{description}</TableCell>
+				<TableCell>
+					<Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems:'center' }}>
+						<Typography variant="body1">
+							{truncateLength(description)}
+						</Typography>{' '}
+						<Button sx={{justifyContent:"flex-end", width:"100%"}} onClick={()=>setShowMore(!showMore)}>{showMore ? 'Show Less' : 'Show More'}</Button>
+					</Box>{' '}
+				</TableCell>
 				<TableCell>{dayjs(uploadDate).format('DD-MM-YYYY')}</TableCell>
-				<TableCell sx={{display:"flex", justifyContent:"center"}}>
-                    <Avatar width={36} >
-                        <img src={url} alt="photo" loading='lazy'/>
-                    </Avatar>
-                    
-                    </TableCell>
+				<TableCell>
+					<Avatar width={36} sx={{width:"50px", height:'50px'}}>
+						<img src={url} alt="photo" loading="lazy" style={{height:"100%",width:'100%', objectFit:"cover"}}/>
+					</Avatar>
+				</TableCell>
 				<TableCell>
 					<IconButton onClick={handleDelete}>
 						<DeleteIcon sx={{ color: 'red' }} />
@@ -204,5 +218,3 @@ const CorporateList = ({
 		</>
 	);
 };
-
-

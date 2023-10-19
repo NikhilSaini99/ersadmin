@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HelpIcon from '@mui/icons-material/Help';
 import { useState } from 'react'
 import { SubHeader } from '../layouts/MainLayout';
+import EmptyRecords from '../components/EmptyRecords/EmptyRecords'
 
 const FAQ = () => {
 
@@ -29,7 +30,6 @@ const FAQ = () => {
         justifyContent: 'flex-end',
         color: '#72b8bf',
         pb: "1rem",
-        mr: '6rem'
     }
     return (
         <>
@@ -38,6 +38,14 @@ const FAQ = () => {
 
 
             <LoaderContainer {...{ loading, error }}>
+            <Box
+					sx={{
+						width: '100%',
+						margin: { xs: '0 auto', lg: '0  auto' },
+						px: { md: '3rem', lg: '5rem,', xl: '10rem' },
+						py: '1rem'
+					}}
+				>
                 <Stack sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem', ml: '2rem' }}>
 
                     <Box sx={myBox}>
@@ -54,7 +62,7 @@ const FAQ = () => {
                         </Link>
                     </Box>
 
-                    {faqData?.data?.map((item, index) => (
+                    { faqData?.data?.length===0 ? <EmptyRecords/> :faqData?.data?.map((item, index) => (
                         <MyFAQPrint
                             key={index}
                             myidx={index}
@@ -66,6 +74,7 @@ const FAQ = () => {
                         />
                     ))}
                 </Stack>
+                </Box>
             </LoaderContainer>
 
         </>
