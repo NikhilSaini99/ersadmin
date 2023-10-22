@@ -8,7 +8,7 @@ export function GalleryImage() {
 	console.log(newArr);
 	return (
 		<>
-			<div className="flex  gap-16">
+			<div className="flex flex-wrap  gap-16 p-14">
 				{newArr.map((img, key) => (
 					<img key={key} src={img} width={400} />
 				))}

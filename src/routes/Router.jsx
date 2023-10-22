@@ -6,7 +6,7 @@ import { UploadVideo } from '../pages/UploadVideo';
 import { Video } from '../pages/Video';
 import { Setting } from '../pages/setting';
 /****Layouts*****/
-// const FullLayout = lazy(() => import('../layouts/MainLayout'));
+
 
 /****End Layouts*****/
 import { AddNews } from '../pages/AddNews';
@@ -22,91 +22,92 @@ import { AddNews } from '../pages/AddNews';
 // 	'../pages',
 // 	'AddCorporateResponsibility'
 // );
-// const CreateImage = lazy(() => import('../pages/CreateImage'))
-// const AddBanner = lazy(() => import('../pages/AddBanner'))
-// const Menu = lazy(() => import('../pages'))
-// const RecentlyApproved = lazy(() => import('../pages/RecentlyApproved'))
-// const AddWhatNew = lazy(() => import('../pages/AddWhatNew'))
-// const AddCorporateResponsibility = lazy(() => import('../pages/AddCorResp'))
-// const UploadGalleryImage = lazy(() => import('../pages/UploadGalleryImage'))
+
 
 // const ImportantLinks = LazyLoad('../pages', 'ImportantLinks');
 // const UserFeedBacks = LazyLoad('../pages', 'UserFeedBacks');
 
-import UserFeedBacks from "../pages/UserFeedback"
+// import UserFeedBacks from "../pages/UserFeedback"
 // const News = LazyLoad('../pages', 'News');
 import { News } from '../pages/News';
 // const Banner = LazyLoad('../pages', 'Banner');
 import { Banner } from '../pages/Banner';
 
 // const UploadGalleryImage = LazyLoad('../pages', 'UploadGalleryImage');
-import ImportantLinks from "../pages/ImpLinks"
-import FullLayout from "../layouts/MainLayout"
-import CreateImage from '../pages/CreateImage';
-import AddBanner from '../pages/AddBanner';
-import Menu from '../pages';
-import RecentlyApproved from '../pages/RecentlyApproved';
-import AddWhatNew from '../pages/AddWhatNew';
-import AddCorporateResponsibility from '../pages/AddCorResp';
-import UploadGalleryImage from '../pages/UploadGalleryImage';
+// import ImportantLinks from "../pages/ImpLinks"
+// import FullLayout from "../layouts/MainLayout"
+// import CreateImage from '../pages/CreateImage';
+// import AddBanner from '../pages/AddBanner';
+// import Menu from '../pages';
+// import RecentlyApproved from '../pages/RecentlyApproved';
+// import AddWhatNew from '../pages/AddWhatNew';
+// import AddCorporateResponsibility from '../pages/AddCorResp';
+// import UploadGalleryImage from '../pages/UploadGalleryImage';
 
-import MyWhatsNew from '../pages/MyWhatsNew';
-import AddMyWhatsNews from '../pages/AddMyWhatsNews';
-import MyNewsPrint from '../pages/MyNewsPrint';
+// import MyWhatsNew from '../pages/MyWhatsNew';
+// import AddMyWhatsNews from '../pages/AddMyWhatsNews';
+// import MyNewsPrint from '../pages/MyNewsPrint';
 import FAQ, { AddFAQ } from '../pages/FAQ';
-import AddMenu from '../pages/AddMenu';
-import AddFormData from '../pages/AddFormData';
-import AddContactBranch from '../pages/AddContactBranch';
-import AddNoticeBoard from '../pages/NoticeBoard/AddNoticeBoard';
-import AddRecentlyApproved from '../pages/RecentlyApproved/AddRecentlyApproved';
-import AddPublications from '../pages/Publications/AddPublications';
-import ListTender from '../pages/Tender/ListTender';
-import AddTender from '../pages/Tender/AddTender';
-import ListPublications from '../pages/Publications/ListPublications';
-import ListRecentlyApproved from '../pages/RecentlyApproved/ListRecentlyApproved';
-import ListNoticeBoard from '../pages/NoticeBoard/ListNoticeBoard';
-import CorporateResponsibility from '../pages/CorporateResponsibility/CorporateResponsibility';
-import ListContactBranch from '../pages/ContactBranch/ListContactBranch';
-import ListFormData from '../pages/FormData/ListFormData';
-import PublicMeeting from '../pages/PublicMeeting/PublicMeeting';
-import ListPublicMeeting from '../pages/PublicMeeting/ListPublicMeeting';
-import AddPracticeNotes from '../pages/PracticeNotes/AddPracticeNotes';
-import ListPracticeNotes from '../pages/PracticeNotes/ListPracticeNotes';
-import ListTaxItem from '../pages/TaxItemCode/ListTaxItem';
-import AddTaxItemCode from '../pages/TaxItemCode/AddTaxItemCode';
-import AboutUsTeam from '../pages/AboutUsTeam/AboutUsTeam';
-import ListAboutUsTeam from '../pages/AboutUsTeam/ListAboutUsTeam';
+// import AddMenu from '../pages/AddMenu';
+// import AddFormData from '../pages/AddFormData';
+// import AddContactBranch from '../pages/AddContactBranch';
+// import AddNoticeBoard from '../pages/NoticeBoard/AddNoticeBoard';
+// import AddRecentlyApproved from '../pages/RecentlyApproved/AddRecentlyApproved';
+// import AddPublications from '../pages/Publications/AddPublications';
+// import ListTender from '../pages/Tender/ListTender';
+// import AddTender from '../pages/Tender/AddTender';
+// import ListPublications from '../pages/Publications/ListPublications';
+// import ListRecentlyApproved from '../pages/RecentlyApproved/ListRecentlyApproved';
+// import ListNoticeBoard from '../pages/NoticeBoard/ListNoticeBoard';
+// import CorporateResponsibility from '../pages/CorporateResponsibility/CorporateResponsibility';
+// import ListContactBranch from '../pages/ContactBranch/ListContactBranch';
+// import ListFormData from '../pages/FormData/ListFormData';
+// import PublicMeeting from '../pages/PublicMeeting/PublicMeeting';
+// import ListPublicMeeting from '../pages/PublicMeeting/ListPublicMeeting';
+// import AddPracticeNotes from '../pages/PracticeNotes/AddPracticeNotes';
+// import ListPracticeNotes from '../pages/PracticeNotes/ListPracticeNotes';
+// import ListTaxItem from '../pages/TaxItemCode/ListTaxItem';
+// import AddTaxItemCode from '../pages/TaxItemCode/AddTaxItemCode';
+// import AboutUsTeam from '../pages/AboutUsTeam/AboutUsTeam';
+// import ListAboutUsTeam from '../pages/AboutUsTeam/ListAboutUsTeam';
 import SignInSide from '../pages/Login/Login';
 // const Login = lazy(() => import('../pages/Login'));
 
-//dynamic import
-// const  ImportantLinks = lazy(()=>import('../pages/ImpLinks'));
-// const  UserFeedBacks = lazy(()=>import('../pages/UserFeedback'));
-// const  ListAboutUsTeam = lazy(()=>import('../pages/AboutUsTeam/ListAboutUsTeam'));
-// const  AboutUsTeam = lazy(()=>import('../pages/AboutUsTeam/AboutUsTeam'));
-// const  AddTaxItemCode = lazy(()=>import('../pages/TaxItemCode/AddTaxItemCode'))
-// const  ListTaxItem = lazy(()=>import('../pages/TaxItemCode/ListTaxItem'))
-// const  ListPracticeNotes = lazy(()=>import('../pages/PracticeNotes/ListPracticeNotes'))
-// const  AddPracticeNotes = lazy(()=>import('../pages/PracticeNotes/AddPracticeNotes'))
-// const  ListPublicMeeting = lazy(()=>import('../pages/PublicMeeting/ListPublicMeeting'))
-// const  PublicMeeting = lazy(()=>import('../pages/PublicMeeting/PublicMeeting'))
-// const  ListFormData = lazy(()=>import('../pages/FormData/ListFormData'))
-// const  ListContactBranch = lazy(()=>import('../pages/ContactBranch/ListContactBranch'))
-// const  CorporateResponsibility = lazy(()=>import('../pages/CorporateResponsibility/CorporateResponsibility'))
-// const  ListNoticeBoard = lazy(()=>import('../pages/NoticeBoard/ListNoticeBoard'))
-// const  ListRecentlyApproved = lazy(()=>import('../pages/RecentlyApproved/ListRecentlyApproved'))
-// const  ListPublications = lazy(()=>import('../pages/Publications/ListPublications'))
-// const  AddTender = lazy(()=>import('../pages/Tender/AddTender'))
-// const  ListTender = lazy(()=>import('../pages/Tender/ListTender'))
-// const  AddPublications = lazy(()=>import('../pages/Publications/AddPublications'))
-// const  AddRecentlyApproved = lazy(()=>import('../pages/RecentlyApproved/AddRecentlyApproved'))
-// const  AddNoticeBoard = lazy(()=>import('../pages/NoticeBoard/AddNoticeBoard'))
-// const  AddContactBranch = lazy(()=>import('../pages/AddContactBranch'))
-// const  AddFormData = lazy(()=>import('../pages/AddFormData'))
-// const  AddMenu = lazy(()=>import('../pages/AddMenu'))
-// const  MyNewsPrint = lazy(()=>import('../pages/MyNewsPrint'))
-// const  AddMyWhatsNews = lazy(()=>import('../pages/AddMyWhatsNews'))
-// const  MyWhatsNew = lazy(()=>import('../pages/MyWhatsNew'))
+const CreateImage = lazy(() => import('../pages/CreateImage'))
+const AddBanner = lazy(() => import('../pages/AddBanner'))
+const Menu = lazy(() => import('../pages'))
+const RecentlyApproved = lazy(() => import('../pages/RecentlyApproved'))
+const AddWhatNew = lazy(() => import('../pages/AddWhatNew'))
+const AddCorporateResponsibility = lazy(() => import('../pages/AddCorResp'))
+const UploadGalleryImage = lazy(() => import('../pages/UploadGalleryImage'))
+const FullLayout = lazy(() => import('../layouts/MainLayout'));
+const  ImportantLinks = lazy(()=>import('../pages/ImpLinks'));
+const  UserFeedBacks = lazy(()=>import('../pages/UserFeedback'));
+const  ListAboutUsTeam = lazy(()=>import('../pages/AboutUsTeam/ListAboutUsTeam'));
+const  AboutUsTeam = lazy(()=>import('../pages/AboutUsTeam/AboutUsTeam'));
+const  AddTaxItemCode = lazy(()=>import('../pages/TaxItemCode/AddTaxItemCode'))
+const  ListTaxItem = lazy(()=>import('../pages/TaxItemCode/ListTaxItem'))
+const  ListPracticeNotes = lazy(()=>import('../pages/PracticeNotes/ListPracticeNotes'))
+const  AddPracticeNotes = lazy(()=>import('../pages/PracticeNotes/AddPracticeNotes'))
+const  ListPublicMeeting = lazy(()=>import('../pages/PublicMeeting/ListPublicMeeting'))
+const  PublicMeeting = lazy(()=>import('../pages/PublicMeeting/PublicMeeting'))
+const  ListFormData = lazy(()=>import('../pages/FormData/ListFormData'))
+const  ListContactBranch = lazy(()=>import('../pages/ContactBranch/ListContactBranch'))
+const  CorporateResponsibility = lazy(()=>import('../pages/CorporateResponsibility/CorporateResponsibility'))
+const  ListNoticeBoard = lazy(()=>import('../pages/NoticeBoard/ListNoticeBoard'))
+const  ListRecentlyApproved = lazy(()=>import('../pages/RecentlyApproved/ListRecentlyApproved'))
+const  ListPublications = lazy(()=>import('../pages/Publications/ListPublications'))
+const  AddTender = lazy(()=>import('../pages/Tender/AddTender'))
+const  ListTender = lazy(()=>import('../pages/Tender/ListTender'))
+const  AddPublications = lazy(()=>import('../pages/Publications/AddPublications'))
+const  AddRecentlyApproved = lazy(()=>import('../pages/RecentlyApproved/AddRecentlyApproved'))
+const  AddNoticeBoard = lazy(()=>import('../pages/NoticeBoard/AddNoticeBoard'))
+const  AddContactBranch = lazy(()=>import('../pages/AddContactBranch'))
+const  AddFormData = lazy(()=>import('../pages/AddFormData'))
+const  AddMenu = lazy(()=>import('../pages/AddMenu'))
+const  MyNewsPrint = lazy(()=>import('../pages/MyNewsPrint'))
+const  AddMyWhatsNews = lazy(()=>import('../pages/AddMyWhatsNews'))
+const  MyWhatsNew = lazy(()=>import('../pages/MyWhatsNew'))
 /*****Routes******/
 
 

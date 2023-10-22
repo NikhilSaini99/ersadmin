@@ -54,11 +54,14 @@ export function UploadVideo() {
 						// eslint-disable-next-line react/jsx-key
 						<Grid item sm={6} md={4}>
 							<VideoItem
+								item={item}
+								id={item?.id}
 								key={key}
-								img={item.url}
-								title={item.name}
-								description={item.description}
-								link={item.url}
+								img={item?.url}
+								title={item?.name}
+								description={item?.description}
+								link={item?.url}
+								refresh={callAPI}
 							/>
 						</Grid>
 					))}
@@ -68,8 +71,4 @@ export function UploadVideo() {
 		</>
 	);
 
-	// async function getVideo() {
-	// 	let [err, res] = await request('GET', '/videos/');
-	// 	if (!err && res.success) setVideo(res.data);
-	// }
 }

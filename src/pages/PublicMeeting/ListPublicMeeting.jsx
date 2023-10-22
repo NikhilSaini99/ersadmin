@@ -166,20 +166,6 @@ const MyPublicMeetingList = ({
 		navigate('/Add-Public-Meetings', { state: { formdata: item, status: true } });
 	}
 
-	// function handleDownloadPDF(pdfURL) {
-	// 	fetch(pdfURL)
-	// 		.then((response) => response.blob())
-	// 		.then((blob) => {
-	// 			const url = window.URL.createObjectURL(blob);
-	// 			const link = document.createElement('a');
-	// 			link.setAttribute('href', url);
-	// 			link.setAttribute('download', 'tender.pdf');
-	// 			link.click();
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error('Error downloading PDF:', error);
-	// 		});
-	// }
 
 	return (
 		<>
