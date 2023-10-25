@@ -22,6 +22,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SunEditor from 'suneditor-react';
 import "suneditor/dist/css/suneditor.min.css";
 import { SubHeader } from '../layouts/MainLayout';
+import { useRef } from 'react';
 
 
 const newsSchema = Yup.object().shape({
@@ -35,27 +36,30 @@ export function AddNews() {
 
 	const location = useLocation()
 	const navigate = useNavigate()
-
+	console.log(location)
 	const MuiTextField = ({ field, form, ...props }) => {
 		return <TextField  {...field} {...props} />;
 	};
-
+	const upload_IMG_FLAG_REF = useRef(false);
 	const { UploadFile } = useFile();
 	const [text, setText] = useState('');
 	const [images, setImages] = useState([]);
 	const { loading, data, error, callAPI } = useFetch('POST', '/news');
+
+	const { callAPI: updateformAPI, loading: updateLoading } = useFetch(
+		'PUT',
+		`/news/${location?.state?.id}`
+	);
+
 	const [htmlData, setHtmlData] = useState({});
-	const [htmlContent, setHtmlContent] = useState('');
+	const [htmlContent, setHtmlContent] = useState('sss');
 
 
 	//filling my texeditor
-	useEffect(() => {
-		if (location.state && location.state.description)
-			setHtmlContent(location.state.description)
-	}, [location.state])
-
+	
 
 	function gettingHtmlData(recvHtml) {
+		console.log(recvHtml)
 		setHtmlData({ body: recvHtml })
 	}
 
@@ -63,15 +67,28 @@ export function AddNews() {
 		setText(content);
 	};
 
-	// console.log(location.state.description)
+	const uploadDate = location?.state?.date.split('T')[0];
 
+	async function createNews({ news: newsName, uploadDate, body: description }) {
+		const result = await UploadFile('/files/news-image', images);
+		console.log(result)
+		if (result.success) {
+			console.log(result)
+			callAPI({
+				newsName: newsName,
+				uploadDate: uploadDate,
+				description: description,
+				url: result.data.urls.toString()
+			})
+		}
+		navigate('/News')
+	}
 
 	return (
 		<Formik
 			initialValues={{
-				news: '',
-				uploadDate: '',
-
+					news: location?.state?.status ? location?.state?.title : '',
+				uploadDate: location?.state?.status ? dayjs(uploadDate) : null,
 			}}
 			validationSchema={newsSchema}
 			onSubmit={(values, { resetForm }) => {
@@ -91,7 +108,7 @@ export function AddNews() {
 				isSubmitting
 			}) => (
 				<Form>
-					<SubHeader title="Add News" />
+					<SubHeader title={location?.state?.status ? "Update News":"Add News"} />
 					<MainCard
 						border={false}
 						elevation={16}
@@ -116,6 +133,7 @@ export function AddNews() {
 							<Grid item xs={6} md={6}>
 								<LocalizationProvider dateAdapter={AdapterDayjs}>
 									<DatePicker
+										disablePast
 										slotProps={{ textField: { fullWidth: true } }}
 										fullWidth
 										value={values.uploadDate}
@@ -132,15 +150,8 @@ export function AddNews() {
 							</Grid>
 
 							<Grid item xs={12} style={{ height: 'auto', overflowY: 'auto' }}>
-								{/* <TextField fullWidth label="Description" id="fullWidth" helperText="Please enter Description" /> */}
 
-								{/* <SunEditor
-									setContents={htmlContent}
-									onChange={handleChange}
-									onBlur={handleBlur}
-								/> */}
-
-								<TextEditor {...{ text, setText }} htmlContent={htmlContent} gettingHtmlData={gettingHtmlData} />
+								<TextEditor initialContent={location?.state?.status ? location?.state?.description: ""} {...{ text, setText }} htmlContent={htmlContent} gettingHtmlData={gettingHtmlData} />
 								{!text && (
 									<Typography variant="body2" className="text-red-500">
 										{errors.description}
@@ -171,27 +182,4 @@ export function AddNews() {
 		</Formik>
 	);
 
-	async function createNews({ news: newsName, uploadDate, body: description }) {
-		// const result = await UploadFile('/files/news-image', images);
-		// if (result.success)
-		// 	callAPI({
-		// 		newsName: values.news,
-		// 		...values,
-		// 		description: text,
-		// 		url: result.data.urls.toString()
-		// 	});
-
-		const result = await UploadFile('/files/news-image', images);
-		console.log(result)
-		if (result.success) {
-			console.log(result)
-			callAPI({
-				newsName: newsName,
-				uploadDate: uploadDate,
-				description: description,
-				url: result.data.urls.toString()
-			})
-		}
-		navigate('/News')
-	}
 }

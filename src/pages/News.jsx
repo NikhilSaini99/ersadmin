@@ -46,6 +46,7 @@ export function News() {
 						{news?.data?.map((item, key) => (
 							<Grid item sm={6} md={4} key={key}>
 								<NewsCard
+									date={item.uploadDate}
 									id={item.id}
 									refresh={callAPI}
 									img={item.url}

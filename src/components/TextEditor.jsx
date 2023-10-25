@@ -1,5 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useRef } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 // import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.bubble.css';
 // import 'react-quill/dist/quill.snow.css';
@@ -8,7 +10,8 @@ import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 
 
-const TextEditor = ({ text, setText,gettingHtmlData,htmlContent }) => {
+const TextEditor = ({ gettingHtmlData,initialContent }) => {
+	const [editorContent, setEditorContent] = useState(initialContent);
 	const editorRef = useRef(null);
 	// const changeHandler = (content, delta, source, editor) => {
 	// 	console.log(editor.getHTML()); // rich text
@@ -18,19 +21,18 @@ const TextEditor = ({ text, setText,gettingHtmlData,htmlContent }) => {
 	// };
 	
 
-	const handleChange = () => {
-		if (editorRef.current && editorRef.current.editor) {
-			const htmlContent = editorRef.current.editor.core.getContents();
-			// console.log(htmlContent)
-			gettingHtmlData(htmlContent)
-		  }
-	}
-	const handlePrintClick = () => {
-		// if (editorRef.current && editorRef.current.editor) {
-		//   const htmlContent = editorRef.current.editor.core.getContents();
-		//   console.log(htmlContent); 
-		//   gettingHtmlData(htmlContent)// now i want to display or save the HTML content for printing
-		// }
+	// const handleChange = () => {
+	// 	if (editorRef.current && editorRef.current.editor) {
+	// 		const htmlContent = editorRef.current.editor.core.getContents();
+	// 		// console.log(htmlContent)
+	// 		gettingHtmlData(htmlContent)
+	// 	  }
+	// }
+	const handleChange = (content) => {
+		setEditorContent(content);
+		if (gettingHtmlData) {
+		  gettingHtmlData(content);
+		}
 	  };
 
 	function handleImageUpload(
@@ -55,6 +57,9 @@ const TextEditor = ({ text, setText,gettingHtmlData,htmlContent }) => {
 
 		console.log(targetElement.src);
 	}
+	useEffect(() => {
+		setEditorContent(initialContent);
+	}, [initialContent])
 
 	return (
 		<>
@@ -68,6 +73,7 @@ const TextEditor = ({ text, setText,gettingHtmlData,htmlContent }) => {
 			onChange={handleChange}
 			onImageUpload={handleImageUpload}
 			onVideoUpload={handleVideoUpload}
+			setContents={editorContent}
 			setOptions={{
 				height: 200,
 				buttonList: [
@@ -87,11 +93,10 @@ const TextEditor = ({ text, setText,gettingHtmlData,htmlContent }) => {
 					"/", // Line break
 					["outdent", "indent"],
 					["align", "horizontalRule", "list", "lineHeight"],
-					["table", "link", "image", "video", "audio" /** ,'math' */], // You must add the 'katex' library at options to use the 'math' plugin. // You must add the "imageGalleryUrl".
+					["table", "link", "image", "video", "audio" /** ,'math' */], 
             /** ['imageGallery'] */["fullScreen", "showBlocks", "codeView"],
 					["preview", "print"],
 					["save"]
-					/** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
 				]
 			}}
 		/>

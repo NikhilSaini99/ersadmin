@@ -24,7 +24,7 @@ export default function UploadGalleryImage() {
 		data: gallery,
 		error,
 		callAPI
-	} = useFetch('GET', '/gallery-images');
+	} = useFetch('GET', "/api/gallery-images/web");
 
 	useEffect(() => callAPI(), []);
 	// console.log(gallery)
@@ -103,6 +103,7 @@ function GalleryCard({ url, groupName, imageName, id, refresh, }) {
 
 	return (
 		<Card>
+			
 			<CardActionArea
 				component="button"
 				onClick={() =>

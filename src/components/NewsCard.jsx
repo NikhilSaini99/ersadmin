@@ -15,7 +15,7 @@ import useFetch from '../hooks/useFetch';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiAddToQueue } from 'react-icons/bi';
 
-export default function NewsCard({ img, title, description, id, refresh }) {
+export default function NewsCard({ img, title, description, id, refresh,date }) {
 	const [showMore, setShowMore] = useState(false);
 	
 	const navigate = useNavigate()
@@ -27,39 +27,41 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 		if (data?.success) refresh();
 	}, [data]);
 
-	function handleEditPage(id)
-	{
-		console.log(description)
-		navigate('/Add-News',{state:{id:id,description:description}})
+	function handleUpdate() {
+		navigate('/Add-News', {state:{id:id,description:description,title:title,date:date,status: true}});
+	}
+	function handleDelete() {
+		callAPI();
 	}
 
-	const MAX_LENGTH = 250;
+	const MAX_LENGTH = 150;
 
 	const truncateLength = (text)=> {
 		const finalString = text.slice(0, MAX_LENGTH)
-		return showMore ? text : finalString+"....";
+		return showMore ? text : `${finalString}....`;
 	}
 	
 	return (
 		<>
 		
 			<Card
-				// sx={{ maxWidth: 345 }}
+				sx={{  minHeight:"350px", height:"200px", overflow: "auto",}}
 				key={id}
-				// className="shadow-xl"
 				elevation={10}
-				// sx={{ boxShadow: 'none' }}/
 			>
 				<CardActionArea
 					component="a"
 					href=""
 					onClick={() => console.log('CardActionArea clicked')}
 				>
+					
 					<CardMedia
-						sx={{ height: 140 }}
+						component="img"
+						sx={{height:140}}
 						image={img.split(',')[0]}
 						title="green iguana"
 					/>
+					
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="div">
 							{title}
@@ -80,7 +82,7 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 						disabled={loading}
 						onClick={(e) => {
 							e.stopPropagation();
-							deleteNews();
+							handleDelete();
 						}}
 						startIcon={<MdDelete size={20} />}
 					>
@@ -90,7 +92,7 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 						variant="outlined"
 						size="small"
 						startIcon={<FaRegEdit size={20} />}
-						onClick={()=>handleEditPage(id)}
+						onClick={()=>handleUpdate(id)}
 					>
 						update
 					</Button>
@@ -110,9 +112,4 @@ export default function NewsCard({ img, title, description, id, refresh }) {
 			</Card>
 		</>
 	);
-
-	async function deleteNews() {
-		await callAPI();
-		if (data?.success) refresh();
-	}
 }
