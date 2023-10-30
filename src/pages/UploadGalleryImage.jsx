@@ -24,7 +24,7 @@ export default function UploadGalleryImage() {
 		data: gallery,
 		error,
 		callAPI
-	} = useFetch('GET', "/api/gallery-images/web");
+	} = useFetch('GET', "/gallery-images");
 
 	useEffect(() => callAPI(), []);
 	// console.log(gallery)
