@@ -24,7 +24,7 @@ export default function UploadGalleryImage() {
 		data: gallery,
 		error,
 		callAPI
-	} = useFetch('GET', "/gallery-images");
+	} = useFetch('GET', "/gallery-images/web");
 
 	useEffect(() => callAPI(), []);
 	// console.log(gallery)
@@ -35,6 +35,11 @@ export default function UploadGalleryImage() {
 		pb: "1rem",
 		my:"1.5rem"
 	};
+
+	if(gallery) {
+		console.log(gallery?.data);
+		console.log("xxxxxxxxx", Object.values(gallery.data))
+	}
 	return (
 		<>
 			<SubHeader
@@ -63,8 +68,8 @@ export default function UploadGalleryImage() {
 							</Button>
 						</Link>
 					</Box>
-				{gallery?.data?.length===0 ? <EmptyRecords/> : <Grid container spacing={6} sx={{marginLeft:"0 !important"}}>
-					{gallery?.data?.map((item, key) => (
+				{gallery?.data && Object?.values(gallery?.data).length===0 ? <EmptyRecords/> : <Grid container spacing={6} sx={{marginLeft:"0 !important"}}>
+					{ gallery?.data && Object.values(gallery.data).map((item, key) => (
 						<Grid item sm={6} md={4} key={key}>
 							<GalleryCard {...{ ...item }} refresh={callAPI} data={gallery} />
 						</Grid>
@@ -77,11 +82,12 @@ export default function UploadGalleryImage() {
 }
 
 function GalleryCard({ url, groupName, imageName, id, refresh, }) {
+	console.log("inside urlxxxxx", url)
 	const navigate = useNavigate();
 	console.log(id)
 	const {data: gallery,callAPI} = useFetch('DELETE', `/gallery-images/${id}`);
 	const splitUrl = () => {
-		const newUrl = url?.split(',')[0];
+		const newUrl = url?.split(' ')[0];
 		if (newUrl) return newUrl;
 		return url;
 	};
