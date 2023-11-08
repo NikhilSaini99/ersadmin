@@ -5,7 +5,7 @@ import {useEffect } from 'react';
 import './App';
 import SignInSide from './pages/Login/Login';
 
-function App() {
+const App =()=> {
 	const navigate = useNavigate()
 	const token = localStorage.getItem('token');
 	useEffect(() => {
@@ -69,9 +69,9 @@ function App() {
 			}
 		}
 	});
-
+//, {path:"*", element:<SignInSide/>}
 	// eslint-disable-next-line react/react-in-jsx-scope
-	const routing = useRoutes(!token ? [{path: "/login", element:<SignInSide/>}, {path:"*", element:<SignInSide/>}] : routes);
+	const routing = useRoutes(!token ? [{path: "/login", element:<SignInSide/>}] : routes);
 	
 	// eslint-disable-next-line react/react-in-jsx-scope
 	return  <ThemeProvider theme={baseTheme}>
