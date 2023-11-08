@@ -14,6 +14,7 @@ const MyNewsPrint = ({ names, description, refresh, id,item }) => {
         gap: '1rem',
         padding: '1rem',
         height: '280px', // Specify the desired height
+        overflow: 'auto'
     }
 
 

@@ -6,8 +6,8 @@ export * from './Banner'
 export * from './CreateImage'
 export * from './CreateVideo'
 export * from './ImpLinks'
-// export * from './Menu'
-export { Menu as default } from "./Menu";
+export * from './Menu'
+// export { Menu as default } from "./Menu";
 export * from './News'
 export * from './RecentlyApproved'
 export * from './UploadGalleryImage'

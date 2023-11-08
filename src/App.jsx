@@ -11,7 +11,7 @@ function App() {
 	useEffect(() => {
 		if (!token) {
 			navigate("/login");
-		} 
+		}
 	}, [token]);
 	
 

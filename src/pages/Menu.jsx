@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { SubHeader } from '../layouts/MainLayout';
 import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
 
-export function Menu() {
+export default function Menu() {
 
     const { loading, error, data: newsData,
         callAPI } = useFetch('GET', '/menuService')
@@ -97,7 +97,7 @@ const AllMenuList = ({ names, subMenu, refresh, id }) => {
 
     return (
         <>
-         {data.length==0 ? <h1>hello</h1> : <Grid item xs={3}>
+         {data?.length==0 ? <h1>hello</h1> : <Grid item xs={3}>
                 <Paper elevation={20}>
                     <Box sx={myBox} >
                         <Box>

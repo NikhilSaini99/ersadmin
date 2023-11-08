@@ -75,7 +75,7 @@ import SignInSide from '../pages/Login/Login';
 
 const CreateImage = lazy(() => import('../pages/CreateImage'))
 const AddBanner = lazy(() => import('../pages/AddBanner'))
-const Menu = lazy(() => import('../pages'))
+const Menu = lazy(() => import('../pages/Menu'))
 const RecentlyApproved = lazy(() => import('../pages/RecentlyApproved'))
 const AddWhatNew = lazy(() => import('../pages/AddWhatNew'))
 const AddCorporateResponsibility = lazy(() => import('../pages/AddCorResp'))
