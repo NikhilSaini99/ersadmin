@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "local": "vite --port 3001",
+    "dev": "vite --port 3001",
     "build": "vite build",
+    "lint": "eslint --fix . --ext .js,.jsx",
+    "lint:fix": "eslint — ext .js,.jsx,.ts,.tsx src — color --fix",
     "preview": "vite preview",
-    "dev": "serve dist -s -n -L -p $PORT",
-    "start": "serve build -s -n -L -p $PORT"
+    "prodStart": "pm2 serve dist 3001 --name \"Admin-Panel\"",
+    "pm2:serve": "pm2 start pm2.prod.json"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -29,7 +31,6 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.10.0",
-    "serve": "^14.2.1",
     "suneditor": "^2.44.12",
     "suneditor-react": "^2.16.5",
     "yup": "^1.1.1"

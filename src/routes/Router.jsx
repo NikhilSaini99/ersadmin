@@ -70,7 +70,7 @@ import FAQ, { AddFAQ } from '../pages/FAQ';
 // import AddTaxItemCode from '../pages/TaxItemCode/AddTaxItemCode';
 // import AboutUsTeam from '../pages/AboutUsTeam/AboutUsTeam';
 // import ListAboutUsTeam from '../pages/AboutUsTeam/ListAboutUsTeam';
-import SignInSide from '../pages/Login/Login';
+import SignInSide from "../pages/Login/Login";
 // const Login = lazy(() => import('../pages/Login'));
 
 const CreateImage = lazy(() => import('../pages/CreateImage'))
