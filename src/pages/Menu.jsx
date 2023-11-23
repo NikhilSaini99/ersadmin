@@ -8,6 +8,8 @@ import useFetch from '../hooks/useFetch';
 import { useEffect } from 'react';
 import { SubHeader } from '../layouts/MainLayout';
 import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../components/Modal/Modal';
+import { useState } from 'react';
 
 export default function Menu() {
 
@@ -72,6 +74,7 @@ export default function Menu() {
 
 //Printing Menu List on Menu Page
 const AllMenuList = ({ names, subMenu, refresh, id }) => {
+    const [OpenModal, setOpenModal] = useState(false);
     const { loading, data, error, callAPI } = useFetch('DELETE', `/menuService/${id}`);
 
     console.log('All Menu List',loading);
@@ -79,9 +82,15 @@ const AllMenuList = ({ names, subMenu, refresh, id }) => {
         if (data?.success) refresh();
     }, [data])
 
-    function handleDelete() {
-        callAPI();
-    }
+
+    function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 
     const myBox = {
         display: 'flex',
@@ -110,11 +119,12 @@ const AllMenuList = ({ names, subMenu, refresh, id }) => {
                             </Typography>
                         </Box>
                         <Box>
-                            <Button variant="contained" onClick={handleDelete}>Delete</Button>
+                            <Button variant="contained" onClick={handleModal}>Delete</Button>
                         </Box>
                     </Box>
                 </Paper>
             </Grid>}
+            <CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
         </>
     )
 }

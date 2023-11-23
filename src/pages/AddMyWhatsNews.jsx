@@ -1,4 +1,4 @@
-import { Box, Button, CardActions, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
+import { Box, Button, CardActions, Divider, FormHelperText, Grid, Paper, TextField, Typography } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import MainCard from '../components/MainCard'
 import { useFormik } from 'formik'
@@ -9,6 +9,7 @@ import { SubHeader } from '../layouts/MainLayout';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import useUpload from '../hooks/useUpload';
 import { useLocation } from 'react-router-dom';
+import { RequestLoader } from '../components/Spinner';
 
 
 const AddMyWhatsNews = () => {
@@ -24,14 +25,13 @@ const AddMyWhatsNews = () => {
     const myRef = useRef({ fileName: '', fileUrl: '' });
 	const upload_URL_FLAG_REF = useRef(false);
 	const [selectedFile, setSelected] = useState();
-
+    const [loading , setLoading] = useState();
     const updateformValues = location?.state?.formdata;
 
-    const newsSchema = Yup.object().shape({
-		tenderName: Yup.string().required('Name is required'),
-		reference: Yup.string().required('Reference is required'),
-		deadline: Yup.date().required('Upload Date is required'),
-		publishedDate: Yup.date().required('Published Date is required')
+    const whatsNewsSchema = Yup.object().shape({
+		name: Yup.string().required('Name is required'),
+		description: Yup.string().max(500, "Maximum 500 characters are allowed").required('Description is required'),
+		documentName: Yup.string().required('Document Name is required'),
 	});
 
     const formik = useFormik({
@@ -41,7 +41,8 @@ const AddMyWhatsNews = () => {
             documentName: location?.state?.status ? updateformValues.documentName : '',
             documentUrl: location?.state?.status ? updateformValues.documentUrl : null
         },
-        onSubmit: addMyNews
+        onSubmit: addMyNews,
+        validationSchema: whatsNewsSchema,
     })
 
     const handleChange = (event) => {
@@ -55,7 +56,9 @@ const AddMyWhatsNews = () => {
 
   async function addMyNews() {
 
-        const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
+     try  
+       { setLoading(true);
+         const updatepdfURL = !upload_URL_FLAG_REF.current ? updateformValues?.documentUrl: await uploadPdfFile(
 			'/files/whats-new-files',
 			selectedFile
 		);
@@ -73,7 +76,10 @@ const AddMyWhatsNews = () => {
             navigate('/MyWhatsNew');
 		} else {
 			console.log('submit error');
-		}
+		}}catch(err){
+            console.log(err);
+            setLoading(false);
+        }
     }
 
     return (
@@ -86,7 +92,7 @@ const AddMyWhatsNews = () => {
                 boxShadow
             >
                 <Box sx={{ p: '1em 3rem 3rem 3rem' }}>
-                    <form onSubmit={formik.handleSubmit} >
+                    <form onSubmit={formik.handleSubmit}>
                         <Grid container direction="column" spacing={2} padding={4}>
 
                             <Grid item xs={12}>
@@ -95,10 +101,13 @@ const AddMyWhatsNews = () => {
                                     label="Enter Name"
                                     id="fullWidth"
                                     name='name'
-                            
                                     onChange={formik.handleChange}
                                     value={formik.values.name}
+                                   error={!!formik.errors.name}
                                 />
+                                         <FormHelperText style={{ color: 'red' }}>
+                                             {formik.errors.name}
+                                         </FormHelperText>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -106,10 +115,13 @@ const AddMyWhatsNews = () => {
                                     label="Enter Description"
                                     id="fullWidth"
                                     name='description'
-                            
                                     onChange={formik.handleChange}
                                     value={formik.values.description}
+                                    error={!!formik.errors.description}
                                 />
+                                 <FormHelperText style={{ color: 'red' }}>
+                                             {formik.errors.description}
+                                         </FormHelperText>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -120,7 +132,11 @@ const AddMyWhatsNews = () => {
                             
                                     onChange={formik.handleChange}
                                     value={formik.values.documentName}
+                                    error={!!formik.errors.documentName}
                                 />
+                                 <FormHelperText style={{ color: 'red' }}>
+                                             {formik.errors.documentName}
+                                         </FormHelperText>
                             </Grid>
                             <Grid item xs={12}>
 									<Box
@@ -131,7 +147,7 @@ const AddMyWhatsNews = () => {
 											alignItems: 'center'
 										}}
 									>
-										<Button variant="outlined" component="label">
+										<Button variant="outlined" component="label" disabled={loading}>
 											<AiOutlineCloudUpload size={30} className="mr-2" />
 											Upload File
 											<input
@@ -163,14 +179,14 @@ const AddMyWhatsNews = () => {
 										variant="contained"
 										color="primary"
 										disabled={
-											location?.state?.status
+											(location?.state?.status
 												? false
 												: !selectedFile
 												? true
-												: false
+												: false) || loading
 										}
 									>
-										{location?.state?.status ? 'Update' : 'Submit'}
+									{loading ? <RequestLoader/>	: location?.state?.status ? 'Update' : 'Submit'}
 									</Button>
 								</Box>
                         </Grid>

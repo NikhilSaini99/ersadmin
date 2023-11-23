@@ -14,8 +14,8 @@ import {
 	Paper,
 	TablePagination,
 	IconButton,
-    Avatar
-} from '@mui/material';
+    Avatar,
+	} from '@mui/material';
 
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -29,6 +29,10 @@ import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
 import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../../components/Modal/Modal';
+import CustomAlert from '../../components/Alert/CustomAlert';
+
+
 
 const ListAboutUsTeam = () => {
     const { loading, error, data: teamData, callAPI } = useFetch('GET', '/aboutus');
@@ -152,20 +156,27 @@ const MyAboutUsTeamList = ({
     possition
 	
 }) => {
+	const [OpenModal, setOpenModal] = useState(false);
+
 	const navigate = useNavigate();
-	const { data, callAPI } = useFetch('DELETE', `/aboutus/${id}`);
+	const { data, callAPI} = useFetch('DELETE', `/aboutus/${id}`);
 	useEffect(() => {
-		if (data?.success) refresh();
+		if (data?.success){
+			refresh();
+		} 
 	}, [data]);
 
-	function handleDelete() {
-		callAPI();
+	function handleModal() {
+		setOpenModal(true)
 	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
 
 	function handleUpdate() {
 		navigate('/Add-Team-Data', { state: { formdata: item, status: true } });
 	}
-
 	return (
 		<>
 			<TableRow
@@ -187,7 +198,7 @@ const MyAboutUsTeamList = ({
 				<TableCell>{possition}</TableCell>
 				<TableCell>{description}</TableCell>
 				<TableCell>
-					<IconButton onClick={handleDelete}>
+					<IconButton onClick={handleModal}>
 						<DeleteIcon sx={{ color: 'red' }} />
 					</IconButton>
 				</TableCell>
@@ -197,6 +208,8 @@ const MyAboutUsTeamList = ({
 					</IconButton>
 				</TableCell>
 			</TableRow>
+			<CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
+			{/* <CustomAlert isOpen={OpenAlert} handleClose={()=>setOpenAlert(false)} AlertMessage={AlertMessage}/> */}
 		</>
 	);
 };

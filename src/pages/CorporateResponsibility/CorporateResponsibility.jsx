@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
 import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../../components/Modal/Modal';
 
 const CorporateResponsibility = () => {
 	const { loading, error, data: CSR, callAPI } = useFetch('GET', '/csr');
@@ -154,15 +155,14 @@ const CorporateList = ({
 	item
 }) => {
 	const navigate = useNavigate();
+	const [OpenModal, setOpenModal] = useState(false);
 	const { data, callAPI } = useFetch('DELETE', `/csr/${id}`);
 	const [showMore, setShowMore] = useState(false);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
 
-	function handleDelete() {
-		callAPI();
-	}
+	
 
 	function handleUpdate() {
 		navigate('/Add-Corporate-Responsibility', {
@@ -175,6 +175,14 @@ const CorporateList = ({
 	const truncateLength = (text) => {
 		const finalString = text.slice(0, MAX_LENGTH);
 		return showMore ? text : finalString + '....';
+	};
+
+	function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
 	};
 
 	return (
@@ -205,7 +213,7 @@ const CorporateList = ({
 					</Avatar>
 				</TableCell>
 				<TableCell>
-					<IconButton onClick={handleDelete}>
+					<IconButton onClick={handleModal}>
 						<DeleteIcon sx={{ color: 'red' }} />
 					</IconButton>
 				</TableCell>
@@ -215,6 +223,7 @@ const CorporateList = ({
 					</IconButton>
 				</TableCell>
 			</TableRow>
+			<CustomModal  isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</>
 	);
 };

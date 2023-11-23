@@ -13,6 +13,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import { useState } from 'react'
 import { SubHeader } from '../layouts/MainLayout';
 import EmptyRecords from '../components/EmptyRecords/EmptyRecords'
+import CustomModal from '../components/Modal/Modal'
 
 const FAQ = () => {
 
@@ -86,6 +87,7 @@ export default FAQ
 /*---------- PRINT FAQ STARTS ---------------*/
 
 const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
+    const [OpenModal, setOpenModal] = useState(false);
 
     const { loading, data, error, callAPI } = useFetch('DELETE', `/faq/${id}`);
 
@@ -100,9 +102,14 @@ const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
         setShowAns(!ans)
     }
 
-    const handleDeleteFAQ = () => {
-        callAPI();
-    }
+       
+	function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
 
     return (
         <>
@@ -136,7 +143,8 @@ const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
                         >{answer}</Typography>
                     </Collapse>
                 </Stack>
-                <Button variant='contained' onClick={handleDeleteFAQ}>Delete</Button>
+                <Button variant='contained' onClick={handleModal}>Delete</Button>
+                <CustomModal  isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
             </Stack>
         </>
     )

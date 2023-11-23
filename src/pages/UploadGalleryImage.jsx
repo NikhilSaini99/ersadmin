@@ -18,6 +18,8 @@ import useFetch from '../hooks/useFetch';
 import { SubHeader } from '../layouts/MainLayout';
 import { BiAddToQueue } from 'react-icons/bi';
 import EmptyRecords from '../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../components/Modal/Modal';
+import { useState } from 'react';
 export default function UploadGalleryImage() {
 	const {
 		loading,
@@ -82,9 +84,8 @@ export default function UploadGalleryImage() {
 }
 
 function GalleryCard({ url, groupName, imageName, id, refresh, }) {
-	console.log("inside urlxxxxx", url)
+	const [OpenModal, setOpenModal] = useState(false);
 	const navigate = useNavigate();
-	console.log(id)
 	const {data: gallery,callAPI} = useFetch('DELETE', `/gallery-images/${id}`);
 	const splitUrl = () => {
 		const newUrl = url?.split(' ')[0];
@@ -103,9 +104,14 @@ function GalleryCard({ url, groupName, imageName, id, refresh, }) {
 		}
 	}, [gallery]);
 
-	const handleDelete=()=>{
-		callAPI();
+	function handleModal() {
+		setOpenModal(true)
 	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 
 	return (
 		<Card>
@@ -136,13 +142,15 @@ function GalleryCard({ url, groupName, imageName, id, refresh, }) {
 					size="small"
 					onClick={(e) => {
 						e.stopPropagation();
-						handleDelete()
+						handleModal()
 					}}
 					startIcon={<MdDelete size={20} />}
 				>
 					delete
 				</Button>
 			</CardActions>
+			<CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</Card>
+		
 	);
 }

@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
 import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../../components/Modal/Modal';
 
 
 
@@ -163,15 +164,14 @@ const MyPublicationList = ({
 	item
 }) => {
 	const navigate = useNavigate();
+	const [OpenModal, setOpenModal] = useState(false);
 	const { data, callAPI } = useFetch('DELETE', `/publication/${id}`);
 
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
 
-	function handleDelete() {
-		callAPI();
-	}
+
 
 	function handleUpdate() {
 		navigate("/Add-publication", { state: { formdata: item, status: true } })
@@ -191,6 +191,14 @@ const MyPublicationList = ({
 				console.error('Error downloading PDF:', error);
 			});
 	}
+
+	function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
 
 	return (
 		<>
@@ -219,7 +227,7 @@ const MyPublicationList = ({
 
 				</TableCell>
 				<TableCell>
-					<IconButton onClick={handleDelete}>
+					<IconButton onClick={handleModal}>
 						<DeleteIcon sx={{ color: "red" }} />
 					</IconButton>
 				</TableCell>
@@ -229,6 +237,7 @@ const MyPublicationList = ({
 					</IconButton>
 				</TableCell>
 			</TableRow>
+			<CustomModal  isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</>
 	);
 };

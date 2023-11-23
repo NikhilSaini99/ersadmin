@@ -2,7 +2,7 @@ import { to } from "await-to-js";
 import { API_HOST } from "../constants";
 
 const token = localStorage.getItem("token");
-console.log("printing", token);
+// console.log("printing", token);
 export default async function request(
     method,
     url,

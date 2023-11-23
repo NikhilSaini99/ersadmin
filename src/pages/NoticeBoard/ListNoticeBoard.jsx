@@ -28,6 +28,7 @@ import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../../components/Modal/Modal';
 
 const ListNoticeBoard = () => {
 	const {
@@ -163,6 +164,7 @@ const NoticeList = ({
 	date
 }) => {
 	const navigate = useNavigate();
+	const [OpenModal, setOpenModal] = useState(false);
 	const { data, callAPI } = useFetch('DELETE', `/noticeBoard/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
@@ -190,6 +192,14 @@ const NoticeList = ({
 				console.error('Error downloading PDF:', error);
 			});
 	}
+	function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 
 	return (
 		<>
@@ -214,7 +224,7 @@ const NoticeList = ({
 					</IconButton>
 				</TableCell>
 				<TableCell>
-					<IconButton onClick={handleDelete}>
+					<IconButton onClick={handleModal}>
 						<DeleteIcon sx={{ color: 'red' }} />
 					</IconButton>
 				</TableCell>
@@ -224,6 +234,7 @@ const NoticeList = ({
 					</IconButton>
 				</TableCell>
 			</TableRow>
+			<CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</>
 	);
 };

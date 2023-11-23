@@ -28,6 +28,7 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { SubHeader } from '../../layouts/MainLayout';
 import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../../components/Modal/Modal';
 
 
 const ListContactBranch = () => {
@@ -167,18 +168,25 @@ const ContactBranchList = ({
 
 }) => {
 	const navigate = useNavigate();
+	const [OpenModal, setOpenModal] = useState(false);
 	const { data, callAPI } = useFetch('DELETE', `/contact/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
 
-	function handleDelete() {
-		callAPI();
-	}
+
 
 	function handleUpdate() {
 		navigate('/Add-Contact-Branch', { state: { formdata: item, status: true } });
 	}
+
+	function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
 
 
 	return (
@@ -201,7 +209,7 @@ const ContactBranchList = ({
 				<TableCell>{long}</TableCell>
 				<TableCell>{isHeadQuater ? "Yes" : "No"}</TableCell>
 				<TableCell>
-					<IconButton onClick={handleDelete}>
+					<IconButton onClick={handleModal}>
 						<DeleteIcon sx={{ color: 'red' }} />
 					</IconButton>
 				</TableCell>
@@ -211,6 +219,7 @@ const ContactBranchList = ({
 					</IconButton>
 				</TableCell>
 			</TableRow>
+			<CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</>
 	);
 };

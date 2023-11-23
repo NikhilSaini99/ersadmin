@@ -14,10 +14,11 @@ import { MdDelete } from 'react-icons/md';
 import useFetch from '../hooks/useFetch';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiAddToQueue } from 'react-icons/bi';
+import CustomModal from './Modal/Modal';
 
 export default function NewsCard({ img, title, description, id, refresh,date }) {
 	const [showMore, setShowMore] = useState(false);
-	
+	const [OpenModal, setOpenModal] = useState(false);
 	const navigate = useNavigate()
 	const { loading, data, callAPI } = useFetch(
 		'DELETE',
@@ -30,9 +31,15 @@ export default function NewsCard({ img, title, description, id, refresh,date }) 
 	function handleUpdate() {
 		navigate('/Add-News', {state:{id:id,description:description,title:title,date:date,status: true}});
 	}
-	function handleDelete() {
-		callAPI();
+
+	function handleModal() {
+		setOpenModal(true)
 	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
+
 
 	const MAX_LENGTH = 150;
 
@@ -82,7 +89,7 @@ export default function NewsCard({ img, title, description, id, refresh,date }) 
 						disabled={loading}
 						onClick={(e) => {
 							e.stopPropagation();
-							handleDelete();
+							handleModal();
 						}}
 						startIcon={<MdDelete size={20} />}
 					>
@@ -110,6 +117,7 @@ export default function NewsCard({ img, title, description, id, refresh,date }) 
 					</Button>
 				</CardActions>
 			</Card>
+			<CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</>
 	);
 }

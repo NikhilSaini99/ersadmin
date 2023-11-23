@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer, useState } from 'react';
 import request from '../utils/request';
 
 function fetchReducer(state, action) {
@@ -25,7 +25,7 @@ function fetchReducer(state, action) {
 }
 
 export default function useFetch(method, url) {
-	
+		
 	const [state, dispatch] = useReducer(fetchReducer, {
 		data: null,
 		error: null,
@@ -34,12 +34,13 @@ export default function useFetch(method, url) {
 	
 	const callAPI = useCallback(
 		(body) => {
-			// console.log('receivin body',body,method)
 			dispatch({ type: 'fetch' });
 			request(method, url, body)
 				.then(([err, response]) => {
 					if (err) return dispatch({ type: 'error', err });
-					dispatch({ type: 'success', data: response });
+					else {
+						dispatch({ type: 'success', data: response });
+					}
 				})
 				.catch((e) => {
 					console.warn(e.message);
@@ -53,6 +54,6 @@ export default function useFetch(method, url) {
 		loading: state.loading,
 		data: state.data,
 		error: state.error,
-		callAPI
+		callAPI,
 	};
 }

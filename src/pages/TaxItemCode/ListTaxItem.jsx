@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { SubHeader } from '../../layouts/MainLayout';
 import EmptyRecords from '../../components/EmptyRecords/EmptyRecords';
+import CustomModal from '../../components/Modal/Modal';
 
 const ListTaxItem = () => {
     const { loading, error, data: textIteamCode, callAPI } = useFetch('GET', '/textIteamCode');
@@ -156,18 +157,26 @@ const MyTaxItemCodeList = ({
 
 }) => {
 	const navigate = useNavigate();
+	const [OpenModal, setOpenModal] = useState(false);
 	const { data, callAPI } = useFetch('DELETE', `/textIteamCode/${id}`);
 	useEffect(() => {
 		if (data?.success) refresh();
 	}, [data]);
 
-	function handleDelete() {
-		callAPI();
-	}
+	
 
 	function handleUpdate() {
 		navigate('/Add-Tax-Item-Code', { state: { formdata: item, status: true } });
 	}
+
+	
+	function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
 
 	return (
 		<>
@@ -185,7 +194,7 @@ const MyTaxItemCodeList = ({
 				<TableCell>{Tax_Item}</TableCell>
 				<TableCell>{Tax_Code}</TableCell>
 				<TableCell>
-					<IconButton onClick={handleDelete}>
+					<IconButton onClick={handleModal}>
 						<DeleteIcon sx={{ color: 'red' }} />
 					</IconButton>
 				</TableCell>
@@ -195,6 +204,7 @@ const MyTaxItemCodeList = ({
 					</IconButton>
 				</TableCell>
 			</TableRow>
+			<CustomModal  isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
 		</>
 	);
 };

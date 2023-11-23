@@ -3,8 +3,11 @@ import useFetch from '../hooks/useFetch';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/base';
+import CustomModal from '../components/Modal/Modal';
+import { useState } from 'react';
 
 const MyNewsPrint = ({ names, description, refresh, id,item }) => {
+    const [OpenModal, setOpenModal] = useState(false);
     const navigate = useNavigate();
     const myBox = {
         display: 'flex',
@@ -25,9 +28,14 @@ const MyNewsPrint = ({ names, description, refresh, id,item }) => {
         if (data?.success) refresh();
     }, [data])
 
-    function handleDelete() {
-        callAPI();
-    }
+   
+    function handleModal() {
+		setOpenModal(true)
+	}
+
+	const handleClose = () => {
+		setOpenModal(false);
+	};
 
     function handleUpdate() {
 		navigate('/AddMyWhatsNews', { state: { formdata: item, status: true } });
@@ -48,12 +56,13 @@ const MyNewsPrint = ({ names, description, refresh, id,item }) => {
                             </Typography>
                         </Box>
                         <Box sx={{display:"flex", gap:"1rem"}}>
-                            <Button variant="contained" onClick={handleDelete}>Delete</Button>
+                            <Button variant="contained" onClick={handleModal}>Delete</Button>
                             <Button variant="contained"  onClick={handleUpdate}>Update</Button>
                         </Box>
                     </Box>
                 </Paper>
             </Grid>
+            <CustomModal isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
         </>
     );
 

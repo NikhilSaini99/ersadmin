@@ -23,10 +23,12 @@ import { useLocation } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import UsePdfCover from '../RecentlyApproved/UsePdfCover';
 import { SubHeader } from '../../layouts/MainLayout';
+import { RequestLoader } from '../../components/Spinner';
 
 const AboutUsTeam = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
     const { uploadCover } = UsePdfCover();
 	const { callAPI } = useFetch('POST', '/aboutus');
 	const { callAPI: updateformAPI } = useFetch(
@@ -54,7 +56,6 @@ const AboutUsTeam = () => {
 		description: Yup.string().required('Description is required'),
 	});
 
-
 	const initialValues = {
 		name: location?.state?.status ? updateformValues.name : '',
 		possition: location?.state?.status ? updateformValues.possition : '',
@@ -62,7 +63,9 @@ const AboutUsTeam = () => {
 		url: location?.state?.status ? updateformValues.url : ""
 	};
 	const handleSubmit = async (values, { resetForm }) => {
-		const uploadCoverUrl = !upload_IMG_FLAG_REF.current ? updateformValues?.url: await uploadCover(
+		try{
+			setLoading(true);
+			const uploadCoverUrl = !upload_IMG_FLAG_REF.current ? updateformValues?.url : await uploadCover(
 			'/files/about-team-image',
 			selectedCover?.serverImgUrl
 		);
@@ -70,7 +73,7 @@ const AboutUsTeam = () => {
 			location?.state?.status
 				? updateformAPI({
 						...values,
-						url: upload_IMG_FLAG_REF.current ? uploadCoverUrl.data.url.toString() : updateformValues?.url,
+						url: upload_IMG_FLAG_REF.current ? uploadCoverUrl.data.urls[0].toString() : updateformValues?.url,
 				}):
 				callAPI({
 				...values,
@@ -81,6 +84,11 @@ const AboutUsTeam = () => {
 			navigate('/List-Team-Data');
 		} else {
 			console.log('error');
+		}}catch(err){
+			console.log(err);
+			setLoading(false);
+		}finally{
+			setLoading(false);
 		}
 	};
 
@@ -143,6 +151,7 @@ const AboutUsTeam = () => {
 
                                 <Grid item xs={12} >
 									<Button
+										disabled={loading}
 										variant="outlined"
 										component="label"
 									>
@@ -165,6 +174,7 @@ const AboutUsTeam = () => {
 												style={{ height: '156px' }}
 											/>
 											{selectedCover?.onPageUrl&&<Button
+												disabled={loading}
 												variant="outlined"
 												onClick={() => 
 													setselectedCover({ ...selectedCover, onPageUrl: "", serverImgUrl:"" })}
@@ -185,11 +195,12 @@ const AboutUsTeam = () => {
 									sx={{ p: 1.25, display: 'flex', justifyContent: 'center' }}
 								>
 									<Button
+										disabled={loading}
 										type="submit"
 										variant="contained"
 										color="primary"
 									>
-										{location?.state?.status ? 'Update' : 'Submit'}
+										{loading? <RequestLoader/>	: location?.state?.status ? 'Update' : 'Submit'}
 									</Button>
 								</Box>
 							</Grid>
