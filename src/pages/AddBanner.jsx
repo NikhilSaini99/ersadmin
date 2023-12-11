@@ -4,7 +4,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import MainCard from '../components/MainCard';
 import UploadImage from '../components/UploadImage';
@@ -12,23 +12,35 @@ import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
 import { useNavigate } from 'react-router-dom';
 import { SubHeader } from '../layouts/MainLayout';
+import UsePdfCover from './RecentlyApproved/UsePdfCover';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { MdDelete } from 'react-icons/md';
+import { RequestLoader } from '../components/Spinner';
 
 
 export default function AddBanner() {
 	const { UploadFile } = useFile();
+	const { uploadCover } = UsePdfCover();
+	const [loading, setLoading] = useState(false);
+	const upload_IMG_FLAG_REF = useRef(false);
 	const { callAPI } = useFetch('POST', '/banner-images');
-
+	const [selectedCover, setselectedCover] = useState({
+		onPageUrl: undefined,
+		serverImgUrl: undefined
+	});
 	const navigate = useNavigate();
 
 	const [images, setImages] = useState([]);
+	const updateformValues = location?.state?.formdata;
+	const initialValues = {
+		name: '',
+		possition: '',
+		description:  '',
+		uploadDate: dayjs('2022-04-17'),
+	};
 
 	const formik = useFormik({
-		initialValues: {
-			imageName: '',
-			link: '',
-			description: '',
-			uploadDate: dayjs('2022-04-17')
-		},
+		initialValues: initialValues,
 		validateOnChange: false,
 		validateOnBlur: false,
 		validationSchema: Yup.object().shape({
@@ -37,8 +49,17 @@ export default function AddBanner() {
 			description: Yup.string().required(`Description  is required`),
 			uploadDate: Yup.string().required(`Upload date is required`)
 		}),
-		onSubmit: createBanner
+		onSubmit: handleSubmit
 	});
+
+	const handleChangeCover = (event) => {
+		const file = event.target.files[0];
+		const imgURL = URL.createObjectURL(file);
+		setselectedCover({ onPageUrl: imgURL, serverImgUrl: file });
+		upload_IMG_FLAG_REF.current= true;
+	};
+
+
 
 	return (
 		<>
@@ -114,9 +135,47 @@ export default function AddBanner() {
 						</LocalizationProvider>
 					</Grid>
 
-					<Grid item xs={12}>
+					{/* <Grid item xs={12}>
 						<UploadImage maxImg={1} {...{ images, setImages }} />
-					</Grid>
+					</Grid> */}
+					<Grid item xs={12} >
+									<Button
+										disabled={loading}
+										variant="outlined"
+										component="label"
+									>
+										<AiOutlineCloudUpload size={30} className="mr-2" />
+										Upload Image
+										<input
+											type="file"
+											hidden
+											name="file"
+											onChange={handleChangeCover}
+											accept="image/*"
+										/>
+									</Button>
+								</Grid>
+								{selectedCover?.onPageUrl && <Grid item xs={12} sx={{ mt: '1.5rem' }}>
+									<Grid container direction="row" spacing={2} padding={2}>
+										<Grid item xs={3}>
+											<img
+												src={selectedCover?.onPageUrl}
+												style={{ height: '156px' }}
+											/>
+											{selectedCover?.onPageUrl&&<Button
+												disabled={loading}
+												variant="outlined"
+												onClick={() => 
+													setselectedCover({ ...selectedCover, onPageUrl: "", serverImgUrl:"" })}
+												size="small"
+												sx={{ mt: 1 }}
+												startIcon={<MdDelete size={20} />}
+											>
+												Delete
+											</Button>}
+										</Grid>
+									</Grid>
+								</Grid>}
 				</Grid>
 
 				<Divider />
@@ -126,27 +185,49 @@ export default function AddBanner() {
 						size="large"
 						variant="contained"
 						type="submit"
-						disabled={
-							(images.length == 1 ? false : true) || formik.isSubmitting
-						}
+						disabled={loading}
 					>
-						Save
+						{loading? <RequestLoader/> : 'Submit'}
 					</Button>
 				</CardActions>
 			</form>
 		</MainCard>
 		</>
 	);
-	async function createBanner(values) {
-		const result = await UploadFile('/files/banner-image', images);
-		console.log(result);
-		if (result.success) {
-			callAPI({
+	async function handleSubmit (values, { resetForm }) {
+		try{
+			setLoading(true);
+			const uploadCoverUrl = !upload_IMG_FLAG_REF.current ? updateformValues?.url : await uploadCover(
+			'/files/banner-image',
+			selectedCover?.serverImgUrl
+		);
+		if (uploadCoverUrl) {
+			console.log("inside upload cover", uploadCoverUrl?.data?.url)
+				callAPI({
 				...values,
-				imageurl: result.data.url.toString()
+				imageurl: uploadCoverUrl?.data?.url.toString()
 			});
-			formik.handleReset();
-			navigate('/banner')
+			resetForm();
+			navigate('/banner');
+		} else {
+			console.log('error');
+		}}catch(err){
+			console.log(err);
+			setLoading(false);
+		}finally{
+			setLoading(false);
 		}
 	}
+	// async function createBanner(values) {
+	// 	const result = await uploadCover('/files/banner-image', images);
+	// 	console.log(result);
+	// 	if (result.success) {
+	// 		callAPI({
+	// 			...values,
+	// 			imageurl: result.data.url.toString()
+	// 		});
+	// 		formik.handleReset();
+	// 		navigate('/banner')
+	// 	}
+	// }
 }
