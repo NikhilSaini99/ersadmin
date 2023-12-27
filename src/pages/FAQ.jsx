@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Grid, TextField, Divider, CardActions, InputLabel, FormControl, MenuItem, Select, Stack, IconButton, Collapse } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import MainCard from '../components/MainCard'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
@@ -14,17 +14,14 @@ import { useState } from 'react'
 import { SubHeader } from '../layouts/MainLayout';
 import EmptyRecords from '../components/EmptyRecords/EmptyRecords'
 import CustomModal from '../components/Modal/Modal'
+import { RequestLoader } from '../components/Spinner'
 
 const FAQ = () => {
-
     const { data: faqData, callAPI, loading, error } = useFetch('get', '/faq')
 
     useEffect(() => {
         callAPI()
     }, [])
-
-
-
 
     const myBox = {
         display: 'flex',
@@ -35,9 +32,6 @@ const FAQ = () => {
     return (
         <>
             <SubHeader title={'ALL FAQ QUESTIONS'} />
-
-
-
             <LoaderContainer {...{ loading, error }}>
             <Box
 					sx={{
@@ -72,6 +66,7 @@ const FAQ = () => {
                             answer={item.answer}
                             category={item.question_cat}
                             refresh={callAPI}
+                            Faq={item}
                         />
                     ))}
                 </Stack>
@@ -86,9 +81,9 @@ export default FAQ
 
 /*---------- PRINT FAQ STARTS ---------------*/
 
-const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
+const MyFAQPrint = ({ id, question, answer, refresh, Faq }) => {
     const [OpenModal, setOpenModal] = useState(false);
-
+    const navigate = useNavigate();
     const { loading, data, error, callAPI } = useFetch('DELETE', `/faq/${id}`);
 
     useEffect(() => {
@@ -110,6 +105,10 @@ const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
 	const handleClose = () => {
 		setOpenModal(false);
 	};
+
+    const handleUpdate = ()=>{
+        navigate("/AddFAQ", {state: {formdata: Faq, status: true}})
+    }
 
     return (
         <>
@@ -144,6 +143,7 @@ const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
                     </Collapse>
                 </Stack>
                 <Button variant='contained' onClick={handleModal}>Delete</Button>
+                <Button variant='contained' onClick={handleUpdate}>Update</Button>
                 <CustomModal  isOpen={OpenModal} handleClose={handleClose} handleDelete={callAPI}/>
             </Stack>
         </>
@@ -157,28 +157,54 @@ const MyFAQPrint = ({ myidx, id, question, answer, category, refresh }) => {
 /* ----------------------ADD FAQ PAGE STARTS------------------ */
 export const AddFAQ = () => {
     const navigate = useNavigate()
-
+    const location = useLocation();
+    const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(null);
+    console.log("form data", location?.state );
     const { callAPI } = useFetch('POST', '/faq')
+    const { callAPI: updateformAPI } = useFetch(
+		'PUT',
+		`/faq/${location?.state?.formdata?.id}`
+	);
 
+    const isUpdate = location?.state?.status;
+    const {use_for: UpdateUserFor,
+         question: UpdateQuestion,
+         answer: UpdateAnswer,
+         question_cat: UpdateQuestionCat} = location.state.formdata
 
     //using formik library to manage overall form and in formik also using useFormik hook
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            if (isUpdate) {
+                updateformAPI(formik.values);
+            } else {
+                callAPI(formik.values);
+            }
+            navigate('/FAQ');
+            formik.handleReset();
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    
     const formik = useFormik({
         initialValues: {
-            use_for: 'Home',
-            question: '',
-            answer: '',
-            question_cat: ''
+            use_for: isUpdate ? UpdateUserFor : 'Home',
+            question: isUpdate? UpdateQuestion : '',
+            answer: isUpdate? UpdateAnswer : '',
+            question_cat: isUpdate? UpdateQuestionCat : ''
         },
-        onSubmit: submittingForm
+        onSubmit: handleSubmit
 
     })
-
-    function submittingForm() {
-        callAPI(formik.values)
-        navigate('/FAQ')
-        formik.handleReset();
-    }
-
 
     return (
         <>
@@ -260,7 +286,7 @@ export const AddFAQ = () => {
                         <Divider sx={{ p: 2 }} />
                         <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
                             <Button type="submit" size="large" variant="contained" >
-                                Save
+                                {loading ? <RequestLoader/> : isUpdate ? "Update":  "Save"}
                             </Button>
                         </CardActions>
                     </Grid>

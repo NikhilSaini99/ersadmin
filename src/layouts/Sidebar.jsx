@@ -25,6 +25,7 @@ import menue from './data';
 import profile from "../assets/images/profile.png";
 import sidebarBackground from '../assets/images/1.svg';
 import { useContext } from 'react';
+import PAGES_PATH from '../routes/params';
 
 // import { AuthContext } from '../hooks/useContext';
 const Sidebar = (props) => {
@@ -41,7 +42,7 @@ const Sidebar = (props) => {
 	const handleLogout = ()=>{
 		localStorage.removeItem('token');
 		localStorage.removeItem('isAuthenticated');
-		navigate("/login")
+		navigate(PAGES_PATH.LOGIN, { replace: true })
 	}
 	const SidebarContent = (
 		<Box

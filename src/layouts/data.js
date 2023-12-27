@@ -1,9 +1,8 @@
 import { AiFillFolderAdd,AiOutlineTeam,AiOutlineVideoCameraAdd } from 'react-icons/ai'
-import { BiNews, BiNote, BiNotification } from 'react-icons/bi'
-import { FaHome, FaVideo ,FaQuestion} from 'react-icons/fa'
+import { BiNews, BiNote } from 'react-icons/bi'
+import { FaHome, FaQuestion} from 'react-icons/fa'
 import { ImFolderUpload } from 'react-icons/im'
 import { MdCorporateFare, MdFeedback, MdLabelImportant, MdOutlineApproval } from 'react-icons/md'
-import { TbReceiptTax } from 'react-icons/tb'
 import { TfiGallery, TfiMenuAlt, } from 'react-icons/tfi'
 import { MdSettings } from 'react-icons/md'
 import {BsClipboard, BsQrCode} from "react-icons/bs"
@@ -92,18 +91,7 @@ const Menuitems = [
         href: '/Tender-List',
         childrens: []
     },
-    // {
-    //     title: 'Add What New',
-    //     icon: AiFillFolderAdd,
-    //     href: '/Add-what-new',
-    //     childrens: []
-    // },
-    // {
-    //     title: 'Add Tax Calender Data (List, Delete, edit)',
-    //     icon: TbReceiptTax,
-    //     href: '/Add-Text-Calender-Data',
-    //     childrens: []
-    // },
+
     {
         title: 'Publication',
         icon: BsClipboard,

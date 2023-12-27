@@ -90,7 +90,7 @@ export default function SignInSide() {
   useEffect(() => {
     const localData = localStorage.getItem("token")
     if (localData) {
-      navigate("/")
+      navigate("/Menu")
     } else {
       navigate("/login")
     }
