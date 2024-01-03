@@ -3,7 +3,7 @@ import React from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 
-const UploadImage = ({ maxImg, images, setImages }) => {
+const UploadImage = ({ maxImg, images, setImages, loading }) => {
 	
 	const deleteImage = (idx) => {
 		setImages((arr) => {
@@ -27,6 +27,7 @@ const UploadImage = ({ maxImg, images, setImages }) => {
 					component="label"
 					// fullWidth
 					startIcon={<AiOutlineCloudUpload size="30" />}
+					disabled={loading}
 				>
 					Upload Image
 					<input
@@ -50,6 +51,7 @@ const UploadImage = ({ maxImg, images, setImages }) => {
 							size="small"
 							sx={{ mt: 1 }}
 							startIcon={<MdDelete size={20} />}
+							disabled={loading}
 						>
 							Delete
 						</Button>

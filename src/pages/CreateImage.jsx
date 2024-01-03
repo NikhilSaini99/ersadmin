@@ -17,6 +17,7 @@ import useFetch from '../hooks/useFetch';
 import useFile from '../hooks/useFile';
 import { useNavigate } from 'react-router-dom';
 import { SubHeader } from '../layouts/MainLayout';
+import { RequestLoader } from '../components/Spinner';
 
 export default function Image() {
 	const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function Image() {
 	const [value, setValue] = useState('');
 	const [options, setOptions] = useState([]);
 	const [inputValue, setInputValue] = React.useState('');
+	const [createLoading, setCreateLoading] = useState(false)
 
 	const formik = useFormik({
 		initialValues: {
@@ -118,7 +120,7 @@ export default function Image() {
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<UploadImage maxImg={15} {...{ images, setImages }} />
+							<UploadImage maxImg={15} {...{ images, setImages }} loading={createLoading} />
 						</Grid>
 					</Grid>
 					<Divider />
@@ -132,7 +134,7 @@ export default function Image() {
 								(images.length >= 1 ? false : true) || formik.isSubmitting
 							}
 						>
-							Save
+							{createLoading ? <RequestLoader/>	: 'Submit'}
 						</Button>
 					</CardActions>
 				</form>
@@ -140,15 +142,24 @@ export default function Image() {
 		</>
 	);
 	async function createGallery(values) {
-		const result = await UploadFile('/files/gallery-image', images);
-		console.log(result);
-		if (result.success)
-			callAPI({
-				groupName: value ? value : inputValue,
-				...values,
-				url: result.data.urls.toString()
-			});
-		formik.handleReset();
-		navigate("/Upload-Gallery-Image")
+		try {
+			setCreateLoading(true);
+			const result = await UploadFile('/files/gallery-image', images);
+			console.log(result);
+			if (result.success)
+				callAPI({
+					groupName: value ? value : inputValue,
+					...values,
+					url: result.data.urls.toString()
+				});
+			formik.handleReset();
+			navigate("/Upload-Gallery-Image");
+		} catch (error) {
+			console.error(error);
+			setCreateLoading(false)
+			// Handle error here
+		} finally {
+			setCreateLoading(false);
+		}
 	}
 }
